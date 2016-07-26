@@ -42,7 +42,9 @@ After this initial extraction, the ZR-Duet DNA/RNA MiniPrep [4] was used, follow
 Transcriptome assembly and annotation
 -------------------------------------
 
-Reads were quality controled using FastQC [6] and filtered using the BioLite program filter\_illumina.cpp [7]. The surviving read pairs from all libraries were concatenated to produce two fastq files that were used for *de novo* transcriptome assembly in Trinity v2.0.6 (using the --normalize\_reads flag). The resulting contigs (with lenght \>=200bp) were annotated against the Uniprot (SwissProt) [8] and *Amphimedon queenslandica* isoforms (AQU2 proteins) [9] using blastx v2.2.29+ with an expectation cutoff of 0.001. Only the best match per contig was saved and the blast results were saved using blast's XML format converted to a 25 column table [10]. Both tables (i.e. [UNIPROT](https://github.com/sevragorgia/CBAS/tree/master/Annotations/Uniprot) and [AQU2](https://github.com/sevragorgia/CBAS/tree/master/Annotations/AQU2)) are available for download in the [project repository](https://github.com/sevragorgia/CBAS). Transcripts were translated using the program TransDecoder.LongOrfs [11] and the resulting cds, mRNA, bed, gff3 and pep files stored in the [project repository](https://github.com/sevragorgia/CBAS/tree/master/Annotations/Transdecoder) and used in the construction of an annotation metatable.
+Reads were quality controled using FastQC [6] and filtered using the BioLite program filter\_illumina.cpp [7]. The surviving read pairs from all libraries were concatenated to produce two fastq files that were used for *de novo* transcriptome assembly in Trinity v2.0.6 (using the --normalize\_reads flag). The resulting contigs (with lenght \>=200bp) were annotated against the Uniprot (SwissProt) [8] and *Amphimedon queenslandica* isoforms (AQU2 proteins) [9] using blastx v2.2.29+ with an expectation cutoff of 0.001. Only the best match per contig was saved and the blast results were saved using blast's XML format converted to a 25 column table [10]. Both tables (i.e. [UNIPROT](https://github.com/sevragorgia/CBAS/tree/master/Annotations/Uniprot) and [AQU2](https://github.com/sevragorgia/CBAS/tree/master/Annotations/AQU2)) are available for download in the [project repository](https://github.com/sevragorgia/CBAS). Gene Ontology [11] annotations for the CBAS transcriptome were obtained programmatically querying the [QuickGO Webservice](http://www.ebi.ac.uk/QuickGO/) with the transcriptome's UNIPROT annotations [12] and a custom [perl script](https://github.com/sevragorgia/CBAS/blob/master/Scripts/Get_GO_Annotations.pl). For each CBAS transcript the "component", "function" and "process" GO terms associated with its UNIPROT best match were stored in the [project repository](https://github.com/sevragorgia/CBAS/tree/master/Annotations/GOs) as independent tab-separated files that can be easily modified to use as input files in TopGO [13].
+
+Transcripts were translated using the program TransDecoder.LongOrfs [14] and the resulting cds, mRNA, bed, gff3 and pep files stored in the [project repository](https://github.com/sevragorgia/CBAS/tree/master/Annotations/Transdecoder) and used in the construction of an annotation metatable.
 
 Differential gene expression analysis
 -------------------------------------
@@ -99,4 +101,10 @@ Footnotes
 
 [10] Blast was run from [Galaxy](https://galaxyproject.org/) and the XML file was converted to a 25 column table by the [ncbi\_blast\_plus](http://toolshed.g2.bx.psu.edu/view/devteam/ncbi_blast_plus) tool.
 
-[11] Transdecoder's Github Repository can be found [here.](https://transdecoder.github.io/)
+[11] Gene Ontology Consortium. [<http://geneontology.org/>](http://geneontology.org/)
+
+[12] The UNIPROT accession code of the blast best match associated to each transcript in the CBAS transcriptome was used to query the GO annotations associated with the UNIPROT protein. These GO annotations were used to annotated the CBAS transcripts; note that these are annotations based on annotations and should be taken with precaution.
+
+[13] [TopGO](https://bioconductor.org/packages/release/bioc/html/topGO.html) expects GO terms in tab separated {Trascript, GoAnnotation} pairs. The script produces output with a leading column indicating the UNIPROT accession code used for each transcript, which comes handy when controling the correct annotation was used for each transcript and can be easily removed for further analyses.
+
+[14] Transdecoder's Github Repository can be found [here.](https://transdecoder.github.io/)
