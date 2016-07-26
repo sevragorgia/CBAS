@@ -1,11 +1,11 @@
 #http://www-huber.embl.de/users/klaus/Teaching/DESeq2Predoc2014.html#preparing-count-matrices consulted 07.03.2016
 
+library("EDASeq")
 library("DESeq2")
 library("pheatmap")
 library("ggplot2")
 library("gplots")
 library("geneplotter")
-library("EDASeq")
 library("RColorBrewer")
 library("genefilter")
 
@@ -13,12 +13,18 @@ library("BiocParallel")
 register(MulticoreParam(4))
 
 
-CBAS_DE<-read.csv("~/Desktop/CBAS/RSEM/CBAS_Bleaching_RSEM_Expression_Matrix.counts", head=T, sep="\t")
+input_counts<-"~/Repos/CBAS/Count_Matrix/CBAS_Bleaching_RSEM_Expression_Matrix.counts"
+
+input_sample_information<-"~/Repos/CBAS/Count_Matrix/CBAS_Bleaching_RSEM_Expression_Matrix.info"
+
+
+CBAS_DE<-read.csv(input_counts, head=T, sep="\t")
+
+CBAS_DE_INFO<-read.csv(input_sample_information, head=T)
 
 # Remove genes that have no counts over all samples
 CBAS_DE <- CBAS_DE[(rowSums(CBAS_DE) > 0),]
 
-CBAS_DE_INFO<-read.csv("~/Desktop/CBAS/RSEM/CBAS_Bleaching_RSEM_Expression_Matrix.info", head=T)
 
 CBAS_DeSeq<-DESeqDataSetFromMatrix(countData=CBAS_DE, colData=CBAS_DE_INFO, design=~condition)
 
