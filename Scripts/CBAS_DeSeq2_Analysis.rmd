@@ -1,0 +1,15 @@
+---
+title: Changes in gene expression under different symbiont activity regimes.
+author: Sergio Vargas R.
+date: 20160726
+output: github_document
+---
+
+#Changes in gene expression under different symbiotic activities regimes in a common aquarium sponge.
+
+***
+
+The common blue aquarium sponge is a cyanosponge commonly found in salt water aquaria. Most aquarium hobbiest refer to this sponge as *Collospongia auris*, however its taxonomic affiliation is not clear.
+Thus, here this sponge is refer to as the Common Blue Aquarium Sponge (CBAS). CBAS is a cyanosponge, it harbours cyanobacteria from the Candidatus *Synechococcus spongiarum* clade.
+
+
