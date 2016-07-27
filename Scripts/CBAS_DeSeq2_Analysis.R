@@ -25,7 +25,6 @@ CBAS_DE_INFO<-read.csv(input_sample_information, head=T)
 # Remove genes that have no counts over all samples
 CBAS_DE <- CBAS_DE[(rowSums(CBAS_DE) > 0),]
 
-
 CBAS_DeSeq<-DESeqDataSetFromMatrix(countData=CBAS_DE, colData=CBAS_DE_INFO, design=~condition)
 
 #relevel the factors so that control is the reference
