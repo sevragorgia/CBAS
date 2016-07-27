@@ -60,8 +60,10 @@ Using the *de novo* assembled transcriptome, the individual libraries (i.e. cont
 
 A stand-alone R script to replicate the analysis is available in the [project repository](https://github.com/sevragorgia/CBAS/blob/master/Scripts) and can be run using the [count matrix](https://github.com/sevragorgia/CBAS/tree/master/Counts/CBAS_Bleaching_RSEM_Expression_Matrix.counts) and [sample information](https://github.com/sevragorgia/CBAS/tree/master/Counts/CBAS_Bleaching_RSEM_Expression_Matrix.info) provided. And in this version of the manuscript, the code used to calculate something is provided as as R markdown snippets in the Results section.
 
-Gene Ontology term enrichment analysis
+Gene Ontology Term enrichment analysis
 --------------------------------------
+
+In order to assess whether certain Gene Ontology terms are "enriched" among the set of differentially expressed genes an GO-term enrichment analysis was done using the R package [TopGO](https://bioconductor.org/packages/release/bioc/html/topGO.html). For this analysis, first, "background sets" of not differentially expressed transcripts with similar expression profile to the set of differentially expressed transcripts was created using the method **genefinder** of the package [genefilter](http://bioconductor.org/packages/release/bioc/html/genefilter.html) with the Manhattan distance. Background transcript sets were created for all differentially expressed transcripts (i.e. transcripts with log fold change \(> |2|\) and \(p<0.01\)), for differentially upregulated genes (i.e. transcripts with log fold change \(> 2\) and \(p<0.01\)) and for differentially downregulated genes (i.e. transcripts with log fold change \(< -2\) and \(p<0.01\))
 
 Pfam domain enrichment analysis
 -------------------------------

@@ -54,6 +54,8 @@ A stand-alone R script to replicate the analysis is available in the [project re
 
 ##Gene Ontology Term enrichment analysis
 
+In order to assess whether certain Gene Ontology terms are "enriched" among the set of differentially expressed genes an GO-term enrichment analysis was done using the R package [TopGO](https://bioconductor.org/packages/release/bioc/html/topGO.html). For this analysis, first, "background sets" of not differentially expressed transcripts with similar expression profile to the set of differentially expressed transcripts was created using the method **genefinder** of the package [genefilter](http://bioconductor.org/packages/release/bioc/html/genefilter.html) with the Manhattan distance. Background transcript sets were created for all differentially expressed transcripts (i.e. transcripts with log fold change $> |2|$ and $p<0.01$), for differentially upregulated genes (i.e. transcripts with log fold change $> 2$ and $p<0.01$) and for differentially downregulated genes (i.e. transcripts with log fold change $< -2$ and $p<0.01$).
+
 
 
 
