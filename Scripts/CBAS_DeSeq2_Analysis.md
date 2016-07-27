@@ -39,15 +39,24 @@ Total RNA was extracted using a hybrid protocol that combines a regular CTAB ext
 
 After this initial extraction, the ZR-Duet DNA/RNA MiniPrep [4] was used, following the manufacturers recommendations, to separate DNA and RNA from the sample. The RNA was resuspended in 30 \(\mu\)L nuclease-free water and quality checked initially on 1% agarose gels and finally on a Bioanalyzer 2100 Nano RNA chip. RNA concentration was measured on a Nanodrop 1000. RIN values could be calculated for bleached samples only; control samples have four rRNA peaks corresponding to the 16S, 18S, 23S and 28S rRNA fragments and the Bioanalyzer canno calculate their RIN value. Quality of the control samples was assessed by overlaying bleached samples with RIN and control samples without RIN and assessing their similarity in terms of peak height and baseline level. Five control and four bleached samples were sent on dry-ice to the EMBL Genomics Core Facility [5] where they were used to produce strand-specific libraries with \~110 base pairs (bp). These libraries were multiplexed and pair-end sequenced (50bp reads) in two lanes of a HiSeq 2500 (Illumina).
 
-Transcriptome assembly and annotation
--------------------------------------
+Transcriptome assembly, annotation
+----------------------------------
 
 Reads were quality controled using FastQC [6] and filtered using the BioLite program filter\_illumina.cpp [7]. The surviving read pairs from all libraries were concatenated to produce two fastq files that were used for *de novo* transcriptome assembly in Trinity v2.0.6 (using the --normalize\_reads flag). The resulting contigs (with lenght \>=200bp) were annotated against the Uniprot (SwissProt) [8] and *Amphimedon queenslandica* isoforms (AQU2 proteins) [9] using blastx v2.2.29+ with an expectation cutoff of 0.001. Only the best match per contig was saved and the blast results were saved using blast's XML format converted to a 25 column table [10]. Both tables (i.e. [UNIPROT](https://github.com/sevragorgia/CBAS/tree/master/Annotations/Uniprot) and [AQU2](https://github.com/sevragorgia/CBAS/tree/master/Annotations/AQU2)) are available for download in the [project repository](https://github.com/sevragorgia/CBAS). Gene Ontology [11] annotations for the CBAS transcriptome were obtained by programmatically querying the [QuickGO Webservice](http://www.ebi.ac.uk/QuickGO/) with the transcriptome's UNIPROT annotations [12] and a custom [perl script](https://github.com/sevragorgia/CBAS/blob/master/Scripts/Get_GO_Annotations.pl). For each CBAS transcript the "component", "function" and "process" GO terms associated with its UNIPROT best match were stored in the [project repository](https://github.com/sevragorgia/CBAS/tree/master/Annotations/GOs) as independent tab-separated files that can be easily modified to use as input files in TopGO [13].
 
-In addition, transcripts were translated using the program TransDecoder.LongOrfs [14] and the resulting cds, mRNA, bed, gff3 and pep files stored in the [project repository](https://github.com/sevragorgia/CBAS/tree/master/Annotations/Transdecoder) and used to annotated the transcriptome against the [Pfam](http://pfam.xfam.org/) and [KEEG](http://www.genome.jp/kegg/) databases. For this, the perl script [pfam\_scan.pl](ftp://ftp.ebi.ac.uk/pub/databases/Pfam/Tools/) and the webservice [BlastKOALA](http://www.kegg.jp/blastkoala/) were used; the resulting output files can be found in the [project repository.](https://github.com/sevragorgia/CBAS)
+In addition, transcripts were translated using the program TransDecoder.LongOrfs [14] and the resulting cds, mRNA, bed, gff3 and pep files stored in the [project repository](https://github.com/sevragorgia/CBAS/tree/master/Annotations/Transdecoder) and used to annotated the transcriptome against the [Pfam](http://pfam.xfam.org/) and [KEEG](http://www.genome.jp/kegg/) databases. For this, the perl script [pfam\_scan.pl](ftp://ftp.ebi.ac.uk/pub/databases/Pfam/Tools/) and the webservice [BlastKOALA](http://www.kegg.jp/blastkoala/) were used; the resulting output files can be found in the [project repository.](https://github.com/sevragorgia/CBAS) Finally, the assembled transcripts were blasted (blastn) against a bacterial genomes database [15].
+
+All annotations were used to build an [annotation meta-table](https://github.com/sevragorgia/CBAS/blob/master/Annotations/Metatable/CBAS_Annotation_Metatable_20160505.csv) using a [custom made perl script](https://github.com/sevragorgia/CBAS/blob/master/Scripts/Create_Transcriptome_Annotation_Table.pl) available in the project repository.
+
+Transcriptome completeness assessment
+-------------------------------------
+
+The CBAS transcriptome completeness was assessed by blasting against the CEGMA gene set of [Parra et al. 2007](http://bioinformatics.oxfordjournals.org/content/23/9/1061.abstract)[16] using tblastn with an e-value of \(1e^-19\) as implemented in the scrtipt [find\_cegma\_genes.py](https://bitbucket.org/wrf/galaxy-files/src). For details about the method see [17].
 
 Differential gene expression analysis
 -------------------------------------
+
+Using the *de novo* assembled transcriptome, the individual libraries (i.e. control and bleached sponges) were mapped with RSEM and a transcript by sample count matrix was derived from the "gene" counts with the program [abundance\_estimates\_to\_matrix.pl](https://github.com/sevragorgia/CBAS/tree/master/Counts/RSEM) provided as part of the Trinity package [18]. The [count matrix](https://github.com/sevragorgia/CBAS/tree/master/Counts/) was used to find differentially expressed genes in the control and bleached sponges. For this, the package [DeSeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) was used.
 
 Gene Ontology term enrichment analysis
 --------------------------------------
@@ -61,25 +70,27 @@ Results
 Discussion
 ==========
 
-References
-==========
+Acknowledgements
+================
 
-Conflict of interest
---------------------
+### Conflict of interest
 
-Author contributions
---------------------
+None declared.
 
-Disclaimer
-----------
+### Author contributions
+
+Sergio Vargas designed the study, conducted the experiments and analyzed the data. Gert Wörheide contributed reagents. Sergio Vargas and Gert Wörheide wrote the manuscript. Sergio Vargas manages the [project repository](https://github.com/sevragorgia/CBAS/).
+
+### Disclaimer
 
 None of the products or companies listed are endorsed or recommended in anyway by the author(s) of this text.
 
-Scripts and Data availability
------------------------------
+### Scripts and Data availability
 
-Footnotes
----------
+All scripts used to analyze the data, as well as some miscellaneous scripts used to, for instance, prepare the annotation table or generate GO-term/Pfam input files for the enrichment analyses can be found in the [project repository](https://github.com/sevragorgia/CBAS/).
+
+References and Notes
+====================
 
 [1] I have (repeatedly) failed to prepare libraries for Next Generation Sequencing from bleached tissue, probably due to the presence of secondary metabolites in the extracts.
 
@@ -108,3 +119,11 @@ Footnotes
 [13] [TopGO](https://bioconductor.org/packages/release/bioc/html/topGO.html) expects GO terms in tab separated {Trascript, GoAnnotation} pairs. The script produces output with a leading column indicating the UNIPROT accession code used for each transcript, which comes handy when controling the correct annotation was used for each transcript and can be easily removed for further analyses.
 
 [14] Transdecoder's Github Repository can be found [here.](https://transdecoder.github.io/)
+
+[15] I honestly do not know what the purpose of this blast run was, I did it for sake of completeness and because the reads were not filtered before assembling the conting. Yet, after seeing the results, it seems as if not too many contigs matched the bacterial database...
+
+[16] Parra et al. 2007. CEGMA: a pipeline to accurately annotate core genes in eukaryotic genomes. [Bioinformatics 23 (9): 1061-1067.](http://dx.doi.org/10.1093/bioinformatics/btm071)
+
+[17] Francis et al. 2013. A comparison across non-model animals suggests an optimal sequencing depth for *de novo* transcriptome assembly. [BMC Genomics 14:167](http://dx.doi.org/10.1186/1471-2164-14-167)
+
+[18] the script is also provided as part of this repository. The Copyright (c) of this script belongs trinityrnaseq (2014), who reserves all rights upon the code. [See the full LICENSE here.](https://github.com/trinityrnaseq/trinityrnaseq/blob/master/LICENSE)
