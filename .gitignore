@@ -1,2 +1,5 @@
 *.html
 *.kate-swp
+*.Rproj
+*.Rproj.user
+*.Rhistory

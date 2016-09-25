@@ -68,6 +68,7 @@ In addition to the GO-Term enrichment analysis, and due to the difficulties in a
 
 
 
+
 ##Global gene expression patterns change due to symbiont inactivation
 
 ##Inmune response transcripts are highly repressed when symbionts are not active or absent
