@@ -37,6 +37,7 @@ GenTable(functions_go_data, classic=resultsFisher_functions, topNodes=50)
 #generate graph of results
 showSigOfNodes(functions_go_data, score(resultsFisher_functions), useInfo = "all")
 
+
 #process GO analysis
 alldegs2Process_GO<-readMappings("~/Desktop/CBAS/DeSeq2/Results/all_degs_p001_2LFC.processes.gos")
 allback2Process_GO<-readMappings("~/Desktop/CBAS/DeSeq2/Results/Back_degs_p001_2LFC.processes.gos")
