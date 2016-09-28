@@ -2,8 +2,14 @@
 title: Changes in gene expression in a common aquarium sponge under different symbiont activity regimes.
 author: Sergio Vargas R.
 date: 2016-07-26
-output: github_document
+#output: github_document
+runtime: shiny
+output: html_document
 ---
+```{r include=FALSE}
+library(ggplot2)
+library(shiny)
+```
 
 ***
 ##Preliminary remarks
@@ -66,21 +72,54 @@ In addition to the GO-Term enrichment analysis, and due to the difficulties in a
 
 ##The transcriptome of the Common Blue Aquarium Sponge, a model cyanosponge
 
-Per library, we obtained on average 26,385,834 ($\pm 3,360,778$) pairs of reads (50 bp long).  After cleaning, each library had an average of 24,942,084 ($\pm 3,420,083$) surviving pairs (see Table 1 for details). The concatenated dataset thus had 199,536,668 pairs. These pairs were used for *de novo* transcriptome assembly.
+Per library, we obtained on average 26,385,834 ($\pm 3,360,778$) pairs of reads (50 bp long).  After cleaning, each library had an average of 24,942,084 ($\pm 3,420,083$) surviving pairs. The concatenated dataset thus had 199,536,668 pairs. Table 1 contains the information on the number of sequenced and surviving reads per library.
 
-Condition| Library |  Sequenced reads  |  Reads post cleaning 
-:--------|:-------:|:-----------------:|:---------------------:
-Control  |   1     |   33,836,615      |     32,397,726      
-         |   2     |   26,740,977      |     25,252,825      
-         |   3     |   22,823,936      |     21,016,976      
-         |   4     |   24,166,051      |     22,655,601      
-Bleached |   1     |   26,579,563      |     25,067,523      
-         |   2     |   25,448,522      |     24,229,217      
-         |   3     |   22,823,936      |     21,016,976      
-         |   4     |   24,166,051      |     22,655,601      
-Total Sequenced |  |  211,086,672      |                     
-Total Clean     |  |                   |    199,536,668     
+**Table 1:** Reads by library before and after quality filtering.
 
+Library | Condition | Sequenced reads | Reads post cleaning | % Kept
+:-----: | :-------: | :-------------: | :-----------------: | :-----:
+1| Control | 33,836,615 | 32,397,726 | `r round((32397726/33836615)*100,2)`
+2| Control | 26,740,977 | 25,252,825 | `r round((25252825/26740977)*100,2)`
+3| Control | 22,823,936 | 21,016,976 | `r round((21016976/22823936)*100,2)`
+4| Control | 24,166,051 | 22,655,601 | `r round((22655601/24166051)*100,2)`
+5| Bleached | 26,579,563 | 25,067,523 | `r round((25067523/26579563)*100,2)`
+6| Bleached | 25,448,522 | 24,229,217 | `r round((24229217/25448522)*100,2)`
+7| Bleached | 22,823,936 | 21,016,976 | `r round((21016976/22823936)*100,2)`
+8| Bleached | 24,166,051 | 22,655,601 | `r round((22655601/24166051)*100,2)`
+**Total Reads** | | **211,086,672** | **199,536,668** | **`r round((199536668/211086672)*100,2)`**
+
+*De novo* transcriptome assembly using the concatenated dataset resulted in 128,686 transcript $\gt 200$bp. The N50 of the transcriptome was 1,281 bp. More details about the assembly can be found in Table 2 and the length distribution of the transcripts can be visualized in Figure 1.
+
+**Table 2: Statistics for the *de novo* assembled CBAS transcriptome**
+
+Statistic | Obtained value |
+:-------: | :------------: |
+GC content | 40.0 |
+N50 | 1,281 |
+Max. length | 19,309 |
+Mean length |	803 |
+Median length |453 |
+Min. length |  224 |
+Number of Transcripts | 128,686 |
+
+***
+
+```{r, echo=FALSE}
+transcript_lengths<-read.csv("../Results/Reference_transcriptome_length_histogram.csv", head=T, sep="\t")
+
+selectInput("length", "Select the max. length to display:", c(1000,5000,10000,20000), selected= 20000)
+
+renderPlot({  
+  
+  selected_transcript_lengths<-subset(transcript_lengths, transcript_lengths$Length<input$length)
+  
+  ggplot(selected_transcript_lengths, aes(x=Length, y=Count)) + geom_bar(fill = "dark green", alpha=0.75, stat="identity") + theme_bw()
+
+})
+
+```
+
+**Figure 1.** Transcript length distribution of CBAS reference transcriptome. 
 
 ##Global gene expression patterns change due to symbiont inactivation
 

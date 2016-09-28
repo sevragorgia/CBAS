@@ -1,0 +1,13 @@
+CEGMA
+
+KOGS with hits (out of 248)	243
+High-confidence full-length matches ($1)	175
+Probable full-length matches ($2)	6
+KOGs slightly shorter than the query ($4)	6
+KOGs much shorter than the query ($8)	22
+Probable nonsense proteins/ misassemblies ($16)	30
+KOGs much longer than the query ($32)	4
+No predicted orfs within expected size ($64)	0
+No Met or stop codons ($128)	0
+No hits ($256)	5
+
