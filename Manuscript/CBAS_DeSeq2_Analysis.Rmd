@@ -36,7 +36,7 @@ After this initial extraction, the ZR-Duet DNA/RNA MiniPrep [^4] was used, follo
 
 ##Transcriptome assembly, annotation
 
-Reads were quality controled using FastQC [^6] and filtered using the BioLite program filter_illumina.cpp [^7]. The surviving read pairs from all libraries were concatenated to produce two fastq files that were used for *de novo* transcriptome assembly in Trinity v2.0.6 (using the --normalize_reads flag). The resulting contigs (with lenght >=200bp) were annotated against the Uniprot (SwissProt) [^8] and *Amphimedon queenslandica* isoforms (AQU2 proteins) [^9] using blastx v2.2.29+ with an expectation cutoff of 0.001. Only the best match per contig was saved and the blast results were saved using blast's XML format converted to a 25 column table [^10]. Both tables (i.e. [UNIPROT](https://github.com/sevragorgia/CBAS/tree/master/Annotations/Uniprot) and [AQU2](https://github.com/sevragorgia/CBAS/tree/master/Annotations/AQU2)) are available for download in the [project repository](https://github.com/sevragorgia/CBAS). Gene Ontology [^11] annotations for the CBAS transcriptome were obtained by programmatically querying the [QuickGO Webservice](http://www.ebi.ac.uk/QuickGO/) with the transcriptome's UNIPROT annotations [^12] and a custom [perl script](https://github.com/sevragorgia/CBAS/blob/master/Scripts/Get_GO_Annotations.pl). For each CBAS transcript the "component", "function" and "process" GO terms associated with its UNIPROT best match were stored in the [project repository](https://github.com/sevragorgia/CBAS/tree/master/Annotations/GOs) as independent tab-separated files that can be easily modified to use as input files in TopGO [^13].
+Reads were quality controled using FastQC [^6] and quality filtered using the BioLite program filter_illumina.cpp [^7]. The surviving read pairs from all libraries were used to produce (using the command cat) two fastq files that were used for *de novo* transcriptome assembly in Trinity v2.0.6 (using the --normalize_reads flag). The resulting contigs (with lenght >=200bp) were annotated against the Uniprot (SwissProt) [^8] and *Amphimedon queenslandica* isoforms (AQU2 proteins) [^9] using blastx v2.2.29+ with an expectation cutoff of 0.001. Only the best match per contig was saved and the blast results were saved using blast's XML format converted to a 25 column table [^10]. Both tables (i.e. [UNIPROT](https://github.com/sevragorgia/CBAS/tree/master/Annotations/Uniprot) and [AQU2](https://github.com/sevragorgia/CBAS/tree/master/Annotations/AQU2)) are available for download in the [project repository](https://github.com/sevragorgia/CBAS). Gene Ontology [^11] annotations for the CBAS transcriptome were obtained by programmatically querying the [QuickGO Webservice](http://www.ebi.ac.uk/QuickGO/) with the transcriptome's UNIPROT annotations [^12] and a custom [perl script](https://github.com/sevragorgia/CBAS/blob/master/Scripts/Get_GO_Annotations.pl). For each CBAS transcript the "component", "function" and "process" GO terms associated with its UNIPROT best match were stored in the [project repository](https://github.com/sevragorgia/CBAS/tree/master/Annotations/GOs) as independent tab-separated files that can be easily modified to use as input files in TopGO [^13].
 
 In addition, transcripts were translated using the program TransDecoder.LongOrfs [^14] and the resulting cds, mRNA, bed, gff3 and pep files stored in the [project repository](https://github.com/sevragorgia/CBAS/tree/master/Annotations/Transdecoder) and used to annotated the transcriptome against the [Pfam](http://pfam.xfam.org/) and [KEEG](http://www.genome.jp/kegg/) databases. For this, the perl script [pfam_scan.pl](ftp://ftp.ebi.ac.uk/pub/databases/Pfam/Tools/) and the webservice [BlastKOALA](http://www.kegg.jp/blastkoala/) were used; the resulting output files can be found in the [project repository.](https://github.com/sevragorgia/CBAS) Finally, the assembled transcripts were blasted (blastn) against a bacterial genomes database [^15].
 
@@ -66,7 +66,20 @@ In addition to the GO-Term enrichment analysis, and due to the difficulties in a
 
 ##The transcriptome of the Common Blue Aquarium Sponge, a model cyanosponge
 
+Per library, we obtained on average 26,385,834 ($\pm 3,360,778$) pairs of reads (50 bp long).  After cleaning, each library had an average of 24,942,084 ($\pm 3,420,083$) surviving pairs (see Table 1 for details). The concatenated dataset thus had 199,536,668 pairs. These pairs were used for *de novo* transcriptome assembly.
 
+Condition| Library |  Sequenced reads  |  Reads post cleaning 
+:--------|:-------:|:-----------------:|:---------------------:
+Control  |   1     |   33,836,615      |     32,397,726      
+         |   2     |   26,740,977      |     25,252,825      
+         |   3     |   22,823,936      |     21,016,976      
+         |   4     |   24,166,051      |     22,655,601      
+Bleached |   1     |   26,579,563      |     25,067,523      
+         |   2     |   25,448,522      |     24,229,217      
+         |   3     |   22,823,936      |     21,016,976      
+         |   4     |   24,166,051      |     22,655,601      
+Total Sequenced |  |  211,086,672      |                     
+Total Clean     |  |                   |    199,536,668     
 
 
 ##Global gene expression patterns change due to symbiont inactivation
