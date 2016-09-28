@@ -2,13 +2,10 @@
 title: Changes in gene expression in a common aquarium sponge under different symbiont activity regimes.
 author: Sergio Vargas R.
 date: 2016-07-26
-#output: github_document
-runtime: shiny
-output: html_document
+output: github_document
 ---
 ```{r include=FALSE}
 library(ggplot2)
-library(shiny)
 ```
 
 ***
