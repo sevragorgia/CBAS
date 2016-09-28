@@ -104,28 +104,11 @@ Number of Transcripts | 128,686 |
 
 ***
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.align='center'}
 transcript_lengths<-read.csv("../Results/Reference_transcriptome_length_histogram.csv", head=T, sep="\t")
 
-
-
-ui<-bootstrapPage(
-  selectInput("length", "Select the max. length to display:", c(1000,5000,10000,20000), selected= 20000),
-  plotOutput('lengthHist')
-)
-
-server <- function(input,output) {
-  
-  output$lengthHist <- renderPlot({
-  selected_transcript_lengths<-subset(transcript_lengths, transcript_lengths$Length<input$length)
-  ggplot(selected_transcript_lengths, aes(x=Length, y=Count)) + geom_bar(fill = "dark green", alpha=0.75, stat="identity") + theme_bw()
-}) 
-  
-}
-  
-shinyApp(ui = ui, server = server)
-
-
+selected_transcript_lengths<-subset(transcript_lengths, transcript_lengths$Length<10000)
+ggplot(selected_transcript_lengths, aes(x=Length, y=Count)) + geom_bar(fill = "dark green", alpha=0.75, stat="identity") + theme_bw()
 
 ```
 
