@@ -108,9 +108,11 @@ Per library, we obtained on average 26,385,834 (\(\pm 3,360,778\)) pairs of read
 
 ------------------------------------------------------------------------
 
-<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
+<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
-**Figure 1.** Transcript length distribution of CBAS reference transcriptome.
+**Figure 1.** Transcript length distribution of CBAS reference transcriptome. Maximum length allowed equal 10,000 base-pairs.
+
+Annotations for the assembled transcript
 
 Global gene expression patterns change due to symbiont inactivation
 -------------------------------------------------------------------

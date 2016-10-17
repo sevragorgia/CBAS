@@ -67,6 +67,13 @@ In addition to the GO-Term enrichment analysis, and due to the difficulties in a
 
 #Results
 
+```{r, echo=FALSE, results='hide'}
+#here we load some necessary files to make them available.
+transcript_lengths<-read.csv("../Results/Reference_transcriptome_length_histogram.csv", head=T, sep="\t")
+
+```
+
+
 ##The transcriptome of the Common Blue Aquarium Sponge, a model cyanosponge
 
 Per library, we obtained on average 26,385,834 ($\pm 3,360,778$) pairs of reads (50 bp long).  After cleaning, each library had an average of 24,942,084 ($\pm 3,420,083$) surviving pairs. The concatenated dataset thus had 199,536,668 pairs. Table 1 contains the information on the number of sequenced and surviving reads per library.
@@ -102,14 +109,21 @@ Number of Transcripts | 128,686 |
 ***
 
 ```{r, echo=FALSE, fig.align='center'}
-transcript_lengths<-read.csv("../Results/Reference_transcriptome_length_histogram.csv", head=T, sep="\t")
+#transcript_lengths<-read.csv("../Results/Reference_transcriptome_length_histogram.csv", head=T, sep="\t")
 
+#cap transcript lenght at 10,000bp to improve the graph.
 selected_transcript_lengths<-subset(transcript_lengths, transcript_lengths$Length<10000)
 ggplot(selected_transcript_lengths, aes(x=Length, y=Count)) + geom_bar(fill = "dark green", alpha=0.75, stat="identity") + theme_bw()
 
 ```
 
-**Figure 1.** Transcript length distribution of CBAS reference transcriptome. 
+**Figure 1.** Transcript length distribution of CBAS reference transcriptome. Maximum length allowed equal 10,000 base-pairs.
+
+Annotations for the assembled transcript
+
+
+
+
 
 ##Global gene expression patterns change due to symbiont inactivation
 
