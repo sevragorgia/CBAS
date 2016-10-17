@@ -137,7 +137,19 @@ Complete | `r as.vector(table(meta_annotations$ORF_Type))[3]` | `r round(100*(as
 
 Regarding the annotation of the assembled transcripts, `r round(100*(sum(!is.na(meta_annotations$Uniprot_match))/(sum(is.na(meta_annotations$Uniprot_match))+sum(!is.na(meta_annotations$Uniprot_match)))), 2)`% had a matching *Uniprot* annotation. The number of transcripts matching an *Amphimedon queenslandica* (AQU2) protein was slightly higher, `r round(100*(sum(!is.na(meta_annotations$Aqu2_match))/(sum(is.na(meta_annotations$Aqu2_match))+sum(!is.na(meta_annotations$Aqu2_match)))), 2)`%. Gene Ontology Component, Function and Process annotations, respectively, could be retrieved for `r round(100*(sum(!is.na(meta_annotations$GO_Component))/(sum(is.na(meta_annotations$GO_Component))+sum(!is.na(meta_annotations$GO_Component)))), 2)`%, `r round(100*(sum(!is.na(meta_annotations$GO_Function))/(sum(is.na(meta_annotations$GO_Function))+sum(!is.na(meta_annotations$GO_Function)))), 2)`% and `r round(100*(sum(!is.na(meta_annotations$GO_Process))/(sum(is.na(meta_annotations$GO_Process))+sum(!is.na(meta_annotations$GO_Process)))), 2)`% of the transcripts. `r round(100*(sum(!is.na(meta_annotations$Pfam_Domains))/(sum(is.na(meta_annotations$Pfam_Domains))+sum(!is.na(meta_annotations$Pfam_Domains)))), 2)`% of the transcripts could be annotated with Pfam domain information. In contrast, only `r round(100*(sum(!is.na(meta_annotations$KEGG))/(sum(is.na(meta_annotations$KEGG))+sum(!is.na(meta_annotations$KEGG)))), 2)`% of the assembled transcripts could be annotated against the KEGG database.
 
+***
 
+```{r, echo=FALSE, fig.align='center'}
+#select only transcripts translating to protein
+meta_annotations_NoNAs<-subset(meta_annotations, meta_annotations$Protein!="NA")
+
+ggplot(meta_annotations_NoNAs, aes(ORF_Type)) + geom_bar(aes(fill=!is.na(Uniprot_match)), position="fill") + theme_bw() + labs(x="Transdecoder ORF Type", y="Frequency", fill="Annotation presence") + scale_x_discrete(labels=c("type:3prime_partial" = "3' Partial", "type:5prime_partial" = "5' Partial", "type:complete" = "Complete", "type:internal" = "Internal"))
+
+```
+
+**Figure 2.** Transcript length distribution of CBAS reference transcriptome. Maximum length allowed equal 10,000 base-pairs.
+
+***
 
 
 
