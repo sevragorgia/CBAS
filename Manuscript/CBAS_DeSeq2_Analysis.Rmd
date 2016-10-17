@@ -69,6 +69,11 @@ In addition to the GO-Term enrichment analysis, and due to the difficulties in a
 
 ```{r, echo=FALSE, results='hide'}
 #here we load some necessary files to make them available.
+
+#meta-annotation table, read gziped file as if read.csv, i.e. no quotes, no comments.
+meta_annotations<-read.table("../Annotations/Metatable/20161017_CBAS_Annotation_Metatable.csv.gz", head=T, sep="\t", quote="", comment.char="")
+
+#histogram table
 transcript_lengths<-read.csv("../Results/Reference_transcriptome_length_histogram.csv", head=T, sep="\t")
 
 ```
@@ -92,7 +97,7 @@ Library | Condition | Sequenced reads | Reads post cleaning | % Kept
 8| Bleached | 24,166,051 | 22,655,601 | `r round((22655601/24166051)*100,2)`
 **Total Reads** | | **211,086,672** | **199,536,668** | **`r round((199536668/211086672)*100,2)`**
 
-*De novo* transcriptome assembly using the concatenated dataset resulted in 128,686 transcript $\gt 200$bp. The N50 of the transcriptome was 1,281 bp. More details about the assembly can be found in Table 2 and the length distribution of the transcripts can be visualized in Figure 1.
+*De novo* transcriptome assembly using the concatenated dataset resulted in 128,686 transcript $\gt 200$bp. The N50 of the transcriptome was 1,281 bp, and the median lenght of the assembled transcripts was `r median(meta_annotations$Length, na.rm=TRUE)` (MAD=`r mad(meta_annotations$Length, center=median(meta_annotations$Length), na.rm=TRUE, constant=1/quantile(meta_annotations$Length, probs=0.75, names=F))`). More details about the assembly can be found in Table 2 and the length distribution of the transcripts can be visualized in Figure 1.
 
 **Table 2: Statistics for the *de novo* assembled CBAS transcriptome**
 
@@ -109,9 +114,7 @@ Number of Transcripts | 128,686 |
 ***
 
 ```{r, echo=FALSE, fig.align='center'}
-#transcript_lengths<-read.csv("../Results/Reference_transcriptome_length_histogram.csv", head=T, sep="\t")
-
-#cap transcript lenght at 10,000bp to improve the graph.
+#cap transcript lenght at 10,000bp to improve the graph.    
 selected_transcript_lengths<-subset(transcript_lengths, transcript_lengths$Length<10000)
 ggplot(selected_transcript_lengths, aes(x=Length, y=Count)) + geom_bar(fill = "dark green", alpha=0.75, stat="identity") + theme_bw()
 

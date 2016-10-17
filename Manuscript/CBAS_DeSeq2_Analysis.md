@@ -92,7 +92,7 @@ Per library, we obtained on average 26,385,834 (\(\pm 3,360,778\)) pairs of read
 |        8        |  Bleached |    24,166,051   |      22,655,601     |   93.75   |
 | **Total Reads** |           | **211,086,672** |   **199,536,668**   | **94.53** |
 
-*De novo* transcriptome assembly using the concatenated dataset resulted in 128,686 transcript \(\gt 200\)bp. The N50 of the transcriptome was 1,281 bp. More details about the assembly can be found in Table 2 and the length distribution of the transcripts can be visualized in Figure 1.
+*De novo* transcriptome assembly using the concatenated dataset resulted in 128,686 transcript \(\gt 200\)bp. The N50 of the transcriptome was 1,281 bp, and the median lenght of the assembled transcripts was 453 (MAD=0.2078891). More details about the assembly can be found in Table 2 and the length distribution of the transcripts can be visualized in Figure 1.
 
 **Table 2: Statistics for the *de novo* assembled CBAS transcriptome**
 
