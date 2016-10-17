@@ -163,7 +163,7 @@ sub transcript_reader{
       }
       
       ($transcript_name, $length) = split(' ');
-      
+      $length =~ s/len=//g; 
       print $transcript_name, "->", $length, "\n" if($debug);
  
       #store the new sequences in hash
