@@ -112,7 +112,20 @@ Per library, we obtained on average 26,385,834 (\(\pm 3,360,778\)) pairs of read
 
 **Figure 1.** Transcript length distribution of CBAS reference transcriptome. Maximum length allowed equal 10,000 base-pairs.
 
-Annotations for the assembled transcript
+------------------------------------------------------------------------
+
+Of the collection of transcripts, 37.75% could be translated into proteins by Transdecoder. The majority of the translated transcripts were *Complete ORFs*, according to Transdecoder. The *Transdecoder ORF Types* distribution of these transcripts can be found in Table 3.
+
+**Table 3: *Transdecoder ORF Type* of the translated transcripts.**
+
+|  ORF Type  | Count |   %   |
+|:----------:|:-----:|:-----:|
+| 3' partial |  6734 | 13.86 |
+| 5' partial | 10535 | 21.69 |
+|  Internal  | 13473 | 27.74 |
+|  Complete  | 17833 | 36.71 |
+
+Regarding the annotation of the assembled transcripts, 29.44% had a matching *Uniprot* annotation. The number of transcripts matching an *Amphimedon queenslandica* (AQU2) protein was slightly higher, 36.21%. Gene Ontology Component, Function and Process annotations, respectively, could be retrieved for 26.3%, 26.49% and 26.76% of the transcripts. 23.45% of the transcripts could be annotated with Pfam domain information. In contrast, only 5.8% of the assembled transcripts could be annotated against the KEGG database.
 
 Global gene expression patterns change due to symbiont inactivation
 -------------------------------------------------------------------

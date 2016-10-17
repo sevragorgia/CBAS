@@ -122,7 +122,22 @@ ggplot(selected_transcript_lengths, aes(x=Length, y=Count)) + geom_bar(fill = "d
 
 **Figure 1.** Transcript length distribution of CBAS reference transcriptome. Maximum length allowed equal 10,000 base-pairs.
 
-Annotations for the assembled transcript
+***
+
+Of the collection of transcripts, `r round(100*(sum(!is.na(meta_annotations$Protein))/(sum(is.na(meta_annotations$Protein))+sum(!is.na(meta_annotations$Protein)))),2)`% could be translated into proteins by Transdecoder. The majority of the translated transcripts were *Complete ORFs*, according to Transdecoder. The *Transdecoder ORF Types* distribution of these transcripts can be found in Table 3.
+
+**Table 3: *Transdecoder ORF Type* of the translated transcripts.**
+
+ORF Type | Count | % |
+:------: | :---: | :-: |
+3' partial | `r as.vector(table(meta_annotations$ORF_Type))[1]` |`r round(100*(as.vector(table(meta_annotations$ORF_Type))[1]/sum(as.vector(table(meta_annotations$ORF_Type)))), 2)` |
+5' partial | `r as.vector(table(meta_annotations$ORF_Type))[2]` | `r round(100*(as.vector(table(meta_annotations$ORF_Type))[2]/sum(as.vector(table(meta_annotations$ORF_Type)))), 2)` |
+Internal | `r as.vector(table(meta_annotations$ORF_Type))[4]` | `r round(100*(as.vector(table(meta_annotations$ORF_Type))[4]/sum(as.vector(table(meta_annotations$ORF_Type)))), 2)` |
+Complete | `r as.vector(table(meta_annotations$ORF_Type))[3]` | `r round(100*(as.vector(table(meta_annotations$ORF_Type))[3]/sum(as.vector(table(meta_annotations$ORF_Type)))), 2)` |
+
+Regarding the annotation of the assembled transcripts, `r round(100*(sum(!is.na(meta_annotations$Uniprot_match))/(sum(is.na(meta_annotations$Uniprot_match))+sum(!is.na(meta_annotations$Uniprot_match)))), 2)`% had a matching *Uniprot* annotation. The number of transcripts matching an *Amphimedon queenslandica* (AQU2) protein was slightly higher, `r round(100*(sum(!is.na(meta_annotations$Aqu2_match))/(sum(is.na(meta_annotations$Aqu2_match))+sum(!is.na(meta_annotations$Aqu2_match)))), 2)`%. Gene Ontology Component, Function and Process annotations, respectively, could be retrieved for `r round(100*(sum(!is.na(meta_annotations$GO_Component))/(sum(is.na(meta_annotations$GO_Component))+sum(!is.na(meta_annotations$GO_Component)))), 2)`%, `r round(100*(sum(!is.na(meta_annotations$GO_Function))/(sum(is.na(meta_annotations$GO_Function))+sum(!is.na(meta_annotations$GO_Function)))), 2)`% and `r round(100*(sum(!is.na(meta_annotations$GO_Process))/(sum(is.na(meta_annotations$GO_Process))+sum(!is.na(meta_annotations$GO_Process)))), 2)`% of the transcripts. `r round(100*(sum(!is.na(meta_annotations$Pfam_Domains))/(sum(is.na(meta_annotations$Pfam_Domains))+sum(!is.na(meta_annotations$Pfam_Domains)))), 2)`% of the transcripts could be annotated with Pfam domain information. In contrast, only `r round(100*(sum(!is.na(meta_annotations$KEGG))/(sum(is.na(meta_annotations$KEGG))+sum(!is.na(meta_annotations$KEGG)))), 2)`% of the assembled transcripts could be annotated against the KEGG database.
+
+
 
 
 
