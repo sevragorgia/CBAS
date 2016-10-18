@@ -127,6 +127,14 @@ Of the collection of transcripts, 37.75% could be translated into proteins by Tr
 
 Regarding the annotation of the assembled transcripts, 29.44% had a matching *Uniprot* annotation. The number of transcripts matching an *Amphimedon queenslandica* (AQU2) protein was slightly higher, 36.21%. Gene Ontology Component, Function and Process annotations, respectively, could be retrieved for 26.3%, 26.49% and 26.76% of the transcripts. 23.45% of the transcripts could be annotated with Pfam domain information. In contrast, only 5.8% of the assembled transcripts could be annotated against the KEGG database.
 
+------------------------------------------------------------------------
+
+<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+
+**Figure 3.** Annotation count by database .
+
+------------------------------------------------------------------------
+
 Global gene expression patterns change due to symbiont inactivation
 -------------------------------------------------------------------
 

@@ -6,6 +6,7 @@ output: github_document
 ---
 ```{r include=FALSE}
 library(ggplot2)
+library(reshape2)
 ```
 
 ***
@@ -143,11 +144,36 @@ Regarding the annotation of the assembled transcripts, `r round(100*(sum(!is.na(
 #select only transcripts translating to protein
 meta_annotations_NoNAs<-subset(meta_annotations, meta_annotations$Protein!="NA")
 
-ggplot(meta_annotations_NoNAs, aes(ORF_Type)) + geom_bar(aes(fill=!is.na(Uniprot_match)), position="fill") + theme_bw() + labs(x="Transdecoder ORF Type", y="Frequency", fill="Annotation presence") + scale_x_discrete(labels=c("type:3prime_partial" = "3' Partial", "type:5prime_partial" = "5' Partial", "type:complete" = "Complete", "type:internal" = "Internal"))
+#prepare a data frame for the next visualization; basically, prepare a table of annotation presence/absence by ORF_type, melt the table and add the database information.
+uniprotMelted<-melt(table(meta_annotations_NoNAs$ORF_Type,!is.na(meta_annotations_NoNAs$Uniprot_match)))
+uniprotMelted[, "Annotation"]<-rep("Uniprot", 8)
 
+aqu2Melted<-melt(table(meta_annotations_NoNAs$ORF_Type,!is.na(meta_annotations_NoNAs$Aqu2_match)))
+aqu2Melted[, "Annotation"]<-rep("Aqu2", 8)
+
+GOComponentMelted<-melt(table(meta_annotations_NoNAs$ORF_Type,!is.na(meta_annotations_NoNAs$GO_Component)))
+GOComponentMelted[, "Annotation"]<-rep("GO-term: Component", 8)
+
+GOFunctionMelted<-melt(table(meta_annotations_NoNAs$ORF_Type,!is.na(meta_annotations_NoNAs$GO_Function)))
+GOFunctionMelted[, "Annotation"]<-rep("GO-term: Function", 8)
+
+GOProcessMelted<-melt(table(meta_annotations_NoNAs$ORF_Type,!is.na(meta_annotations_NoNAs$GO_Process)))
+GOProcessMelted[, "Annotation"]<-rep("GO-term: Process", 8)
+
+pfamMelted<-melt(table(meta_annotations_NoNAs$ORF_Type,!is.na(meta_annotations_NoNAs$Pfam_Domains)))
+pfamMelted[, "Annotation"]<-rep("Pfam", 8)
+
+KEGGMelted<-melt(table(meta_annotations_NoNAs$ORF_Type,!is.na(meta_annotations_NoNAs$KEGG)))
+KEGGMelted[, "Annotation"]<-rep("KEGG", 8)
+
+#now concat all previous dataframes:
+annotations_per_ORF_Type<-rbind(uniprotMelted,aqu2Melted,GOComponentMelted,GOFunctionMelted, GOProcessMelted, pfamMelted, KEGGMelted)
+colnames(annotations_per_ORF_Type)<-c("ORF_Type", "Annotation_present", "Count", "Database")
+
+ggplot(subset(annotations_per_ORF_Type, Annotation_present==TRUE), aes(Database,Count)) + geom_bar(stat="identity",  aes(fill=ORF_Type)) + theme_bw() + labs(fill="Transdecoder ORF Type") + theme(axis.text.x=element_text(angle=45, vjust=0.9, hjust=1))
 ```
 
-**Figure 2.** Transcript length distribution of CBAS reference transcriptome. Maximum length allowed equal 10,000 base-pairs.
+**Figure 3.** Annotation count by database .
 
 ***
 
