@@ -44,7 +44,7 @@ Transcriptome assembly, annotation
 
 Reads were quality controled using FastQC [6] and quality filtered using the BioLite program filter\_illumina.cpp [7]. The surviving read pairs from all libraries were used to produce (using the command cat) two fastq files that were used for *de novo* transcriptome assembly in Trinity v2.0.6 (using the --normalize\_reads flag). The resulting contigs (with lenght &gt;=200bp) were annotated against the Uniprot (SwissProt) [8] and *Amphimedon queenslandica* isoforms (AQU2 proteins) [9] using blastx v2.2.29+ with an expectation cutoff of 0.001. Only the best match per contig was saved and the blast results were saved using blast's XML format converted to a 25 column table [10]. Both tables (i.e. [UNIPROT](https://github.com/sevragorgia/CBAS/tree/master/Annotations/Uniprot) and [AQU2](https://github.com/sevragorgia/CBAS/tree/master/Annotations/AQU2)) are available for download in the [project repository](https://github.com/sevragorgia/CBAS). Gene Ontology [11] annotations for the CBAS transcriptome were obtained by programmatically querying the [QuickGO Webservice](http://www.ebi.ac.uk/QuickGO/) with the transcriptome's UNIPROT annotations [12] and a custom [perl script](https://github.com/sevragorgia/CBAS/blob/master/Scripts/Get_GO_Annotations.pl). For each CBAS transcript the "component", "function" and "process" GO terms associated with its UNIPROT best match were stored in the [project repository](https://github.com/sevragorgia/CBAS/tree/master/Annotations/GOs) as independent tab-separated files that can be easily modified to use as input files in TopGO [13].
 
-In addition, transcripts were translated using the program TransDecoder.LongOrfs [14] and the resulting cds, mRNA, bed, gff3 and pep files stored in the [project repository](https://github.com/sevragorgia/CBAS/tree/master/Annotations/Transdecoder) and used to annotated the transcriptome against the [Pfam](http://pfam.xfam.org/) and [KEEG](http://www.genome.jp/kegg/) databases. For this, the perl script [pfam\_scan.pl](ftp://ftp.ebi.ac.uk/pub/databases/Pfam/Tools/) and the webservice [BlastKOALA](http://www.kegg.jp/blastkoala/) were used; the resulting output files can be found in the [project repository.](https://github.com/sevragorgia/CBAS) Finally, the assembled transcripts were blasted (blastn) against a bacterial genomes database [15].
+In addition, transcripts were translated using the program TransDecoder.LongOrfs [14] and the resulting cds, mRNA, bed, gff3 and pep files stored in the [project repository](https://github.com/sevragorgia/CBAS/tree/master/Annotations/Transdecoder) and used to annotate the transcriptome against the [Pfam](http://pfam.xfam.org/) and [KEEG](http://www.genome.jp/kegg/) databases. For this, the perl script [pfam\_scan.pl](ftp://ftp.ebi.ac.uk/pub/databases/Pfam/Tools/) and the webservice [BlastKOALA](http://www.kegg.jp/blastkoala/) were used; the resulting output files can be found in the [project repository.](https://github.com/sevragorgia/CBAS) Finally, the assembled transcripts were blasted (blastn) against a bacterial genomes database [15].
 
 All annotations were used to build an [annotation meta-table](https://github.com/sevragorgia/CBAS/blob/master/Annotations/Metatable/) using a [custom made perl script](https://github.com/sevragorgia/CBAS/blob/master/Scripts/Create_Transcriptome_Annotation_Table.pl) available in the project repository.
 
@@ -92,7 +92,7 @@ Per library, we obtained on average 26,385,834 (\(\pm 3,360,778\)) pairs of read
 |        8        |  Bleached |    24,166,051   |      22,655,601     |   93.75   |
 | **Total Reads** |           | **211,086,672** |   **199,536,668**   | **94.53** |
 
-*De novo* transcriptome assembly using the concatenated dataset resulted in 128,686 transcript \(\gt 200\)bp. The N50 of the transcriptome was 1,281 bp, and the median lenght of the assembled transcripts was 453 (MAD=0.2078891). More details about the assembly can be found in Table 2 and the length distribution of the transcripts can be visualized in Figure 1.
+*De novo* transcriptome assembly using the concatenated dataset resulted in 128,686 transcript \(\gt 200\)bp. The N50 of the transcriptome was 1,281 bp, and the median lenght of the assembled transcripts was 453 bp (MAD=0.2078891). More details about the assembly can be found in Table 2 and the length distribution of the transcripts can be visualized in Figure 1.
 
 **Table 2: Statistics for the *de novo* assembled CBAS transcriptome**
 
@@ -114,7 +114,7 @@ Per library, we obtained on average 26,385,834 (\(\pm 3,360,778\)) pairs of read
 
 ------------------------------------------------------------------------
 
-Of the collection of transcripts, 37.75% could be translated into proteins by Transdecoder. The majority of the translated transcripts were *Complete ORFs*, according to Transdecoder. The *Transdecoder ORF Types* distribution of these transcripts can be found in Table 3.
+Of the collection of transcripts, 37.75% could be translated into proteins by Transdecoder. The majority of the translated transcripts were *Complete ORFs*, according to Transdecoder. The *Transdecoder ORF Types* distribution of the translated transcripts can be found in Table 3.
 
 **Table 3: *Transdecoder ORF Type* of the translated transcripts.**
 
@@ -124,14 +124,17 @@ Of the collection of transcripts, 37.75% could be translated into proteins by Tr
 | 5' partial | 10535 | 21.69 |
 |  Internal  | 13473 | 27.74 |
 |  Complete  | 17833 | 36.71 |
+|    Total   | 48575 |  100  |
 
-Regarding the annotation of the assembled transcripts, 29.44% had a matching *Uniprot* annotation. The number of transcripts matching an *Amphimedon queenslandica* (AQU2) protein was slightly higher, 36.21%. Gene Ontology Component, Function and Process annotations, respectively, could be retrieved for 26.3%, 26.49% and 26.76% of the transcripts. 23.45% of the transcripts could be annotated with Pfam domain information. In contrast, only 5.8% of the assembled transcripts could be annotated against the KEGG database.
+Regarding the annotation of the assembled transcripts, 29.44% had a matching *Uniprot* annotation. The number of transcripts matching an *Amphimedon queenslandica* (AQU2) protein was slightly higher, 36.21%. *Gene Ontology Component*, *Function* and *Process* annotations could be retrieved for 26.3%, 26.49% and 26.76% of the transcripts, respectively. Additionally, 23.45% of the transcripts could be annotated with *Pfam* domain information. In contrast, only 5.8% of the assembled transcripts could be annotated against the *KEGG* database. Figure 3 shows, by *ORF Type*, the number of protein coding transcripts that could be annotated in each database.
 
 ------------------------------------------------------------------------
 
-<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /> **Figure 3.** Annotation success by database for transcripts translated by Transdecoder.
 
-**Figure 3.** Annotation count by database .
+------------------------------------------------------------------------
+
+<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /> **Figure 4.** Annotation count by database for different types of ORF as defined by Transdecoder.
 
 ------------------------------------------------------------------------
 
