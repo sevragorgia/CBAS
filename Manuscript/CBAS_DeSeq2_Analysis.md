@@ -138,7 +138,18 @@ Regarding the annotation of the translated transcripts [19], 29.44% had a matchi
 
 ------------------------------------------------------------------------
 
-For Uniprot and AQU2 annotations the mean evalue obtained were 2.51935110^{-7} (SD = 1.12711810^{-6}) and 2.414682610^{-7} (SD = 1.113969610^{-6}), respectively. In addition, the mean evalues obtained for both Uniprot and AQU2 annotations were similar for all Transdecoder ORF types (Table 4) and the maximum evalue obtained after querying these two databases was 1e^-05 [20].
+For Uniprot and AQU2 annotations the mean evalue obtained were \(2.519351\times 10^{-7}\) (SD = \(1.127118\times 10^{-6}\)) and \(2.4146826\times 10^{-7}\) (SD = \(1.1139696\times 10^{-6}\)), respectively. In addition, the mean evalues obtained for both Uniprot and AQU2 annotations were similar for all Transdecoder ORF types (Table 4) and the maximum evalue obtained after querying these two databases was 1e^-05 [20].
+
+Table 4
+
+|   RF Type  | Database |                      Mean evalue (SD)                     |
+|:----------:|:--------:|:---------------------------------------------------------:|
+| 3' partial |  Uniprot | \(2.1738267\times 10^{-7}\) (\(1.0499955\times 10^{-6}\)) |
+| 5' partial |  Uniprot | \(2.1534162\times 10^{-7}\) (\(1.0780619\times 10^{-6}\)) |
+|  Internal  |  Uniprot | \(1.6779664\times 10^{-7}\) (\(8.9792016\times 10^{-7}\)) |
+|  Complete  |  Uniprot | \(4.9614047\times 10^{-7}\) (\(1.5576029\times 10^{-6}\)) |
+
+In terms of completeness, we recovered 243 out of 248 KOGs (i.e. \(97.98%\)) from the CBAS transcriptome. Yet the number of *High-confidence, full length matches* was only 175 (i.e. \(70.56%\)). Six transcripts were categorized as *Probable full length matches*, six more were tagged as matching a KOG that was slightly shorter than the query and 4 transcripts matched a KOG that was much longer than the query. Thus, in total \(187\) (i.e. \(75.4\)) transcripts can be thought of as high confidence KOG matches. Transcripts matching KOGs that were much shorter and transcripts probably representing missassemblies amount to 22 and 30 respectively.
 
 Global gene expression patterns change due to symbiont inactivation
 -------------------------------------------------------------------

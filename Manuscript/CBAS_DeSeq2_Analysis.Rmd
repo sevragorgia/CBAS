@@ -187,9 +187,18 @@ ggplot(subset(annotations_per_ORF_Type, Annotation_present==TRUE), aes(Database,
 
 ***
 
-For Uniprot and AQU2 annotations the mean evalue obtained were `r mean(meta_annotations_NoNAs$evalue, na.rm=TRUE)` (SD = `r sd(meta_annotations_NoNAs$evalue, na.rm=TRUE)`) and `r mean(meta_annotations_NoNAs$evalue.1, na.rm=TRUE)` (SD = `r sd(meta_annotations_NoNAs$evalue.1, na.rm=TRUE)`), respectively. In addition, the mean evalues obtained for both Uniprot and AQU2 annotations were similar for all Transdecoder ORF types (Table 4) and the maximum evalue obtained after querying these two databases was 1e^-05 [^20].
+For Uniprot and AQU2 annotations the mean evalue obtained were $`r mean(meta_annotations_NoNAs$evalue, na.rm=TRUE)`$ (SD = $`r sd(meta_annotations_NoNAs$evalue, na.rm=TRUE)`$) and $`r mean(meta_annotations_NoNAs$evalue.1, na.rm=TRUE)`$ (SD = $`r sd(meta_annotations_NoNAs$evalue.1, na.rm=TRUE)`$), respectively. In addition, the mean evalues obtained for both Uniprot and AQU2 annotations were similar for all Transdecoder ORF types (Table 4) and the maximum evalue obtained after querying these two databases was 1e^-05 [^20].
 
-In terms of completeness,
+Table 4
+
+RF Type | Database | Mean evalue (SD) |
+:-----: | :------: | :--------------: |
+3' partial | Uniprot | $`r as.vector(tapply(meta_annotations$evalue, meta_annotations$ORF_Type, mean, na.rm=TRUE))[1]`$ ($`r as.vector(tapply(meta_annotations$evalue, meta_annotations$ORF_Type, sd, na.rm=TRUE))[1]`$) |
+5' partial | Uniprot | $`r as.vector(tapply(meta_annotations$evalue, meta_annotations$ORF_Type, mean, na.rm=TRUE))[2]`$ ($`r as.vector(tapply(meta_annotations$evalue, meta_annotations$ORF_Type, sd, na.rm=TRUE))[2]`$)
+Internal | Uniprot | $`r as.vector(tapply(meta_annotations$evalue, meta_annotations$ORF_Type, mean, na.rm=TRUE))[3]`$ ($`r as.vector(tapply(meta_annotations$evalue, meta_annotations$ORF_Type, sd, na.rm=TRUE))[3]`$)
+Complete | Uniprot | $`r as.vector(tapply(meta_annotations$evalue, meta_annotations$ORF_Type, mean, na.rm=TRUE))[4]`$ ($`r as.vector(tapply(meta_annotations$evalue, meta_annotations$ORF_Type, sd, na.rm=TRUE))[4]`$)
+
+In terms of completeness, we recovered 243 out of 248 KOGs (i.e. $`r round(100*(243/248),2)`%$) from the CBAS transcriptome. Yet the number of *High-confidence, full length matches* was only 175 (i.e. $`r round(100*(175/248),2)`%$). Six transcripts were categorized as *Probable full length matches*, six more were tagged as matching a KOG that was slightly shorter than the query and 4 transcripts matched a KOG that was much longer than the query. Thus, in total $`r 175+6+6`$ (i.e. $`r round(100*((175+6+6)/248),2)`$) transcripts can be thought of as high confidence KOG matches. Transcripts matching KOGs that were much shorter and transcripts probably representing missassemblies amount to 22 and 30 respectively. 
 
 
 ##Global gene expression patterns change due to symbiont inactivation
