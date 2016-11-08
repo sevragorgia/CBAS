@@ -80,17 +80,17 @@ Per library, we obtained on average 26,385,834 (\(\pm 3,360,778\)) pairs of read
 
 **Table 1:** Reads by library before and after quality filtering.
 
-|     Library     | Condition | Sequenced reads | Reads post cleaning |   % Kept  |
-|:---------------:|:---------:|:---------------:|:-------------------:|:---------:|
-|        1        |  Control  |    33,836,615   |      32,397,726     |   95.75   |
-|        2        |  Control  |    26,740,977   |      25,252,825     |   94.43   |
-|        3        |  Control  |    22,823,936   |      21,016,976     |   92.08   |
-|        4        |  Control  |    24,166,051   |      22,655,601     |   93.75   |
-|        5        |  Bleached |    26,579,563   |      25,067,523     |   94.31   |
-|        6        |  Bleached |    25,448,522   |      24,229,217     |   95.21   |
-|        7        |  Bleached |    22,823,936   |      21,016,976     |   92.08   |
-|        8        |  Bleached |    24,166,051   |      22,655,601     |   93.75   |
-| **Total Reads** |           | **211,086,672** |   **199,536,668**   | **94.53** |
+|   Library   | Condition | Sequenced reads | Reads post cleaning | % Kept |
+|:-----------:|:---------:|:---------------:|:-------------------:|:------:|
+|      1      |  Control  |    33,836,615   |      32,397,726     |  95.75 |
+|      2      |  Control  |    26,740,977   |      25,252,825     |  94.43 |
+|      3      |  Control  |    22,823,936   |      21,016,976     |  92.08 |
+|      4      |  Control  |    24,166,051   |      22,655,601     |  93.75 |
+|      5      |  Bleached |    26,579,563   |      25,067,523     |  94.31 |
+|      6      |  Bleached |    25,448,522   |      24,229,217     |  95.21 |
+|      7      |  Bleached |    22,823,936   |      21,016,976     |  92.08 |
+|      8      |  Bleached |    24,166,051   |      22,655,601     |  93.75 |
+| Total Reads |           |   211,086,672   |     199,536,668     |  94.53 |
 
 *De novo* transcriptome assembly using the concatenated dataset resulted in 128,686 transcript \(\gt 200\)bp. The N50 of the transcriptome was 1,281 bp, and the median lenght of the assembled transcripts was 453 bp (MAD=0.2078891). More details about the assembly can be found in Table 2 and the length distribution of the transcripts can be visualized in Figure 1.
 
@@ -108,7 +108,7 @@ Per library, we obtained on average 26,385,834 (\(\pm 3,360,778\)) pairs of read
 
 ------------------------------------------------------------------------
 
-<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
+<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/transcript_length_fig-1.png" style="display: block; margin: auto;" />
 
 **Figure 1.** Transcript length distribution of CBAS reference transcriptome. Maximum length allowed equal 10,000 base-pairs.
 
@@ -126,17 +126,19 @@ Of the collection of transcripts, 37.75% could be translated into proteins by Tr
 |  Complete  | 17833 | 36.71 |
 |    Total   | 48575 |  100  |
 
-Regarding the annotation of the assembled transcripts, 29.44% had a matching *Uniprot* annotation. The number of transcripts matching an *Amphimedon queenslandica* (AQU2) protein was slightly higher, 36.21%. *Gene Ontology Component*, *Function* and *Process* annotations could be retrieved for 26.3%, 26.49% and 26.76% of the transcripts, respectively. Additionally, 23.45% of the transcripts could be annotated with *Pfam* domain information. In contrast, only 5.8% of the assembled transcripts could be annotated against the *KEGG* database. Figure 3 shows, by *ORF Type*, the number of protein coding transcripts that could be annotated in each database.
+Regarding the annotation of the translated transcripts [19], 29.44% had a matching *Uniprot* annotation. The number of transcripts matching an *Amphimedon queenslandica* (AQU2) protein was slightly higher, 36.21%. *Gene Ontology Component*, *Function* and *Process* annotations could be retrieved for 26.3%, 26.49% and 26.76% of the transcripts, respectively. Additionally, 23.45% of the transcripts could be annotated with *Pfam* domain information. In contrast, only 5.8% of the assembled transcripts could be annotated against the *KEGG* database. Figure 3 shows, by *ORF Type*, the number of protein coding transcripts that could be annotated in each database.
 
 ------------------------------------------------------------------------
 
-<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /> **Figure 3.** Annotation success by database for transcripts translated by Transdecoder.
+<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/annotation_success_fig-1.png" style="display: block; margin: auto;" /> **Figure 3.** Annotation success by database for transcripts translated by Transdecoder.
 
 ------------------------------------------------------------------------
 
-<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /> **Figure 4.** Annotation count by database for different types of ORF as defined by Transdecoder.
+<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/annotation_count_byDB_Fig-1.png" style="display: block; margin: auto;" /> **Figure 4.** Annotation count by database for different types of ORF as defined by Transdecoder.
 
 ------------------------------------------------------------------------
+
+For Uniprot and AQU2 annotations the mean evalue obtained were 2.51935110^{-7} (SD = 1.12711810^{-6}) and 2.414682610^{-7} (SD = 1.113969610^{-6}), respectively. In addition, the mean evalues obtained for both Uniprot and AQU2 annotations were similar for all Transdecoder ORF types (Table 4) and the maximum evalue obtained after querying these two databases was 1e^-05 [20].
 
 Global gene expression patterns change due to symbiont inactivation
 -------------------------------------------------------------------
@@ -204,3 +206,7 @@ References and Notes
 [17] Francis et al. 2013. A comparison across non-model animals suggests an optimal sequencing depth for *de novo* transcriptome assembly. [BMC Genomics 14:167](http://dx.doi.org/10.1186/1471-2164-14-167)
 
 [18] the script is also provided as part of this repository. The Copyright (c) of this script belongs trinityrnaseq (2014), who reserves all rights upon the code. [See the full LICENSE here.](https://github.com/trinityrnaseq/trinityrnaseq/blob/master/LICENSE)
+
+[19] With these graphs were produced for transcripts that could be successfully translated using **Transdecoder**. In the case of the **Uniprot** and **AQU2** annotations, the transcripts were directly blasted using blastn. Thus could be possible to obtain **Uniprot** and **AQU2** annotations for transcripts that could not be translated with **Transdecoder**. This is in fact the case, however the number of transcripts that could not *transdecoded* but were annotated is relatively small. In the case of **Uniprot**, the number of transcripts that yielded annotations but were not *transdecoded* was **7535**. For **AQU2**, only **11915** not *transdecoded* transcripts could be annotated.
+
+[20] Here it is worth noting that the evalue cutoff used for blast against the Uniprot and AQU2 databases was 0.001. So the annotations obtained had an evalue at least two orders of magnitud smaller than the set cutoff evalue.

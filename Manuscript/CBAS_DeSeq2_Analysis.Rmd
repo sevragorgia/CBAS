@@ -68,7 +68,7 @@ In addition to the GO-Term enrichment analysis, and due to the difficulties in a
 
 #Results
 
-```{r, echo=FALSE, results='hide'}
+```{r load_files, echo=FALSE, results='hide'}
 #here we load some necessary files to make them available.
 
 #meta-annotation table, read gziped file as if read.csv, i.e. no quotes, no comments.
@@ -78,7 +78,6 @@ meta_annotations<-read.table("../Annotations/Metatable/20161017_CBAS_Annotation_
 transcript_lengths<-read.csv("../Results/Reference_transcriptome_length_histogram.csv", head=T, sep="\t")
 
 ```
-
 
 ##The transcriptome of the Common Blue Aquarium Sponge, a model cyanosponge
 
@@ -96,7 +95,7 @@ Library | Condition | Sequenced reads | Reads post cleaning | % Kept
 6| Bleached | 25,448,522 | 24,229,217 | `r round((24229217/25448522)*100,2)`
 7| Bleached | 22,823,936 | 21,016,976 | `r round((21016976/22823936)*100,2)`
 8| Bleached | 24,166,051 | 22,655,601 | `r round((22655601/24166051)*100,2)`
-**Total Reads** | | **211,086,672** | **199,536,668** | **`r round((199536668/211086672)*100,2)`**
+Total Reads | | 211,086,672 | 199,536,668 | `r round((199536668/211086672)*100,2)`
 
 *De novo* transcriptome assembly using the concatenated dataset resulted in 128,686 transcript $\gt 200$bp. The N50 of the transcriptome was 1,281 bp, and the median lenght of the assembled transcripts was `r median(meta_annotations$Length, na.rm=TRUE)` bp (MAD=`r mad(meta_annotations$Length, center=median(meta_annotations$Length), na.rm=TRUE, constant=1/quantile(meta_annotations$Length, probs=0.75, names=F))`). More details about the assembly can be found in Table 2 and the length distribution of the transcripts can be visualized in Figure 1.
 
@@ -114,7 +113,7 @@ Number of Transcripts | 128,686 |
 
 ***
 
-```{r, echo=FALSE, fig.align='center'}
+```{r transcript_length_fig, echo=FALSE , fig.align='center'}
 #cap transcript lenght at 10,000bp to improve the graph.    
 selected_transcript_lengths<-subset(transcript_lengths, transcript_lengths$Length<10000)
 ggplot(selected_transcript_lengths, aes(x=Length, y=Count)) + geom_bar(fill = "dark green", alpha=0.75, stat="identity") + theme_bw()
@@ -129,7 +128,7 @@ Of the collection of transcripts, `r round(100*(sum(!is.na(meta_annotations$Prot
 
 **Table 3: *Transdecoder ORF Type* of the translated transcripts.**
 
-ORF Type | Count | % |
+ORF Type | Count |  %  |
 :------: | :---: | :-: |
 3' partial | `r as.vector(table(meta_annotations$ORF_Type))[1]` |`r round(100*(as.vector(table(meta_annotations$ORF_Type))[1]/sum(as.vector(table(meta_annotations$ORF_Type)))), 2)` |
 5' partial | `r as.vector(table(meta_annotations$ORF_Type))[2]` | `r round(100*(as.vector(table(meta_annotations$ORF_Type))[2]/sum(as.vector(table(meta_annotations$ORF_Type)))), 2)` |
@@ -141,7 +140,7 @@ Regarding the annotation of the translated transcripts [^19], `r round(100*(sum(
 
 ***
 
-```{r, echo=FALSE, fig.align='center'}
+```{r annotation_success_fig, echo=FALSE, fig.align='center'}
 #select only transcripts translating to protein
 meta_annotations_NoNAs<-subset(meta_annotations, meta_annotations$Protein!="NA")
 
@@ -178,7 +177,7 @@ ggplot(annotations_per_ORF_Type, aes(Database,Count)) + geom_bar(stat="identity"
 
 ***
 
-```{r, echo=FALSE, fig.align='center'}
+```{r annotation_count_byDB_Fig, echo=FALSE, fig.align='center'}
 #using the previously generated data frame, provide a more detail account of the annotation success by ORF Type
 
 ggplot(subset(annotations_per_ORF_Type, Annotation_present==TRUE), aes(Database,Count)) + geom_bar(stat="identity",  aes(fill=ORF_Type)) + theme_bw() + theme(axis.text.x=element_text(angle=45, vjust=0.9, hjust=1)) + scale_fill_discrete(name="Transdecoder ORF Type", labels=c("3' Partial", "5' Partial", "Complete", "Internal"))
@@ -188,8 +187,9 @@ ggplot(subset(annotations_per_ORF_Type, Annotation_present==TRUE), aes(Database,
 
 ***
 
+For Uniprot and AQU2 annotations the mean evalue obtained were `r mean(meta_annotations_NoNAs$evalue, na.rm=TRUE)` (SD = `r sd(meta_annotations_NoNAs$evalue, na.rm=TRUE)`) and `r mean(meta_annotations_NoNAs$evalue.1, na.rm=TRUE)` (SD = `r sd(meta_annotations_NoNAs$evalue.1, na.rm=TRUE)`), respectively. In addition, the mean evalues obtained for both Uniprot and AQU2 annotations were similar for all Transdecoder ORF types (Table 4) and the maximum evalue obtained after querying these two databases was 1e^-05 [^20].
 
-
+In terms of completeness,
 
 
 ##Global gene expression patterns change due to symbiont inactivation
@@ -256,13 +256,8 @@ All scripts used to analyze the data, as well as some miscellaneous scripts used
 
 [^18]: the script is also provided as part of this repository. The Copyright (c) of this script belongs trinityrnaseq (2014), who reserves all rights upon the code. [See the full LICENSE here.](https://github.com/trinityrnaseq/trinityrnaseq/blob/master/LICENSE)
 
-[^19]: 
+[^19]: With these graphs were produced for transcripts that could be successfully translated using **Transdecoder**. In the case of the **Uniprot** and **AQU2** annotations, the transcripts were directly blasted using blastn. Thus could be possible to obtain **Uniprot** and **AQU2** annotations for transcripts that could not be translated with **Transdecoder**. This is in fact the case, however the number of transcripts that could not *transdecoded* but were annotated is relatively small. In the case of **Uniprot**, the number of transcripts that yielded annotations but were not *transdecoded* was **`r as.vector(table(!is.na(meta_annotations$Protein), !is.na(meta_annotations$Uniprot_match)))[3]`**. For **AQU2**, only **`r as.vector(table(!is.na(meta_annotations$Protein), !is.na(meta_annotations$Aqu2_match)))[3]`** not *transdecoded* transcripts could be annotated.
 
-
-
-
-
-
-
+[^20]: Here it is worth noting that the evalue cutoff used for blast against the Uniprot and AQU2 databases was 0.001. So the annotations obtained had an evalue at least two orders of magnitud smaller than the set cutoff evalue.
 
 
