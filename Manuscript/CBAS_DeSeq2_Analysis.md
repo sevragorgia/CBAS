@@ -58,7 +58,7 @@ Differential gene expression analysis
 
 Using the *de novo* assembled transcriptome, the individual libraries (i.e. control and bleached sponges) were mapped with RSEM and a transcript by sample count matrix was derived from the "gene" counts with the program [abundance\_estimates\_to\_matrix.pl](https://github.com/sevragorgia/CBAS/tree/master/Counts/RSEM) provided as part of the Trinity package [18]. The [count matrix](https://github.com/sevragorgia/CBAS/tree/master/Counts/) was used to find differentially expressed genes in control *vs.* bleached sponges (model = \~Treatment). For this, the package [DeSeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) was used. In brief, transcripts with 0 counts over all samples were removed from the matrix and Principal Component Analysis was used to assess the global expression pattern of control *vs.* bleached sponges and identify potential outliers. Size effects and dispersions were estimated with the DeSe2 methods **estimateSizeFactors** and **estimateDispersions** and differentially expressed transcripts were then infered using a Wald test (DeSeq2 method **nbinomWaldTest**). The resulting p-values were adjusted using the Benjamin-Hochberg correction. Transcripts with **log fold change \(< -2\)** or **log fold change \(> 2\)** and **adjusted p-value \(< 0.01\)** were considered as differentially expressed for further analyses.
 
-A stand-alone R script to replicate the analysis is available in the [project repository](https://github.com/sevragorgia/CBAS/blob/master/Scripts) and can be run using the [count matrix](https://github.com/sevragorgia/CBAS/tree/master/Counts/CBAS_Bleaching_RSEM_Expression_Matrix.counts) and [sample information](https://github.com/sevragorgia/CBAS/tree/master/Counts/CBAS_Bleaching_RSEM_Expression_Matrix.info) provided. And in this version of the manuscript, the code used to calculate something is provided as as R markdown snippets in the Results section.
+A stand-alone R script to replicate the analysis is available in the [project repository](https://github.com/sevragorgia/CBAS/blob/master/Scripts) and can be run using the [count matrix](https://github.com/sevragorgia/CBAS/tree/master/Counts/CBAS_Bleaching_RSEM_Expression_Matrix.counts) and [sample information](https://github.com/sevragorgia/CBAS/tree/master/Counts/CBAS_Bleaching_RSEM_Expression_Matrix.info) provided. And in this version of the manuscript, the code used for several calculations is provided embedded as Rmarkdown snippets in the source code of this document.
 
 Gene Ontology Term enrichment analysis
 --------------------------------------
@@ -138,7 +138,7 @@ Regarding the annotation of the translated transcripts [19], 29.44% had a matchi
 
 * * * * *
 
-For Uniprot and Aqu2 annotations the mean evalue obtained were \(2.519351\times 10^{-7}\) (SD = \(1.127118\times 10^{-6}\)) and \(2.4146826\times 10^{-7}\) (SD = \(1.1139696\times 10^{-6}\)), respectively. In addition, the mean evalues obtained for both Uniprot and Aqu2 annotations were similar for all Transdecoder ORF types (Table 4) and the maximum evalue obtained after querying these two databases was 1e\^-05 [20].
+For Uniprot and Aqu2 annotations the mean evalue obtained were \(2.519351\times 10^{-7}\) (SD = \(1.127118\times 10^{-6}\)) and \(2.4146826\times 10^{-7}\) (SD = \(1.1139696\times 10^{-6}\)), respectively. In addition, the mean evalues obtained for both Uniprot and Aqu2 annotations were similar for all Transdecoder ORF types (Table 4) and the maximum evalue obtained after querying these two databases was \(1e^-05\) [20].
 
 **Table 4.** Mean evalue by Transdecoder ORF type for annotations obtained from the Uniprot or Aqu2 databases.
 
@@ -154,10 +154,34 @@ For Uniprot and Aqu2 annotations the mean evalue obtained were \(2.519351\times 
 |Internal|Aqu2|\(4.5642628\times 10^{-7}\) (\(1.5267768\times 10^{-6}\))|
 |Complete|Aqu2|\(1.6698938\times 10^{-7}\) (\(9.0483509\times 10^{-7}\))|
 
-In terms of completeness, we recovered 243 out of 248 KOGs (i.e. \(97.98%\)) from the CBAS transcriptome. Yet the number of *High-confidence, full length matches* was only 175 (i.e. \(70.56%\)). Six transcripts were categorized as *Probable full length matches*, six more were tagged as matching a KOG that was slightly shorter than the query and 4 transcripts matched a KOG that was much longer than the query. Thus, in total \(187\) (i.e. \(75.4\)) transcripts can be thought of as high confidence KOG matches. Transcripts matching KOGs that were much shorter and transcripts probably representing missassemblies amount to 22 and 30 respectively.
+In terms of completeness, we recovered 243 out of 248 KOGs (i.e. \(97.98\)%) from the CBAS transcriptome. Yet, the number of transcripts classified as *High-confidence, full length matches* was only 175 (i.e. \(70.56\)%). In addition, six transcripts were categorized as *Probable full length matches*, six more were tagged as matching a KOG that was slightly shorter than the query and 4 transcripts matched a KOG that was much longer than the query. Thus, in total \(191\) (i.e. \(77.02\)%) transcripts can be thought of as high confidence KOG matches. Transcripts matching KOGs that were much shorter and transcripts probably representing missassemblies amount to 22 and 30, respectively (i.e. \(20.97\)%).
 
 Global gene expression patterns change due to symbiont inactivation
 -------------------------------------------------------------------
+
+The count matrix used to investigate changes in gene expression in Bleached *vs.* Control sponges had \(100098\) rows with counts. Of these, however, only \(52567\) had counts in all samples (i.e. the transcript was detected in all sequenced samples). The inspection of the cummulative density distribution and of the density distribution of normalized counts (Fig. 5 and Fig. 6) for either all rows or only the non-zero rows in the datamatrix showed similar patterns for all libraries indicating that they were sequenced at similar depths and can be safely compared.
+
+<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/normalized_counts_cumulativeDist_qc_figure-1.png" style="display: block; margin: auto;" /> **Figure 5.**
+
+<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/normalized_counts_multidensity_qc_figure-1.png" style="display: block; margin: auto;" /> **Figure 6.**
+
+Additionally, if individual libraries are compared
+
+<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/MDPlots_library_01_qc_figure-1.png" style="display: block; margin: auto;" />
+
+<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/MDPlots_library_02_qc_figure-1.png" style="display: block; margin: auto;" />
+
+<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/MDPlots_library_03_qc_figure-1.png" style="display: block; margin: auto;" />
+
+<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/MDPlots_library_04_qc_figure-1.png" style="display: block; margin: auto;" />
+
+<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/MDPlots_library_05_qc_figure-1.png" style="display: block; margin: auto;" /> <img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/MDPlots_library_06_qc_figure-1.png" style="display: block; margin: auto;" />
+
+<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/MDPlots_library_07_qc_figure-1.png" style="display: block; margin: auto;" />
+
+<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/MDPlots_library_08_qc_figure-1.png" style="display: block; margin: auto;" />
+
+**Figure 7.**
 
 Inmune response transcripts are highly repressed when symbionts are not active or absent
 ----------------------------------------------------------------------------------------
