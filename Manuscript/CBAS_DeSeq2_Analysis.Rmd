@@ -40,7 +40,7 @@ After this initial extraction, the ZR-Duet DNA/RNA MiniPrep [^4] was used, follo
 
 ##Transcriptome assembly, annotation
 
-Reads were quality controled using FastQC [^6] and quality filtered using the BioLite program filter_illumina.cpp [^7]. The surviving read pairs from all libraries were used to produce (using the command cat) two fastq files that were used for *de novo* transcriptome assembly in Trinity v2.0.6 (using the --normalize_reads flag). The resulting contigs (with lenght >=200bp) were annotated against the Uniprot (SwissProt) [^8] and *Amphimedon queenslandica* isoforms (AQU2 proteins) [^9] using blastx v2.2.29+ with an expectation cutoff of 0.001. Only the best match per contig was saved and the blast results were saved using blast's XML format converted to a 25 column table [^10]. Both tables (i.e. [UNIPROT](https://github.com/sevragorgia/CBAS/tree/master/Annotations/Uniprot) and [AQU2](https://github.com/sevragorgia/CBAS/tree/master/Annotations/AQU2)) are available for download in the [project repository](https://github.com/sevragorgia/CBAS). Gene Ontology [^11] annotations for the CBAS transcriptome were obtained by programmatically querying the [QuickGO Webservice](http://www.ebi.ac.uk/QuickGO/) with the transcriptome's UNIPROT annotations [^12] and a custom [perl script](https://github.com/sevragorgia/CBAS/blob/master/Scripts/Get_GO_Annotations.pl). For each CBAS transcript the "component", "function" and "process" GO terms associated with its UNIPROT best match were stored in the [project repository](https://github.com/sevragorgia/CBAS/tree/master/Annotations/GOs) as independent tab-separated files that can be easily modified to use as input files in TopGO [^13].
+Reads were quality controled using FastQC [^6] and quality filtered using the BioLite program filter_illumina.cpp [^7]. The surviving read pairs from all libraries were used to produce (using the command cat) two fastq files that were used for *de novo* transcriptome assembly in Trinity v2.0.6 (using the --normalize_reads flag). The resulting contigs (with lenght >=200bp) were annotated against the Uniprot (SwissProt) [^8] and *Amphimedon queenslandica* isoforms (Aqu2 proteins) [^9] using blastx v2.2.29+ with an expectation cutoff of 0.001. Only the best match per contig was saved and the blast results were saved using blast's XML format converted to a 25 column table [^10]. Both tables (i.e. [UNIPROT](https://github.com/sevragorgia/CBAS/tree/master/Annotations/Uniprot) and [Aqu2](https://github.com/sevragorgia/CBAS/tree/master/Annotations/AQU2)) are available for download in the [project repository](https://github.com/sevragorgia/CBAS). Gene Ontology [^11] annotations for the CBAS transcriptome were obtained by programmatically querying the [QuickGO Webservice](http://www.ebi.ac.uk/QuickGO/) with the transcriptome's UNIPROT annotations [^12] and a custom [perl script](https://github.com/sevragorgia/CBAS/blob/master/Scripts/Get_GO_Annotations.pl). For each CBAS transcript the "component", "function" and "process" GO terms associated with its UNIPROT best match were stored in the [project repository](https://github.com/sevragorgia/CBAS/tree/master/Annotations/GOs) as independent tab-separated files that can be easily modified to use as input files in TopGO [^13].
 
 In addition, transcripts were translated using the program TransDecoder.LongOrfs [^14] and the resulting cds, mRNA, bed, gff3 and pep files stored in the [project repository](https://github.com/sevragorgia/CBAS/tree/master/Annotations/Transdecoder) and used to annotate the transcriptome against the [Pfam](http://pfam.xfam.org/) and [KEEG](http://www.genome.jp/kegg/) databases. For this, the perl script [pfam_scan.pl](ftp://ftp.ebi.ac.uk/pub/databases/Pfam/Tools/) and the webservice [BlastKOALA](http://www.kegg.jp/blastkoala/) were used; the resulting output files can be found in the [project repository.](https://github.com/sevragorgia/CBAS) Finally, the assembled transcripts were blasted (blastn) against a bacterial genomes database [^15].
 
@@ -83,7 +83,7 @@ transcript_lengths<-read.csv("../Results/Reference_transcriptome_length_histogra
 
 Per library, we obtained on average 26,385,834 ($\pm 3,360,778$) pairs of reads (50 bp long).  After cleaning, each library had an average of 24,942,084 ($\pm 3,420,083$) surviving pairs. The concatenated dataset thus had 199,536,668 pairs. Table 1 contains the information on the number of sequenced and surviving reads per library.
 
-**Table 1:** Reads by library before and after quality filtering.
+**Table 1.** Reads by library before and after quality filtering.
 
 Library | Condition | Sequenced reads | Reads post cleaning | % Kept
 :-----: | :-------: | :-------------: | :-----------------: | :-----:
@@ -99,7 +99,7 @@ Total Reads | | 211,086,672 | 199,536,668 | `r round((199536668/211086672)*100,2
 
 *De novo* transcriptome assembly using the concatenated dataset resulted in 128,686 transcript $\gt 200$bp. The N50 of the transcriptome was 1,281 bp, and the median lenght of the assembled transcripts was `r median(meta_annotations$Length, na.rm=TRUE)` bp (MAD=`r mad(meta_annotations$Length, center=median(meta_annotations$Length), na.rm=TRUE, constant=1/quantile(meta_annotations$Length, probs=0.75, names=F))`). More details about the assembly can be found in Table 2 and the length distribution of the transcripts can be visualized in Figure 1.
 
-**Table 2: Statistics for the *de novo* assembled CBAS transcriptome**
+**Table 2.** Statistics for the *de novo* assembled CBAS transcriptome
 
 Statistic | Obtained value |
 :-------: | :------------: |
@@ -126,7 +126,7 @@ ggplot(selected_transcript_lengths, aes(x=Length, y=Count)) + geom_bar(fill = "d
 
 Of the collection of transcripts, `r round(100*(sum(!is.na(meta_annotations$Protein))/(sum(is.na(meta_annotations$Protein))+sum(!is.na(meta_annotations$Protein)))),2)`% could be translated into proteins by Transdecoder. The majority of the translated transcripts were *Complete ORFs*, according to Transdecoder. The *Transdecoder ORF Types* distribution of the translated transcripts can be found in Table 3.
 
-**Table 3: *Transdecoder ORF Type* of the translated transcripts.**
+**Table 3.** *Transdecoder ORF Type* of the translated transcripts.
 
 ORF Type | Count |  %  |
 :------: | :---: | :-: |
@@ -136,7 +136,7 @@ Internal | `r as.vector(table(meta_annotations$ORF_Type))[4]` | `r round(100*(as
 Complete | `r as.vector(table(meta_annotations$ORF_Type))[3]` | `r round(100*(as.vector(table(meta_annotations$ORF_Type))[3]/sum(as.vector(table(meta_annotations$ORF_Type)))), 2)` |
 Total | `r sum(as.vector(table(meta_annotations$ORF_Type)))` | `r round(100*sum(as.vector(table(meta_annotations$ORF_Type)))/sum(as.vector(table(meta_annotations$ORF_Type))), 2)` |
 
-Regarding the annotation of the translated transcripts [^19], `r round(100*(sum(!is.na(meta_annotations$Uniprot_match))/(sum(is.na(meta_annotations$Uniprot_match))+sum(!is.na(meta_annotations$Uniprot_match)))), 2)`% had a matching *Uniprot* annotation. The number of transcripts matching an *Amphimedon queenslandica* (AQU2) protein was slightly higher, `r round(100*(sum(!is.na(meta_annotations$Aqu2_match))/(sum(is.na(meta_annotations$Aqu2_match))+sum(!is.na(meta_annotations$Aqu2_match)))), 2)`%. *Gene Ontology Component*, *Function* and *Process* annotations could be retrieved for `r round(100*(sum(!is.na(meta_annotations$GO_Component))/(sum(is.na(meta_annotations$GO_Component))+sum(!is.na(meta_annotations$GO_Component)))), 2)`%, `r round(100*(sum(!is.na(meta_annotations$GO_Function))/(sum(is.na(meta_annotations$GO_Function))+sum(!is.na(meta_annotations$GO_Function)))), 2)`% and `r round(100*(sum(!is.na(meta_annotations$GO_Process))/(sum(is.na(meta_annotations$GO_Process))+sum(!is.na(meta_annotations$GO_Process)))), 2)`% of the transcripts, respectively. Additionally, `r round(100*(sum(!is.na(meta_annotations$Pfam_Domains))/(sum(is.na(meta_annotations$Pfam_Domains))+sum(!is.na(meta_annotations$Pfam_Domains)))), 2)`% of the transcripts could be annotated with *Pfam* domain information. In contrast, only `r round(100*(sum(!is.na(meta_annotations$KEGG))/(sum(is.na(meta_annotations$KEGG))+sum(!is.na(meta_annotations$KEGG)))), 2)`% of the assembled transcripts could be annotated against the *KEGG* database. Figure 3 shows, by *ORF Type*, the number of protein coding transcripts that could be annotated in each database.
+Regarding the annotation of the translated transcripts [^19], `r round(100*(sum(!is.na(meta_annotations$Uniprot_match))/(sum(is.na(meta_annotations$Uniprot_match))+sum(!is.na(meta_annotations$Uniprot_match)))), 2)`% had a matching *Uniprot* annotation. The number of transcripts matching an *Amphimedon queenslandica* (Aqu2) protein was slightly higher, `r round(100*(sum(!is.na(meta_annotations$Aqu2_match))/(sum(is.na(meta_annotations$Aqu2_match))+sum(!is.na(meta_annotations$Aqu2_match)))), 2)`%. *Gene Ontology Component*, *Function* and *Process* annotations could be retrieved for `r round(100*(sum(!is.na(meta_annotations$GO_Component))/(sum(is.na(meta_annotations$GO_Component))+sum(!is.na(meta_annotations$GO_Component)))), 2)`%, `r round(100*(sum(!is.na(meta_annotations$GO_Function))/(sum(is.na(meta_annotations$GO_Function))+sum(!is.na(meta_annotations$GO_Function)))), 2)`% and `r round(100*(sum(!is.na(meta_annotations$GO_Process))/(sum(is.na(meta_annotations$GO_Process))+sum(!is.na(meta_annotations$GO_Process)))), 2)`% of the transcripts, respectively. Additionally, `r round(100*(sum(!is.na(meta_annotations$Pfam_Domains))/(sum(is.na(meta_annotations$Pfam_Domains))+sum(!is.na(meta_annotations$Pfam_Domains)))), 2)`% of the transcripts could be annotated with *Pfam* domain information. In contrast, only `r round(100*(sum(!is.na(meta_annotations$KEGG))/(sum(is.na(meta_annotations$KEGG))+sum(!is.na(meta_annotations$KEGG)))), 2)`% of the assembled transcripts could be annotated against the *KEGG* database. Figure 3 shows, by *ORF Type*, the number of protein coding transcripts that could be annotated in each database.
 
 ***
 
@@ -173,7 +173,7 @@ colnames(annotations_per_ORF_Type)<-c("ORF_Type", "Annotation_present", "Count",
 ggplot(annotations_per_ORF_Type, aes(Database,Count)) + geom_bar(stat="identity",  aes(fill=Annotation_present)) + theme_bw() + theme(axis.text.x=element_text(angle=45, vjust=0.9, hjust=1)) + scale_fill_discrete(name="Annotation found")
 
 ```
-**Figure 3.** Annotation success by database for transcripts translated by Transdecoder.
+**Figure 2.** Annotation success by database for transcripts translated by Transdecoder.
 
 ***
 
@@ -183,20 +183,25 @@ ggplot(annotations_per_ORF_Type, aes(Database,Count)) + geom_bar(stat="identity"
 ggplot(subset(annotations_per_ORF_Type, Annotation_present==TRUE), aes(Database,Count)) + geom_bar(stat="identity",  aes(fill=ORF_Type)) + theme_bw() + theme(axis.text.x=element_text(angle=45, vjust=0.9, hjust=1)) + scale_fill_discrete(name="Transdecoder ORF Type", labels=c("3' Partial", "5' Partial", "Complete", "Internal"))
 
 ```
-**Figure 4.** Annotation count by database for different types of ORF as defined by Transdecoder.
+**Figure 3.** Annotation count by database for different types of ORF as defined by Transdecoder.
 
 ***
 
-For Uniprot and AQU2 annotations the mean evalue obtained were $`r mean(meta_annotations_NoNAs$evalue, na.rm=TRUE)`$ (SD = $`r sd(meta_annotations_NoNAs$evalue, na.rm=TRUE)`$) and $`r mean(meta_annotations_NoNAs$evalue.1, na.rm=TRUE)`$ (SD = $`r sd(meta_annotations_NoNAs$evalue.1, na.rm=TRUE)`$), respectively. In addition, the mean evalues obtained for both Uniprot and AQU2 annotations were similar for all Transdecoder ORF types (Table 4) and the maximum evalue obtained after querying these two databases was 1e^-05 [^20].
+For Uniprot and Aqu2 annotations the mean evalue obtained were $`r mean(meta_annotations_NoNAs$evalue, na.rm=TRUE)`$ (SD = $`r sd(meta_annotations_NoNAs$evalue, na.rm=TRUE)`$) and $`r mean(meta_annotations_NoNAs$evalue.1, na.rm=TRUE)`$ (SD = $`r sd(meta_annotations_NoNAs$evalue.1, na.rm=TRUE)`$), respectively. In addition, the mean evalues obtained for both Uniprot and Aqu2 annotations were similar for all Transdecoder ORF types (Table 4) and the maximum evalue obtained after querying these two databases was 1e^-05 [^20].
 
-Table 4
+**Table 4.** Mean evalue by Transdecoder ORF type for annotations obtained from the Uniprot or Aqu2 databases.
 
-RF Type | Database | Mean evalue (SD) |
+Transdecoder ORF Type | Database | Mean evalue (SD) |
 :-----: | :------: | :--------------: |
-3' partial | Uniprot | $`r as.vector(tapply(meta_annotations$evalue, meta_annotations$ORF_Type, mean, na.rm=TRUE))[1]`$ ($`r as.vector(tapply(meta_annotations$evalue, meta_annotations$ORF_Type, sd, na.rm=TRUE))[1]`$) |
+3' partial | Uniprot | $`r as.vector(tapply(meta_annotations$evalue, meta_annotations$ORF_Type, mean, na.rm=TRUE))[1]`$ ($`r as.vector(tapply(meta_annotations$evalue, meta_annotations$ORF_Type, sd, na.rm=TRUE))[1]`$) 
 5' partial | Uniprot | $`r as.vector(tapply(meta_annotations$evalue, meta_annotations$ORF_Type, mean, na.rm=TRUE))[2]`$ ($`r as.vector(tapply(meta_annotations$evalue, meta_annotations$ORF_Type, sd, na.rm=TRUE))[2]`$)
-Internal | Uniprot | $`r as.vector(tapply(meta_annotations$evalue, meta_annotations$ORF_Type, mean, na.rm=TRUE))[3]`$ ($`r as.vector(tapply(meta_annotations$evalue, meta_annotations$ORF_Type, sd, na.rm=TRUE))[3]`$)
-Complete | Uniprot | $`r as.vector(tapply(meta_annotations$evalue, meta_annotations$ORF_Type, mean, na.rm=TRUE))[4]`$ ($`r as.vector(tapply(meta_annotations$evalue, meta_annotations$ORF_Type, sd, na.rm=TRUE))[4]`$)
+Internal | Uniprot | $`r as.vector(tapply(meta_annotations$evalue, meta_annotations$ORF_Type, mean, na.rm=TRUE))[4]`$ ($`r as.vector(tapply(meta_annotations$evalue, meta_annotations$ORF_Type, sd, na.rm=TRUE))[4]`$)
+Complete | Uniprot | $`r as.vector(tapply(meta_annotations$evalue, meta_annotations$ORF_Type, mean, na.rm=TRUE))[3]`$ ($`r as.vector(tapply(meta_annotations$evalue, meta_annotations$ORF_Type, sd, na.rm=TRUE))[3]`$)
+ | | 
+3' partial | Aqu2 | $`r as.vector(tapply(meta_annotations$evalue.1, meta_annotations$ORF_Type, mean, na.rm=TRUE))[1]`$ ($`r as.vector(tapply(meta_annotations$evalue.1, meta_annotations$ORF_Type, sd, na.rm=TRUE))[1]`$) 
+5' partial | Aqu2 | $`r as.vector(tapply(meta_annotations$evalue.1, meta_annotations$ORF_Type, mean, na.rm=TRUE))[2]`$ ($`r as.vector(tapply(meta_annotations$evalue.1, meta_annotations$ORF_Type, sd, na.rm=TRUE))[2]`$)
+Internal | Aqu2 | $`r as.vector(tapply(meta_annotations$evalue.1, meta_annotations$ORF_Type, mean, na.rm=TRUE))[4]`$ ($`r as.vector(tapply(meta_annotations$evalue.1, meta_annotations$ORF_Type, sd, na.rm=TRUE))[4]`$)
+Complete  | Aqu2 | $`r as.vector(tapply(meta_annotations$evalue.1, meta_annotations$ORF_Type, mean, na.rm=TRUE))[3]`$ ($`r as.vector(tapply(meta_annotations$evalue.1, meta_annotations$ORF_Type, sd, na.rm=TRUE))[3]`$)
 
 In terms of completeness, we recovered 243 out of 248 KOGs (i.e. $`r round(100*(243/248),2)`%$) from the CBAS transcriptome. Yet the number of *High-confidence, full length matches* was only 175 (i.e. $`r round(100*(175/248),2)`%$). Six transcripts were categorized as *Probable full length matches*, six more were tagged as matching a KOG that was slightly shorter than the query and 4 transcripts matched a KOG that was much longer than the query. Thus, in total $`r 175+6+6`$ (i.e. $`r round(100*((175+6+6)/248),2)`$) transcripts can be thought of as high confidence KOG matches. Transcripts matching KOGs that were much shorter and transcripts probably representing missassemblies amount to 22 and 30 respectively. 
 
@@ -245,7 +250,7 @@ All scripts used to analyze the data, as well as some miscellaneous scripts used
 
 [^8]: Downloaded early 2015. [Uniprot download.](http://www.uniprot.org/downloads)
 
-[^9]: AQU2 isoforms (proteins) [*Amphimedon queenslandica* transcriptome resource.](http://amphimedon.qcloud.qcif.edu.au/downloads.html)
+[^9]: Aqu2 isoforms (proteins) [*Amphimedon queenslandica* transcriptome resource.](http://amphimedon.qcloud.qcif.edu.au/downloads.html)
 
 [^10]: Blast was run from [Galaxy](https://galaxyproject.org/) and the XML file was converted to a 25 column table by the [ncbi_blast_plus](http://toolshed.g2.bx.psu.edu/view/devteam/ncbi_blast_plus) tool.
 
@@ -265,8 +270,8 @@ All scripts used to analyze the data, as well as some miscellaneous scripts used
 
 [^18]: the script is also provided as part of this repository. The Copyright (c) of this script belongs trinityrnaseq (2014), who reserves all rights upon the code. [See the full LICENSE here.](https://github.com/trinityrnaseq/trinityrnaseq/blob/master/LICENSE)
 
-[^19]: With these graphs were produced for transcripts that could be successfully translated using **Transdecoder**. In the case of the **Uniprot** and **AQU2** annotations, the transcripts were directly blasted using blastn. Thus could be possible to obtain **Uniprot** and **AQU2** annotations for transcripts that could not be translated with **Transdecoder**. This is in fact the case, however the number of transcripts that could not *transdecoded* but were annotated is relatively small. In the case of **Uniprot**, the number of transcripts that yielded annotations but were not *transdecoded* was **`r as.vector(table(!is.na(meta_annotations$Protein), !is.na(meta_annotations$Uniprot_match)))[3]`**. For **AQU2**, only **`r as.vector(table(!is.na(meta_annotations$Protein), !is.na(meta_annotations$Aqu2_match)))[3]`** not *transdecoded* transcripts could be annotated.
+[^19]: With these graphs were produced for transcripts that could be successfully translated using **Transdecoder**. In the case of the **Uniprot** and **Aqu2** annotations, the transcripts were directly blasted using blastn. Thus could be possible to obtain **Uniprot** and **Aqu2** annotations for transcripts that could not be translated with **Transdecoder**. This is in fact the case, however the number of transcripts that could not *transdecoded* but were annotated is relatively small. In the case of **Uniprot**, the number of transcripts that yielded annotations but were not *transdecoded* was **`r as.vector(table(!is.na(meta_annotations$Protein), !is.na(meta_annotations$Uniprot_match)))[3]`**. For **Aqu2**, only **`r as.vector(table(!is.na(meta_annotations$Protein), !is.na(meta_annotations$Aqu2_match)))[3]`** not *transdecoded* transcripts could be annotated.
 
-[^20]: Here it is worth noting that the evalue cutoff used for blast against the Uniprot and AQU2 databases was 0.001. So the annotations obtained had an evalue at least two orders of magnitud smaller than the set cutoff evalue.
+[^20]: Here it is worth noting that the evalue cutoff used for blast against the Uniprot and Aqu2 databases was 0.001. So the annotations obtained had an evalue at least two orders of magnitud smaller than the set cutoff evalue.
 
 
