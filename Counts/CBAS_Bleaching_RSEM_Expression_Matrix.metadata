@@ -1,0 +1,10 @@
+Original_Sample_Name,Condition,Library_Type,Name_Used_in_Analysis
+Cauris_20141021_2_T,bleached,pair-end,CBAS_Bleached_1
+Cauris_20141021_3_T,bleached,pair-end,CBAS_Bleached_2
+Cauris_20141021_4_T,bleached,pair-end,CBAS_Bleached_3
+Cauris_20141021_5_T,bleached,pair-end,CBAS_Bleached_4
+Cauris_20141021_6_T,bleached,pair-end,CBAS_Bleached_5
+Cauris_20141022_1_C,control,pair-end,CBAS_Control_1
+Cauris_20141022_5_C,control,pair-end,CBAS_Control_2
+Cauris_20141029_1_C,control,pair-end,CBAS_Control_3
+Cauris_20141029_4_C,control,pair-end,CBAS_Control_4
