@@ -167,21 +167,69 @@ The count matrix used to investigate changes in gene expression in Bleached *vs.
 
 Additionally, if individual libraries are compared
 
-<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/MDPlots_library_01_qc_figure-1.png" style="display: block; margin: auto;" />
+<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/MDPlots_library_01_qc_figure-1.png" style="display: block; margin: auto;" /> \*\*\*
 
-<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/MDPlots_library_02_qc_figure-1.png" style="display: block; margin: auto;" />
+<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/MDPlots_library_02_qc_figure-1.png" style="display: block; margin: auto;" /> \*\*\*
 
-<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/MDPlots_library_03_qc_figure-1.png" style="display: block; margin: auto;" />
+<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/MDPlots_library_03_qc_figure-1.png" style="display: block; margin: auto;" /> \*\*\*
 
-<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/MDPlots_library_04_qc_figure-1.png" style="display: block; margin: auto;" />
+<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/MDPlots_library_04_qc_figure-1.png" style="display: block; margin: auto;" /> \*\*\*
 
-<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/MDPlots_library_05_qc_figure-1.png" style="display: block; margin: auto;" /> <img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/MDPlots_library_06_qc_figure-1.png" style="display: block; margin: auto;" />
+<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/MDPlots_library_05_qc_figure-1.png" style="display: block; margin: auto;" /> \*\*\*
 
-<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/MDPlots_library_07_qc_figure-1.png" style="display: block; margin: auto;" />
+<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/MDPlots_library_06_qc_figure-1.png" style="display: block; margin: auto;" /> \*\*\*
 
-<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/MDPlots_library_08_qc_figure-1.png" style="display: block; margin: auto;" />
+<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/MDPlots_library_07_qc_figure-1.png" style="display: block; margin: auto;" /> \*\*\*
+
+<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/MDPlots_library_08_qc_figure-1.png" style="display: block; margin: auto;" /> \*\*\*
 
 **Figure 7.**
+
+    ## Warning in bplt(at[i], wid = width[i], stats = z$stats[, i], out = z$out[z
+    ## $group == : Outlier (-Inf) in boxplot 1 is not drawn
+
+    ## Warning in bplt(at[i], wid = width[i], stats = z$stats[, i], out = z$out[z
+    ## $group == : Outlier (-Inf) in boxplot 2 is not drawn
+
+    ## Warning in bplt(at[i], wid = width[i], stats = z$stats[, i], out = z$out[z
+    ## $group == : Outlier (-Inf) in boxplot 3 is not drawn
+
+    ## Warning in bplt(at[i], wid = width[i], stats = z$stats[, i], out = z$out[z
+    ## $group == : Outlier (-Inf) in boxplot 4 is not drawn
+
+    ## Warning in bplt(at[i], wid = width[i], stats = z$stats[, i], out = z$out[z
+    ## $group == : Outlier (-Inf) in boxplot 5 is not drawn
+
+    ## Warning in bplt(at[i], wid = width[i], stats = z$stats[, i], out = z$out[z
+    ## $group == : Outlier (-Inf) in boxplot 6 is not drawn
+
+    ## Warning in bplt(at[i], wid = width[i], stats = z$stats[, i], out = z$out[z
+    ## $group == : Outlier (-Inf) in boxplot 9 is not drawn
+
+    ## Warning in bplt(at[i], wid = width[i], stats = z$stats[, i], out = z$out[z
+    ## $group == : Outlier (-Inf) in boxplot 1 is not drawn
+
+    ## Warning in bplt(at[i], wid = width[i], stats = z$stats[, i], out = z$out[z
+    ## $group == : Outlier (-Inf) in boxplot 2 is not drawn
+
+    ## Warning in bplt(at[i], wid = width[i], stats = z$stats[, i], out = z$out[z
+    ## $group == : Outlier (-Inf) in boxplot 3 is not drawn
+
+    ## Warning in bplt(at[i], wid = width[i], stats = z$stats[, i], out = z$out[z
+    ## $group == : Outlier (-Inf) in boxplot 4 is not drawn
+
+    ## Warning in bplt(at[i], wid = width[i], stats = z$stats[, i], out = z$out[z
+    ## $group == : Outlier (-Inf) in boxplot 5 is not drawn
+
+    ## Warning in bplt(at[i], wid = width[i], stats = z$stats[, i], out = z$out[z
+    ## $group == : Outlier (-Inf) in boxplot 6 is not drawn
+
+    ## Warning in bplt(at[i], wid = width[i], stats = z$stats[, i], out = z$out[z
+    ## $group == : Outlier (-Inf) in boxplot 9 is not drawn
+
+<img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/TPM_figure-1.png" style="display: block; margin: auto;" /> \*\*\*
+
+**Figure 8.**
 
 Inmune response transcripts are highly repressed when symbionts are not active or absent
 ----------------------------------------------------------------------------------------

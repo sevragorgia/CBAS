@@ -89,6 +89,10 @@ meta_annotations<-read.table("../Annotations/Metatable/20161017_CBAS_Annotation_
 #histogram table
 transcript_lengths<-read.csv("../Results/Reference_transcriptome_length_histogram.csv", head=T, sep="\t")
 
+#load tpm and fpkm matrices
+tpm_matrix<-read.csv("../Counts/CBAS_Bleaching_RSEM_Expression_TPM_Matrix.csv", sep="\t", header=TRUE)
+fpkm_matrix<-read.csv("../Counts/CBAS_Bleaching_RSEM_Expression_FPKM_Matrix.csv", sep="\t", header=TRUE)
+
 #load the transcript count matrix and sample information table. It is assumed that these files are store in the folder Count_Matrix in the folder used to cloned the CBAS repository. The folder structure of the repository must not be changed.
 CBAS_DE<-read.csv("../Counts/CBAS_Bleaching_RSEM_Expression_Matrix.counts", head=T, sep="\t")
 CBAS_DE_INFO<-read.csv("../Counts/CBAS_Bleaching_RSEM_Expression_Matrix.info", head=T)
@@ -276,6 +280,7 @@ title(paste( "Library", colnames(CBAS_DeSeq)[1], "vs."), outer=TRUE)
 mtext("Mean log-transformed counts", side=1, outer=TRUE)
 mtext("Mean log fold", side=2, outer=TRUE)
 ```
+***
 
 ```{r MDPlots_library_02_qc_figure, echo=FALSE, fig.align='center', fig.height=10, fig.width=10}
 par(mfrow = c(2,4), oma=c(4,4,2,0.5))
@@ -290,6 +295,7 @@ title(paste( "Library", colnames(CBAS_DeSeq)[2], "vs."), outer=TRUE)
 mtext("Mean log-transformed counts", side=1, outer=TRUE)
 mtext("Mean log fold", side=2, outer=TRUE)
 ```
+***
 
 ```{r MDPlots_library_03_qc_figure, echo=FALSE, fig.align='center', fig.height=10, fig.width=10}
 par(mfrow = c(2,4), oma=c(4,4,2,0.5))
@@ -303,6 +309,7 @@ title(paste( "Library", colnames(CBAS_DeSeq)[3], "vs."), outer=TRUE)
 mtext("Mean log-transformed counts", side=1, outer=TRUE)
 mtext("Mean log fold", side=2, outer=TRUE)
 ```
+***
 
 ```{r MDPlots_library_04_qc_figure, echo=FALSE, fig.align='center', fig.height=10, fig.width=10}
 par(mfrow = c(2,4), oma=c(4,4,2,0.5))
@@ -315,6 +322,7 @@ title(paste( "Library", colnames(CBAS_DeSeq)[4], "vs."), outer=TRUE)
 mtext("Mean log-transformed counts", side=1, outer=TRUE)
 mtext("Mean log fold", side=2, outer=TRUE)
 ```
+***
 
 ```{r MDPlots_library_05_qc_figure, echo=FALSE, fig.align='center', fig.height=5, fig.width=10}
 par(mfrow = c(1,4), oma=c(4,4,2,0.5))
@@ -326,6 +334,8 @@ title(paste( "Library", colnames(CBAS_DeSeq)[5], "vs."), outer=TRUE)
 mtext("Mean log-transformed counts", side=1, outer=TRUE)
 mtext("Mean log fold", side=2, outer=TRUE)
 ```
+***
+
 ```{r MDPlots_library_06_qc_figure, echo=FALSE, fig.align='center', fig.height=5, fig.width=10}
 par(mfrow = c(1,4), oma=c(4,4,2,0.5))
 MDPlot(counts(CBAS_DeSeq, normalized=T)[non_zero_rows, ],c(6,7), xlab="", ylab="", main=paste(colnames(CBAS_DeSeq)[7]))
@@ -335,6 +345,7 @@ title(paste( "Library", colnames(CBAS_DeSeq)[6], "vs."), outer=TRUE)
 mtext("Mean log-transformed counts", side=1, outer=TRUE)
 mtext("Mean log fold", side=2, outer=TRUE)
 ```
+***
 
 ```{r MDPlots_library_07_qc_figure, echo=FALSE, fig.align='center', fig.height=5, fig.width=10}
 par(mfrow = c(1,4), oma=c(4,4,2,0.5))
@@ -344,6 +355,7 @@ title(paste( "Library", colnames(CBAS_DeSeq)[7], "vs."), outer=TRUE)
 mtext("Mean log-transformed counts", side=1, outer=TRUE)
 mtext("Mean log fold", side=2, outer=TRUE)
 ```
+***
 
 ```{r MDPlots_library_08_qc_figure, echo=FALSE, fig.align='center', , fig.height=5, fig.width=10}
 par(mfrow = c(1,4), oma=c(4,4,2,0.5))
@@ -352,12 +364,19 @@ title(paste( "Library", colnames(CBAS_DeSeq)[8], "vs.", colnames(CBAS_DeSeq)[9])
 mtext("Mean log-transformed counts", side=1, outer=TRUE)
 mtext("Mean log fold", side=2, outer=TRUE)
 ```
+***
 
 **Figure 7.**
 
+```{r TPM_figure, echo=FALSE, fig.align='center', fig.height=15, fig.width=10}
+par(mfrow = c(2,1), oma=c(4,4,2,0.5))
+boxplot(log(tpm_matrix[-c(1)], 10))
+boxplot(log(fpkm_matrix[-c(1)], 10))
 
+```
+***
 
-
+**Figure 8.**
 
 
 ##Inmune response transcripts are highly repressed when symbionts are not active or absent
