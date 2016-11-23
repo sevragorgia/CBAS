@@ -53,6 +53,7 @@ use Getopt::Long;
 
 #command line options, the variable names should be self explanatory;
 my $transcripts;
+my $trinity_file;
 my $uniprot;
 my @uniprot_fields;
 my $other_annotations;
@@ -74,6 +75,7 @@ my $kegg_file;
 
 my $help = "The following options have to be provided:
     --transcripts = the fasta file with the transcripts
+    --trinity_genes = a tab separated files with the transcripts to genes mappings done by trinity.
 		--uniprot = uniprot blast results in extended table format (i.e. 25 columns)
 		--uniprot_fields = fields to kept in the annotation table, defaults to field 2, 11 and 25 (Subject Seq-id, e-value and All subject title(s))
 		--other_blast = other blast results in extended table format (i.e. 25 columns), e.g. AQU2
@@ -101,6 +103,8 @@ this script expects trinity like headers in the fasta files:
 	>TR1|c0_g1_i1 len=396 path=[374:0-395] [-1, 374, -2]
 
 it extracts the transcripts and uses their names (i.e. TR1|c0_g1.i1) to look for annotations. It produces a csv table joining all the annotations for the transcripts.
+
+The trinity_genes files expects a tab separated file with the gene in the first column and the transcripts associated to that gene in the second column.
 ";
 
 #get options from command line
@@ -120,6 +124,7 @@ GetOptions("transcripts=s" => \$transcripts,
 					 "pfam=s" => \$pfam_file,
 					 "kegg=s" => \$kegg_file,
 					 "degs=s" => \$degs,
+					 "trinity_genes=s" => \$trinity_file,
 					 "verbose=s" => \$verbose,
 					 "debug=s" => \$debug,
 					 "help" => \$help
@@ -392,6 +397,38 @@ sub pfam_reader{
   close $pfam_filehandle;
 }
 
+#table reader, expects file path, a hash ref, the fields to be extracted and the field separator
+sub trinity_transcripts_to_genes_reader{
+  my $table_file = shift;
+  my $hash_ref = shift;
+  my $sep = shift;
+	
+  #open filehandles
+  open my $trinity_table, '<', $table_file or die "Cannot open the table file\n$!";
+
+  while(<$trinity_table>){
+    chomp;
+    my @table_fields = split($sep);
+    
+    #genes are expected to be in the first column and transcripts belonging to a gene in the second column separated by , if multiple transcripts map to a gene.
+    
+    my @transcripts = split(",", $table_fields[1]);
+    
+    foreach my $transcript (@transcripts) {
+    
+        if(exists ${$hash_ref}{$transcript}){
+            push @{${$hash_ref}{$transcript}}, $table_fields[0];
+        }else{
+            ${$hash_ref}{$transcript} = [$table_fields[0]];
+        }
+    }    
+  }
+  close $trinity_table;
+}
+
+
+
+
 #main loop
 sub main {
 
@@ -435,17 +472,26 @@ sub main {
   my %kegg_table;
   kegg_reader($kegg_file, \%kegg_table) if(defined $kegg_file);
 
+  my %transcripts_to_genes_table;
+  trinity_transcripts_to_genes_reader($trinity_file, \%transcripts_to_genes_table, "\t");
   
 #join all annotations
 
-  print "Transcript_name\tLength\tSequence\tUniprot_match\tevalue\tUniprot_match_annotation\tAqu2_match\tevalue\tAqu2_match_annotation\tORF_Type\tProtein\tGO_Component\tGO_Function\tGO_Process\tPfam_Domains\tKEGG\tBacteria_match\tevalue\tBacteria_match_annotation\tLog_Fold_Change\tAdjusted_p_value\n";
+  print "Transcript_name\tLength\tSequence\tTrinity_gene\tUniprot_match\tevalue\tUniprot_match_annotation\tAqu2_match\tevalue\tAqu2_match_annotation\tORF_Type\tProtein\tGO_Component\tGO_Function\tGO_Process\tPfam_Domains\tKEGG\tBacteria_match\tevalue\tBacteria_match_annotation\tLog_Fold_Change\tAdjusted_p_value\n";
   
   my @keys = sort(keys(%transcript_table));
 
   foreach my $key (@keys){
   
     my $print_line = $key . "\t" . join("\t", @{$transcript_table{$key}});
-  
+
+    if($transcripts_to_genes_table{$key}){
+        warn "transcript $key was assigned to more than one gene!" if($#{$transcripts_to_genes_table{$key}} > 0);
+        $print_line .= "\t" . ${$transcripts_to_genes_table{$key}}[0];
+    }else{
+      $print_line .= "\tNA";
+    }
+    
     if($uniprot_table{$key}){#the contig has a uniprot annotation
     
       $print_line .= "\t" . $uniprot_table{$key};
