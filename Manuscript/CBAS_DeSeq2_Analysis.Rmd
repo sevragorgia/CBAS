@@ -84,7 +84,7 @@ In addition to the GO-Term enrichment analysis, and due to the difficulties in a
 #here we load some necessary files to make them available.
 
 #meta-annotation table, read gziped file as if read.csv, i.e. no quotes, no comments.
-meta_annotations<-read.table("../Annotations/Metatable/20161017_CBAS_Annotation_Metatable.csv.gz", head=T, sep="\t", quote="", comment.char="")
+meta_annotations<-read.table("../Annotations/Metatable/20161123_CBAS_Annotation_Metatable.csv.gz", head=T, sep="\t", quote="", comment.char="")
 
 #histogram table
 transcript_lengths<-read.csv("../Results/Reference_transcriptome_length_histogram.csv", head=T, sep="\t")
@@ -366,15 +366,56 @@ mtext("Mean log fold", side=2, outer=TRUE)
 ```
 ***
 
+```{r prepare_TPM_and_FPKM_matrices_for_plotting, include=FALSE, results='hide'}
+#create a new fpkm matrix with only those genes sucessfully transdecoded
+fpkm_matrix_transdecoded_only<-fpkm_matrix
+fpkm_matrix_transdecoded_only[, "WasTransdecoded"]<-fpkm_matrix$Transcript_ID %in% meta_annotations_NoNAs$Trinity_gene
+fpkm_matrix_transdecoded_only<-subset(fpkm_matrix_transdecoded_only, fpkm_matrix_transdecoded_only$WasTransdecoded ==T)
+fpkm_matrix_transdecoded_only<-subset(fpkm_matrix_transdecoded_only, ,-c(WasTransdecoded))
+
+#create a new tpm matrix with only those genes sucessfully transdecoded
+tpm_matrix_transdecoded_only<-tpm_matrix
+tpm_matrix_transdecoded_only[, "WasTransdecoded"]<-tpm_matrix$Transcript_ID %in% meta_annotations_NoNAs$Trinity_gene
+tpm_matrix_transdecoded_only<-subset(tpm_matrix_transdecoded_only, tpm_matrix_transdecoded_only$WasTransdecoded ==T)
+tpm_matrix_transdecoded_only<-subset(tpm_matrix_transdecoded_only, ,-c(WasTransdecoded))
+
+```
+
 **Figure 7.**
 
 ```{r TPM_figure, echo=FALSE, fig.align='center', fig.height=15, fig.width=10}
-par(mfrow = c(2,1), oma=c(4,4,2,0.5))
-boxplot(log(tpm_matrix[-c(1)], 10))
-boxplot(log(fpkm_matrix[-c(1)], 10))
+par(mfrow = c(2,2), oma=c(4,4,2,0.5))
+boxplot(log(tpm_matrix[-c(1)]+0.0001, 10))
+boxplot(log(fpkm_matrix[-c(1)]+0.0001, 10))
+
+boxplot(log(tpm_matrix_transdecoded_only[-c(1)]+0.0001, 10))
+boxplot(log(fpkm_matrix_transdecoded_only[-c(1)]+0.0001, 10))
 
 ```
 ***
+
+```{r prepare_reduced_DE_dataset, include=FALSE, results='hide'}
+#select only transcripts that could be transdecoded
+#first copy the original matrix
+CBAS_DE_Transdecoded_Only<-CBAS_DE
+#then check if the transcript was transdecoded
+CBAS_DE_Transdecoded_Only[, "WasTransdecoded"]<-rownames(CBAS_DE) %in% meta_annotations_NoNAs$Trinity_gene
+#then subset based on that
+CBAS_DE_Transdecoded_Only<-subset(CBAS_DE_Transdecoded_Only, CBAS_DE_Transdecoded_Only$WasTransdecoded == T)
+#finally, delete the column with the true/false value for transdecoder success
+CBAS_DE_Transdecoded_Only<-subset(CBAS_DE_Transdecoded_Only, ,-c(WasTransdecoded))
+
+CBAS_DeSeq_Transdecoded_Only<-DESeqDataSetFromMatrix(countData=CBAS_DE_Transdecoded_Only, colData=CBAS_DE_INFO, design=~condition)
+
+#relevel the factors so that "control" is the reference treatment
+CBAS_DeSeq_Transdecoded_Only$condition<-relevel(CBAS_DeSeq_Transdecoded_Only$condition,ref="control")
+
+#estimate size factors
+#If all size factors are roughly equal to one, the libraries have been sequenced equally deeply.
+CBAS_DeSeq_Transdecoded_Only<-estimateSizeFactors(CBAS_DeSeq_Transdecoded_Only)
+
+
+```
 
 **Figure 8.**
 
