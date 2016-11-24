@@ -251,17 +251,23 @@ all_rows<-apply(counts(CBAS_DeSeq), 1, function(x){all(x>=0)})
 ```
 The count matrix used to investigate changes in gene expression in Bleached *vs.* Control sponges had $`r sum(all_rows)`$ rows with counts. Of these, however, only $`r sum(non_zero_rows)`$ had counts in all samples (i.e. the transcript was detected in all sequenced samples). The inspection of the cummulative density distribution and of the density distribution of normalized counts (Fig. 5 and Fig. 6) for either all rows or only the non-zero rows in the datamatrix showed similar patterns for all libraries indicating that they were sequenced at similar depths and can be safely compared. 
 
+***
+
 ```{r normalized_counts_cumulativeDist_qc_figure, echo=FALSE, fig.align='center'}
 #cummulative distribution of normalized counts for non-zero rows
 multiecdf(counts(CBAS_DeSeq, normalized=T)[non_zero_rows, ], xlab="Mean counts", ylab="Cummulative density", xlim=c(0,1000), main="")
 ```
 **Figure 5.** 
 
+***
+
 ```{r normalized_counts_multidensity_qc_figure, echo=FALSE, fig.align='center'}
 #density of normalized counts
 multidensity(counts(CBAS_DeSeq, normalized=T)[non_zero_rows, ], xlab="Mean counts", main="", xlim=c(0,1000))
 ```
 **Figure 6.**
+
+***
 
 Additionally, if individual libraries are compared 
 
@@ -280,7 +286,7 @@ title(paste( "Library", colnames(CBAS_DeSeq)[1], "vs."), outer=TRUE)
 mtext("Mean log-transformed counts", side=1, outer=TRUE)
 mtext("Mean log fold", side=2, outer=TRUE)
 ```
-***
+
 
 ```{r MDPlots_library_02_qc_figure, echo=FALSE, fig.align='center', fig.height=10, fig.width=10}
 par(mfrow = c(2,4), oma=c(4,4,2,0.5))
@@ -295,7 +301,7 @@ title(paste( "Library", colnames(CBAS_DeSeq)[2], "vs."), outer=TRUE)
 mtext("Mean log-transformed counts", side=1, outer=TRUE)
 mtext("Mean log fold", side=2, outer=TRUE)
 ```
-***
+
 
 ```{r MDPlots_library_03_qc_figure, echo=FALSE, fig.align='center', fig.height=10, fig.width=10}
 par(mfrow = c(2,4), oma=c(4,4,2,0.5))
@@ -309,7 +315,7 @@ title(paste( "Library", colnames(CBAS_DeSeq)[3], "vs."), outer=TRUE)
 mtext("Mean log-transformed counts", side=1, outer=TRUE)
 mtext("Mean log fold", side=2, outer=TRUE)
 ```
-***
+
 
 ```{r MDPlots_library_04_qc_figure, echo=FALSE, fig.align='center', fig.height=10, fig.width=10}
 par(mfrow = c(2,4), oma=c(4,4,2,0.5))
@@ -322,7 +328,7 @@ title(paste( "Library", colnames(CBAS_DeSeq)[4], "vs."), outer=TRUE)
 mtext("Mean log-transformed counts", side=1, outer=TRUE)
 mtext("Mean log fold", side=2, outer=TRUE)
 ```
-***
+
 
 ```{r MDPlots_library_05_qc_figure, echo=FALSE, fig.align='center', fig.height=5, fig.width=10}
 par(mfrow = c(1,4), oma=c(4,4,2,0.5))
@@ -334,7 +340,7 @@ title(paste( "Library", colnames(CBAS_DeSeq)[5], "vs."), outer=TRUE)
 mtext("Mean log-transformed counts", side=1, outer=TRUE)
 mtext("Mean log fold", side=2, outer=TRUE)
 ```
-***
+
 
 ```{r MDPlots_library_06_qc_figure, echo=FALSE, fig.align='center', fig.height=5, fig.width=10}
 par(mfrow = c(1,4), oma=c(4,4,2,0.5))
@@ -345,7 +351,7 @@ title(paste( "Library", colnames(CBAS_DeSeq)[6], "vs."), outer=TRUE)
 mtext("Mean log-transformed counts", side=1, outer=TRUE)
 mtext("Mean log fold", side=2, outer=TRUE)
 ```
-***
+
 
 ```{r MDPlots_library_07_qc_figure, echo=FALSE, fig.align='center', fig.height=5, fig.width=10}
 par(mfrow = c(1,4), oma=c(4,4,2,0.5))
@@ -355,7 +361,7 @@ title(paste( "Library", colnames(CBAS_DeSeq)[7], "vs."), outer=TRUE)
 mtext("Mean log-transformed counts", side=1, outer=TRUE)
 mtext("Mean log fold", side=2, outer=TRUE)
 ```
-***
+
 
 ```{r MDPlots_library_08_qc_figure, echo=FALSE, fig.align='center', , fig.height=5, fig.width=10}
 par(mfrow = c(1,4), oma=c(4,4,2,0.5))
@@ -364,7 +370,10 @@ title(paste( "Library", colnames(CBAS_DeSeq)[8], "vs.", colnames(CBAS_DeSeq)[9])
 mtext("Mean log-transformed counts", side=1, outer=TRUE)
 mtext("Mean log fold", side=2, outer=TRUE)
 ```
+**Figure 7.**
+
 ***
+
 
 ```{r prepare_TPM_and_FPKM_matrices_for_plotting, include=FALSE, results='hide'}
 #create a new fpkm matrix with only those genes sucessfully transdecoded
@@ -381,7 +390,6 @@ tpm_matrix_transdecoded_only<-subset(tpm_matrix_transdecoded_only, ,-c(WasTransd
 
 ```
 
-**Figure 7.**
 
 ```{r TPM_figure, echo=FALSE, fig.align='center', fig.height=15, fig.width=10}
 par(mfrow = c(2,2), oma=c(4,4,2,0.5))
@@ -392,7 +400,10 @@ boxplot(log(tpm_matrix_transdecoded_only[-c(1)]+0.0001, 10))
 boxplot(log(fpkm_matrix_transdecoded_only[-c(1)]+0.0001, 10))
 
 ```
+**Figure 8.**
+
 ***
+
 
 ```{r prepare_reduced_DE_dataset, include=FALSE, results='hide'}
 #select only transcripts that could be transdecoded
@@ -414,9 +425,97 @@ CBAS_DeSeq_Transdecoded_Only$condition<-relevel(CBAS_DeSeq_Transdecoded_Only$con
 #If all size factors are roughly equal to one, the libraries have been sequenced equally deeply.
 CBAS_DeSeq_Transdecoded_Only<-estimateSizeFactors(CBAS_DeSeq_Transdecoded_Only)
 
+#transform the data to rlog
+CBAS_DeSeq_Transdecoded_Only_rlog<-rlogTransformation(CBAS_DeSeq_Transdecoded_Only, blind = T)
 ```
 
-**Figure 8.**
+***
+
+```{r sample_heat_pca_plot, echo=FALSE, fig.align='center', fig.height=10, fig.width=10}
+#produce a heat plot using the transformed distances
+CBAS_DeSeq_Transdecoded_Only_distances<-dist(t(assay(CBAS_DeSeq_Transdecoded_Only_rlog)))
+
+par(mfrow = c(2,1), oma=c(4,4,2,0.5))
+heatmap.2(as.matrix(CBAS_DeSeq_Transdecoded_Only_distances), trace="none", col=rev(colorRampPalette(brewer.pal(9, "GnBu"))(100)))
+
+#PCA of samples
+plotPCA(CBAS_DeSeq_Transdecoded_Only_rlog, intgroup=c("condition"))
+
+```
+
+**Figure 9.**
+
+***
+
+```{r drop_anomalous_sample_and_replot, echo=FALSE, fig.align='center', fig.height=10, fig.width=10}
+#remove outlier samples: CBAS_Bleached_5
+outliers=c("CBAS_Bleached_5")
+CBAS_DeSeq_Transdecoded_Only_NoOutliers<-CBAS_DeSeq_Transdecoded_Only[,!(colnames(CBAS_DeSeq_Transdecoded_Only) %in% outliers)]
+
+#repeat above analyses
+CBAS_DeSeq_Transdecoded_Only_NoOutliers_rlog<-rlogTransformation(CBAS_DeSeq_Transdecoded_Only_NoOutliers, blind = T)
+
+#produce a heat plot using the transformed distances
+CBAS_DeSeq_Transdecoded_Only_NoOutliers_distances<-dist(t(assay(CBAS_DeSeq_Transdecoded_Only_NoOutliers_rlog)))
+
+#now replot
+par(mfrow = c(2,1), oma=c(4,4,2,0.5))
+heatmap.2(as.matrix(CBAS_DeSeq_Transdecoded_Only_NoOutliers_distances), trace="none", col=rev(colorRampPalette(brewer.pal(9, "GnBu"))(100)))
+
+#PCA of samples
+plotPCA(CBAS_DeSeq_Transdecoded_Only_NoOutliers_rlog, intgroup=c("condition"))
+```
+
+Figure 10.
+
+***
+
+```{r differential expression analysis, include=FALSE, results='hide'}
+
+CBAS_DeSeq_Transdecoded_Only_NoOutliers<-estimateSizeFactors(CBAS_DeSeq_Transdecoded_Only_NoOutliers)
+CBAS_DeSeq_Transdecoded_Only_NoOutliers<-estimateDispersions(CBAS_DeSeq_Transdecoded_Only_NoOutliers)
+
+#need to plot this.
+#plotDispEsts(CBAS_DeSeq_Transdecoded_Only_NoOutliers)
+
+#wald test
+CBAS_DeSeq_Transdecoded_Only_NoOutliers<-nbinomWaldTest(CBAS_DeSeq_Transdecoded_Only_NoOutliers)
+CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results<-results(CBAS_DeSeq_Transdecoded_Only_NoOutliers, pAdjustMethod = "BH")
+
+#need to use this in the results
+#number of DE genes at 0.01 significance level
+table(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$padj < 0.01)
+
+#number of DE genes at 0.01 significance level and log fold change > 2
+table(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$padj < 0.01 & abs(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$log2FoldChange) > 2)
+
+#number of overexpressed genes at 0.01 significance level and log fold change > 2
+table(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$padj < 0.01 & CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$log2FoldChange > 2)
+
+#number of underexpressed genes at 0.01 significance level and log fold change < -2
+table(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$padj < 0.01 & CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$log2FoldChange < -2)
+
+#plot of p values
+#hist(CBAS_DeSeq_NoOutliers_Results$pvalue, main = "Bleached vs. Control", xlab="p-values")
+
+#need to plot this
+#plotMA(CBAS_DeSeq_NoOutliers_Results, alpha=0.01)
+
+#get significant genes
+#degs_names<-rownames(subset(CBAS_DeSeq_NoOutliers_Results, padj<0.01 & abs(log2FoldChange) > 2))
+#write.csv(degs_names, "~/Desktop/CBAS/DeSeq2/Results/all_degs_p001_2LFC.csv")
+
+#get significantly overexpressed in treatment:
+#over_deg_names<-rownames(subset(CBAS_DeSeq_NoOutliers_Results, padj<0.01 & log2FoldChange > 2))
+#write.csv(over_deg_names, "~/Desktop/CBAS/DeSeq2/Results/over_degs_p001_2LFC.csv")
+#heatmap.2(log2(counts(CBAS_DeSeq_NoOutliers, normalized=T)[rownames(CBAS_DeSeq_NoOutliers) %in% over_deg_names, ]+1), scale="row", trace = "none", dendrogram = "column", col= colorRampPalette(rev(brewer.pal(9, "RdBu"))))
+
+#get significantly underexpressed in treatment:
+#under_deg_names<-rownames(subset(CBAS_DeSeq_NoOutliers_Results, padj<0.01 & log2FoldChange < -2))
+#write.csv(under_deg_names, "~/Desktop/CBAS/DeSeq2/Results/under_degs_p001_2LFC.csv")
+#heatmap.2(log2(counts(CBAS_DeSeq_NoOutliers, normalized=T)[rownames(CBAS_DeSeq_NoOutliers) %in% under_deg_names, ]+1), scale="row", trace = "none", dendrogram = "column", col= colorRampPalette(rev(brewer.pal(9, "RdBu"))))
+
+```
 
 
 ##Inmune response transcripts are highly repressed when symbionts are not active or absent
