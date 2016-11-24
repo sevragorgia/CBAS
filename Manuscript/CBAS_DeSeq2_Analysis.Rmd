@@ -414,7 +414,6 @@ CBAS_DeSeq_Transdecoded_Only$condition<-relevel(CBAS_DeSeq_Transdecoded_Only$con
 #If all size factors are roughly equal to one, the libraries have been sequenced equally deeply.
 CBAS_DeSeq_Transdecoded_Only<-estimateSizeFactors(CBAS_DeSeq_Transdecoded_Only)
 
-
 ```
 
 **Figure 8.**
@@ -470,7 +469,7 @@ All scripts used to analyze the data, as well as some miscellaneous scripts used
 
 [^12]: The UNIPROT accession code of the blast best match associated to each transcript in the CBAS transcriptome was used to query the GO annotations associated with the UNIPROT protein. These GO annotations were used to annotated the CBAS transcripts; note that these are annotations based on annotations and should be taken with precaution.
 
-[^13]: [TopGO](https://bioconductor.org/packages/release/bioc/html/topGO.html) expects GO terms in tab separated {Trascript, GoAnnotation} pairs. The script produces output with a leading column indicating the UNIPROT accession code used for each transcript, which comes handy when controling the correct annotation was used for each transcript and can be easily removed for further analyses.
+[^13]: TopGO [(https://bioconductor.org/packages/release/bioc/html/topGO.html)](https://bioconductor.org/packages/release/bioc/html/topGO.html) expects GO terms in tab separated {Trascript, GoAnnotation} pairs. The script produces output with a leading column indicating the UNIPROT accession code used for each transcript, which comes handy when controling the correct annotation was used for each transcript and can be easily removed for further analyses.
 
 [^14]: Transdecoder's Github Repository can be found [here.](https://transdecoder.github.io/)
 
