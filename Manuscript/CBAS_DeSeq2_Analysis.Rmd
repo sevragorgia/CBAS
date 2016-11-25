@@ -117,6 +117,8 @@ Library | Condition | Sequenced reads | Reads post cleaning | % Kept
 8| Bleached | 24,166,051 | 22,655,601 | `r round((22655601/24166051)*100,2)`
 Total Reads | | 211,086,672 | 199,536,668 | `r round((199536668/211086672)*100,2)`
 
+***
+
 *De novo* transcriptome assembly using the concatenated dataset resulted in 128,686 transcript $\gt 200$bp. The N50 of the transcriptome was 1,281 bp, and the median lenght of the assembled transcripts was `r median(meta_annotations$Length, na.rm=TRUE)` bp (MAD=`r mad(meta_annotations$Length, center=median(meta_annotations$Length), na.rm=TRUE, constant=1/quantile(meta_annotations$Length, probs=0.75, names=F))`). More details about the assembly can be found in Table 2 and the length distribution of the transcripts can be visualized in Figure 1.
 
 **Table 2.** Statistics for the *de novo* assembled CBAS transcriptome
@@ -156,9 +158,10 @@ Internal | `r as.vector(table(meta_annotations$ORF_Type))[4]` | `r round(100*(as
 Complete | `r as.vector(table(meta_annotations$ORF_Type))[3]` | `r round(100*(as.vector(table(meta_annotations$ORF_Type))[3]/sum(as.vector(table(meta_annotations$ORF_Type)))), 2)` |
 Total | `r sum(as.vector(table(meta_annotations$ORF_Type)))` | `r round(100*sum(as.vector(table(meta_annotations$ORF_Type)))/sum(as.vector(table(meta_annotations$ORF_Type))), 2)` |
 
-Regarding the annotation of the translated transcripts [^19], `r round(100*(sum(!is.na(meta_annotations$Uniprot_match))/(sum(is.na(meta_annotations$Uniprot_match))+sum(!is.na(meta_annotations$Uniprot_match)))), 2)`% had a matching *Uniprot* annotation. The number of transcripts matching an *Amphimedon queenslandica* (Aqu2) protein was slightly higher, `r round(100*(sum(!is.na(meta_annotations$Aqu2_match))/(sum(is.na(meta_annotations$Aqu2_match))+sum(!is.na(meta_annotations$Aqu2_match)))), 2)`%. *Gene Ontology Component*, *Function* and *Process* annotations could be retrieved for `r round(100*(sum(!is.na(meta_annotations$GO_Component))/(sum(is.na(meta_annotations$GO_Component))+sum(!is.na(meta_annotations$GO_Component)))), 2)`%, `r round(100*(sum(!is.na(meta_annotations$GO_Function))/(sum(is.na(meta_annotations$GO_Function))+sum(!is.na(meta_annotations$GO_Function)))), 2)`% and `r round(100*(sum(!is.na(meta_annotations$GO_Process))/(sum(is.na(meta_annotations$GO_Process))+sum(!is.na(meta_annotations$GO_Process)))), 2)`% of the transcripts, respectively. Additionally, `r round(100*(sum(!is.na(meta_annotations$Pfam_Domains))/(sum(is.na(meta_annotations$Pfam_Domains))+sum(!is.na(meta_annotations$Pfam_Domains)))), 2)`% of the transcripts could be annotated with *Pfam* domain information. In contrast, only `r round(100*(sum(!is.na(meta_annotations$KEGG))/(sum(is.na(meta_annotations$KEGG))+sum(!is.na(meta_annotations$KEGG)))), 2)`% of the assembled transcripts could be annotated against the *KEGG* database. Figure 3 shows, by *ORF Type*, the number of protein coding transcripts that could be annotated in each database.
-
 ***
+
+Regarding the annotation of the translated transcripts [^19], `r round(100*(sum(!is.na(meta_annotations$Uniprot_match))/(sum(is.na(meta_annotations$Uniprot_match))+sum(!is.na(meta_annotations$Uniprot_match)))), 2)`% had a matching *Uniprot* annotation. The number of transcripts matching an *Amphimedon queenslandica* (Aqu2) protein was slightly higher, `r round(100*(sum(!is.na(meta_annotations$Aqu2_match))/(sum(is.na(meta_annotations$Aqu2_match))+sum(!is.na(meta_annotations$Aqu2_match)))), 2)`%. *Gene Ontology Component*, *Function* and *Process* annotations could be retrieved for `r round(100*(sum(!is.na(meta_annotations$GO_Component))/(sum(is.na(meta_annotations$GO_Component))+sum(!is.na(meta_annotations$GO_Component)))), 2)`%, `r round(100*(sum(!is.na(meta_annotations$GO_Function))/(sum(is.na(meta_annotations$GO_Function))+sum(!is.na(meta_annotations$GO_Function)))), 2)`% and `r round(100*(sum(!is.na(meta_annotations$GO_Process))/(sum(is.na(meta_annotations$GO_Process))+sum(!is.na(meta_annotations$GO_Process)))), 2)`% of the transcripts, respectively. Additionally, `r round(100*(sum(!is.na(meta_annotations$Pfam_Domains))/(sum(is.na(meta_annotations$Pfam_Domains))+sum(!is.na(meta_annotations$Pfam_Domains)))), 2)`% of the transcripts could be annotated with *Pfam* domain information. In contrast, only `r round(100*(sum(!is.na(meta_annotations$KEGG))/(sum(is.na(meta_annotations$KEGG))+sum(!is.na(meta_annotations$KEGG)))), 2)`% of the assembled transcripts could be annotated against the *KEGG* database.
+
 
 ```{r annotation_success_fig, echo=FALSE, fig.align='center'}
 #select only transcripts translating to protein
@@ -197,6 +200,8 @@ ggplot(annotations_per_ORF_Type, aes(Database,Count)) + geom_bar(stat="identity"
 
 ***
 
+Regarding annotation success, different *Transdecoder ORF Types* had different annotation success rates (Fig. 3) with *complete ORFs* having higher annotation sucess than other *ORF types* and *3' Partial ORFs* having the lowest annotation success.
+
 ```{r annotation_count_byDB_Fig, echo=FALSE, fig.align='center'}
 #using the previously generated data frame, provide a more detail account of the annotation success by ORF Type
 
@@ -207,7 +212,7 @@ ggplot(subset(annotations_per_ORF_Type, Annotation_present==TRUE), aes(Database,
 
 ***
 
-For Uniprot and Aqu2 annotations the mean evalue obtained were $`r mean(meta_annotations_NoNAs$evalue, na.rm=TRUE)`$ (SD = $`r sd(meta_annotations_NoNAs$evalue, na.rm=TRUE)`$) and $`r mean(meta_annotations_NoNAs$evalue.1, na.rm=TRUE)`$ (SD = $`r sd(meta_annotations_NoNAs$evalue.1, na.rm=TRUE)`$), respectively. In addition, the mean evalues obtained for both Uniprot and Aqu2 annotations were similar for all Transdecoder ORF types (Table 4) and the maximum evalue obtained after querying these two databases was $1e^-05$ [^20].
+For annotation against Uniprot and Aqu2 we used a permissive evalue (0.001) to query these databases. Thus, we risk obtaining annotations that are only partial matches or that are of doubtful homology. Despite our permissive annotation strategy, the mean evalues obtained for the annotations against Uniprot and Aqu2 had clearly lower values than the threshold set (i.e. $`r mean(meta_annotations_NoNAs$evalue, na.rm=TRUE)` \pm `r sd(meta_annotations_NoNAs$evalue, na.rm=TRUE)`$ and $`r mean(meta_annotations_NoNAs$evalue.1, na.rm=TRUE)` \pm `r sd(meta_annotations_NoNAs$evalue.1, na.rm=TRUE)`$, respectively). Interestintly, the mean evalues obtained for both Uniprot and Aqu2 annotations were similar for all *Transdecoder ORF types* (Table 4) and the maximum evalue obtained after querying these two databases was $1x10^{-05}$ [^20].
 
 **Table 4.** Mean evalue by Transdecoder ORF type for annotations obtained from the Uniprot or Aqu2 databases.
 
@@ -223,7 +228,9 @@ Complete | Uniprot | $`r as.vector(tapply(meta_annotations$evalue, meta_annotati
 Internal | Aqu2 | $`r as.vector(tapply(meta_annotations$evalue.1, meta_annotations$ORF_Type, mean, na.rm=TRUE))[4]`$ ($`r as.vector(tapply(meta_annotations$evalue.1, meta_annotations$ORF_Type, sd, na.rm=TRUE))[4]`$)
 Complete  | Aqu2 | $`r as.vector(tapply(meta_annotations$evalue.1, meta_annotations$ORF_Type, mean, na.rm=TRUE))[3]`$ ($`r as.vector(tapply(meta_annotations$evalue.1, meta_annotations$ORF_Type, sd, na.rm=TRUE))[3]`$)
 
-In terms of completeness, we recovered 243 out of 248 KOGs (i.e. $`r round(100*(243/248),2)`$%) from the CBAS transcriptome. Yet, the number of transcripts classified as *High-confidence, full length matches* was only 175 (i.e. $`r round(100*(175/248),2)`$%). In addition, six transcripts were categorized as *Probable full length matches*, six more were tagged as matching a KOG that was slightly shorter than the query and 4 transcripts matched a KOG that was much longer than the query. Thus, in total $`r 175+6+6+4`$ (i.e. $`r round(100*((175+6+6+4)/248),2)`$%) transcripts can be thought of as high confidence KOG matches. Transcripts matching KOGs that were much shorter and transcripts probably representing missassemblies amount to 22 and 30, respectively (i.e. $`r round(100*((22+30)/248),2)`$%). 
+***
+
+Finally, in terms of completeness, we recovered 243 out of 248 KOGs (i.e. $`r round(100*(243/248),2)`$%) from the CBAS transcriptome. Yet, the number of transcripts classified as *High-confidence, full length matches* was only 175 (i.e. $`r round(100*(175/248),2)`$%). In addition, six transcripts were categorized as *Probable full length matches*, six more were tagged as matching a KOG that was slightly shorter than the query and 4 transcripts matched a KOG that was much longer than the query. Thus, in total $`r 175+6+6+4`$ (i.e. $`r round(100*((175+6+6+4)/248),2)`$%) transcripts can be considered high confidence KOG matches. Transcripts matching KOGs that were much shorter and transcripts probably representing missassemblies amount to 22 and 30, respectively (i.e. $`r round(100*((22+30)/248),2)`$%).
 
 ##Global gene expression patterns change due to symbiont inactivation
 
@@ -249,27 +256,22 @@ non_zero_rows<-apply(counts(CBAS_DeSeq), 1, function(x){all(x>0)})
 all_rows<-apply(counts(CBAS_DeSeq), 1, function(x){all(x>=0)})
 
 ```
-The count matrix used to investigate changes in gene expression in Bleached *vs.* Control sponges had $`r sum(all_rows)`$ rows with counts. Of these, however, only $`r sum(non_zero_rows)`$ had counts in all samples (i.e. the transcript was detected in all sequenced samples). The inspection of the cummulative density distribution and of the density distribution of normalized counts (Fig. 5 and Fig. 6) for either all rows or only the non-zero rows in the datamatrix showed similar patterns for all libraries indicating that they were sequenced at similar depths and can be safely compared. 
 
-***
+The count matrix used to investigate changes in gene expression in Bleached *vs.* Control sponges had $`r sum(all_rows)`$ rows with counts. Of these, however, only $`r sum(non_zero_rows)`$ had counts in all samples (i.e. the transcript was detected in all sequenced libraries). The inspection of the cummulative density distribution and of the density distribution of normalized counts (Fig. 5) for either all rows (not shown) or only the non-zero rows in the matrix showed similar patterns for all libraries indicating that they were sequenced at similar depths and can be compared safely. 
 
-```{r normalized_counts_cumulativeDist_qc_figure, echo=FALSE, fig.align='center'}
+```{r normalized_counts_cumulativeDist_qc_figure, echo=FALSE, fig.align='center', fig.height=10, fig.width=10}
+par(mfrow = c(2,1), oma=c(4,4,2,0.5))
 #cummulative distribution of normalized counts for non-zero rows
 multiecdf(counts(CBAS_DeSeq, normalized=T)[non_zero_rows, ], xlab="Mean counts", ylab="Cummulative density", xlim=c(0,1000), main="")
-```
-**Figure 5.** 
 
-***
-
-```{r normalized_counts_multidensity_qc_figure, echo=FALSE, fig.align='center'}
 #density of normalized counts
 multidensity(counts(CBAS_DeSeq, normalized=T)[non_zero_rows, ], xlab="Mean counts", main="", xlim=c(0,1000))
 ```
-**Figure 6.**
+**Figure 5.** Cummulative density distribution of normalized counts and density distribution of normalized counts of RNA-Seq libraries prepared samples for *bleached* and *control* **CBAS** samples.
 
 ***
 
-Additionally, if individual libraries are compared 
+A pairwise comparison of the individual libraries (Fig 6.) provided further evidence for the technical similarity of the libraries.
 
 ```{r MDPlots_library_01_qc_figure, echo=FALSE, fig.align='center', fig.height=10, fig.width=10}
 par(mfrow = c(2,4), oma=c(4,4,2,0.5))
@@ -370,17 +372,24 @@ title(paste( "Library", colnames(CBAS_DeSeq)[8], "vs.", colnames(CBAS_DeSeq)[9])
 mtext("Mean log-transformed counts", side=1, outer=TRUE)
 mtext("Mean log fold", side=2, outer=TRUE)
 ```
-**Figure 7.**
+**Figure 6.** Pairwise library comparisons based on the relation between the *Mean log-fold* and the *Mean (log-transformed) counts*. In general, no trend should be observed in the pairwise comparisons.
 
 ***
 
+Libraries were also compared in terms of the *FPKM* and *TPM* distribution of the transcripts (Fig. 7). This analysis revealed that two libraries (i.e. CBAS_Control_2 and CBAS_Control_3) differed markedly from all other sequenced libraries. Thus, we restricted the count matrix to include only *trinity genes* that could be translated using Transdecoder. After this, the libraries were comparable in terms of the distribution of TPM and FPKM values. The analysis of differential expression was conducted on this reduced data matrix.
+
 
 ```{r prepare_TPM_and_FPKM_matrices_for_plotting, include=FALSE, results='hide'}
-#create a new fpkm matrix with only those genes sucessfully transdecoded
-fpkm_matrix_transdecoded_only<-fpkm_matrix
-fpkm_matrix_transdecoded_only[, "WasTransdecoded"]<-fpkm_matrix$Transcript_ID %in% meta_annotations_NoNAs$Trinity_gene
-fpkm_matrix_transdecoded_only<-subset(fpkm_matrix_transdecoded_only, fpkm_matrix_transdecoded_only$WasTransdecoded ==T)
-fpkm_matrix_transdecoded_only<-subset(fpkm_matrix_transdecoded_only, ,-c(WasTransdecoded))
+#melt for graphs
+tpm_matrix_melted<-melt(tpm_matrix)
+colnames(tpm_matrix_melted)<-c("Transcript_ID", "Library", "Value")
+tpm_matrix_melted[,"Gen_set"]<-rep("All Genes", nrow(tpm_matrix_melted))
+tpm_matrix_melted[,"Variable"]<-rep("TPM", nrow(tpm_matrix_melted))
+
+fpkm_matrix_melted<-melt(fpkm_matrix)
+colnames(fpkm_matrix_melted)<-c("Transcript_ID", "Library", "Value")
+fpkm_matrix_melted[,"Gen_set"]<-rep("All Genes", nrow(fpkm_matrix_melted))
+fpkm_matrix_melted[,"Variable"]<-rep("FPKM", nrow(fpkm_matrix_melted))
 
 #create a new tpm matrix with only those genes sucessfully transdecoded
 tpm_matrix_transdecoded_only<-tpm_matrix
@@ -388,22 +397,35 @@ tpm_matrix_transdecoded_only[, "WasTransdecoded"]<-tpm_matrix$Transcript_ID %in%
 tpm_matrix_transdecoded_only<-subset(tpm_matrix_transdecoded_only, tpm_matrix_transdecoded_only$WasTransdecoded ==T)
 tpm_matrix_transdecoded_only<-subset(tpm_matrix_transdecoded_only, ,-c(WasTransdecoded))
 
+#melt for graphs
+tpm_matrix_transdecoded_only_melted<-melt(tpm_matrix_transdecoded_only)
+colnames(tpm_matrix_transdecoded_only_melted)<-c("Transcript_ID", "Library", "Value")
+tpm_matrix_transdecoded_only_melted[,"Gen_set"]<-rep("Transdecoded Genes", nrow(tpm_matrix_transdecoded_only_melted))
+tpm_matrix_transdecoded_only_melted[,"Variable"]<-rep("TPM", nrow(tpm_matrix_transdecoded_only_melted))
+
+#create a new fpkm matrix with only those genes sucessfully transdecoded
+fpkm_matrix_transdecoded_only<-fpkm_matrix
+fpkm_matrix_transdecoded_only[, "WasTransdecoded"]<-fpkm_matrix$Transcript_ID %in% meta_annotations_NoNAs$Trinity_gene
+fpkm_matrix_transdecoded_only<-subset(fpkm_matrix_transdecoded_only, fpkm_matrix_transdecoded_only$WasTransdecoded ==T)
+fpkm_matrix_transdecoded_only<-subset(fpkm_matrix_transdecoded_only, ,-c(WasTransdecoded))
+
+fpkm_matrix_transdecoded_only_melted<-melt(fpkm_matrix_transdecoded_only)
+colnames(fpkm_matrix_transdecoded_only_melted)<-c("Transcript_ID", "Library", "Value")
+fpkm_matrix_transdecoded_only_melted[,"Gen_set"]<-rep("Transdecoded Genes", nrow(fpkm_matrix_transdecoded_only_melted))
+fpkm_matrix_transdecoded_only_melted[,"Variable"]<-rep("FPKM", nrow(fpkm_matrix_transdecoded_only_melted))
+
+tpm_fpkm_matrix_melted<-rbind(tpm_matrix_melted, fpkm_matrix_melted, tpm_matrix_transdecoded_only_melted, fpkm_matrix_transdecoded_only_melted)
+
 ```
 
+```{r TPM_figure, echo=FALSE, fig.align='center', fig.height=10, fig.width=10}
 
-```{r TPM_figure, echo=FALSE, fig.align='center', fig.height=15, fig.width=10}
-par(mfrow = c(2,2), oma=c(4,4,2,0.5))
-boxplot(log(tpm_matrix[-c(1)]+0.0001, 10))
-boxplot(log(fpkm_matrix[-c(1)]+0.0001, 10))
-
-boxplot(log(tpm_matrix_transdecoded_only[-c(1)]+0.0001, 10))
-boxplot(log(fpkm_matrix_transdecoded_only[-c(1)]+0.0001, 10))
+ggplot(tpm_fpkm_matrix_melted, aes(Library,Value+0.0001)) + geom_boxplot() + theme_bw() + scale_y_log10(name="") + theme(axis.text.x=element_text(angle=45, vjust=0.9, hjust=1)) + scale_x_discrete(name="Library", labels=c("CBAS_Bleached_1", "CBAS_Bleached_2", "CBAS_Bleached_3", "CBAS_Bleached_4", "CBAS_Bleached_5", "CBAS_Control_1", "CBAS_Control_2", "CBAS_Control_3", "CBAS_Control_4")) + facet_grid(Gen_set~Variable)
 
 ```
-**Figure 8.**
+**Figure 7.** TPM and FPKM distribution in datasets including all trinity genes (All Genes) and only trinity genes that could be translated with trandescoder (Transdecoded Genes). In general, libraries should have similar TPM/FPKM distributions to be comparable.
 
 ***
-
 
 ```{r prepare_reduced_DE_dataset, include=FALSE, results='hide'}
 #select only transcripts that could be transdecoded
@@ -429,6 +451,10 @@ CBAS_DeSeq_Transdecoded_Only<-estimateSizeFactors(CBAS_DeSeq_Transdecoded_Only)
 CBAS_DeSeq_Transdecoded_Only_rlog<-rlogTransformation(CBAS_DeSeq_Transdecoded_Only, blind = T)
 ```
 
+For the analysis of differentially expressed genes, the count matrix was transformed using the rlog transformation available in the R package DeSeq2. A cluster analysis based on the between-sample distances calculated using the rlog transformed counts grouped samples in two groups matching the *control* and *treatment* groups. Interestingly one treatment sample behaved in an anomalous manner, clustering with neither the treatment or the control group. This sample (CBAS_Bleached_5) was also found to be different in a Principal Component Analysis (PCA) conducted on the rlog transformed count matrix.
+
+
+
 ***
 
 ```{r sample_heat_pca_plot, echo=FALSE, fig.align='center', fig.height=10, fig.width=10}
@@ -436,7 +462,7 @@ CBAS_DeSeq_Transdecoded_Only_rlog<-rlogTransformation(CBAS_DeSeq_Transdecoded_On
 CBAS_DeSeq_Transdecoded_Only_distances<-dist(t(assay(CBAS_DeSeq_Transdecoded_Only_rlog)))
 
 par(mfrow = c(2,1), oma=c(4,4,2,0.5))
-heatmap.2(as.matrix(CBAS_DeSeq_Transdecoded_Only_distances), trace="none", col=rev(colorRampPalette(brewer.pal(9, "GnBu"))(100)))
+heatmap.2(as.matrix(CBAS_DeSeq_Transdecoded_Only_distances), trace="none", dendrogram=c("row"), col=rev(colorRampPalette(brewer.pal(9, "GnBu"))(100)))
 
 #PCA of samples
 plotPCA(CBAS_DeSeq_Transdecoded_Only_rlog, intgroup=c("condition"))
