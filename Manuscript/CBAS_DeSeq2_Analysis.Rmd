@@ -462,7 +462,7 @@ For the analysis of differentially expressed genes, the count matrix was transfo
 CBAS_DeSeq_Transdecoded_Only_distances<-dist(t(assay(CBAS_DeSeq_Transdecoded_Only_rlog)))
 
 par(mfrow = c(2,1), oma=c(4,4,2,0.5))
-heatmap.2(as.matrix(CBAS_DeSeq_Transdecoded_Only_distances), trace="none", dendrogram=c("row"), col=rev(colorRampPalette(brewer.pal(9, "GnBu"))(100)))
+heatmap.2(as.matrix(CBAS_DeSeq_Transdecoded_Only_distances), trace="none", labRow=FALSE, dendrogram=c("column"), col=rev(colorRampPalette(brewer.pal(9, "GnBu"))(100)))
 
 #PCA of samples
 plotPCA(CBAS_DeSeq_Transdecoded_Only_rlog, intgroup=c("condition"))
