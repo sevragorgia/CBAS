@@ -451,9 +451,7 @@ CBAS_DeSeq_Transdecoded_Only<-estimateSizeFactors(CBAS_DeSeq_Transdecoded_Only)
 CBAS_DeSeq_Transdecoded_Only_rlog<-rlogTransformation(CBAS_DeSeq_Transdecoded_Only, blind = T)
 ```
 
-For the analysis of differentially expressed genes, the count matrix was transformed using the rlog transformation available in the R package DeSeq2. A cluster analysis based on the between-sample distances calculated using the rlog transformed counts grouped samples in two groups matching the *control* and *treatment* groups. Interestingly one treatment sample behaved in an anomalous manner, clustering with neither the treatment or the control group. This sample (CBAS_Bleached_5) was also found to be different in a Principal Component Analysis (PCA) conducted on the rlog transformed count matrix.
-
-
+For the analysis of differentially expressed genes, the count matrix was transformed using the *rlog* transformation available in the R package DeSeq2. A cluster analysis based on the between-sample distances calculated using the *rlog* transformed counts grouped samples in two groups matching the *control* and *treatment* groups. Interestingly one treatment sample behaved in an anomalous manner, clustering with neither the treatment nor the control group. This sample (i.e. CBAS_Bleached_5) was also found to be different in a Principal Component Analysis (PCA) conducted on the *rlog* transformed count matrix.
 
 ***
 
@@ -462,16 +460,19 @@ For the analysis of differentially expressed genes, the count matrix was transfo
 CBAS_DeSeq_Transdecoded_Only_distances<-dist(t(assay(CBAS_DeSeq_Transdecoded_Only_rlog)))
 
 par(mfrow = c(2,1), oma=c(4,4,2,0.5))
-heatmap.2(as.matrix(CBAS_DeSeq_Transdecoded_Only_distances), trace="none", labRow=FALSE, dendrogram=c("column"), col=rev(colorRampPalette(brewer.pal(9, "GnBu"))(100)))
+heatmap.2(as.matrix(CBAS_DeSeq_Transdecoded_Only_distances), trace="none", cexCol=1.15, labRow=FALSE, dendrogram=c("column"), col=rev(colorRampPalette(brewer.pal(9, "GnBu"))(100)))
 
 #PCA of samples
 plotPCA(CBAS_DeSeq_Transdecoded_Only_rlog, intgroup=c("condition"))
 
 ```
 
-**Figure 9.**
+**Figure 9.** Cluster and Principal Component Analysis of the *rlog* transformed counts for *bleached vs. control* CBAS specimens.
 
 ***
+
+If sample *CBAS_Bleached_5* is removed from the analysis, *bleached* samples are grouped together while *control* sponges are divided in two groups in both the cluster analysis and the principal component analysis.
+
 
 ```{r drop_anomalous_sample_and_replot, echo=FALSE, fig.align='center', fig.height=10, fig.width=10}
 #remove outlier samples: CBAS_Bleached_5
@@ -486,13 +487,13 @@ CBAS_DeSeq_Transdecoded_Only_NoOutliers_distances<-dist(t(assay(CBAS_DeSeq_Trans
 
 #now replot
 par(mfrow = c(2,1), oma=c(4,4,2,0.5))
-heatmap.2(as.matrix(CBAS_DeSeq_Transdecoded_Only_NoOutliers_distances), trace="none", col=rev(colorRampPalette(brewer.pal(9, "GnBu"))(100)))
+heatmap.2(as.matrix(CBAS_DeSeq_Transdecoded_Only_NoOutliers_distances), cexCol=1.15, trace="none", labRow=FALSE, dendrogram=c("column"), col=rev(colorRampPalette(brewer.pal(9, "GnBu"))(100)))
 
 #PCA of samples
 plotPCA(CBAS_DeSeq_Transdecoded_Only_NoOutliers_rlog, intgroup=c("condition"))
 ```
 
-Figure 10.
+**Figure 10.** Cluster and Principal Component Analysis of the *rlog* transformed counts for *bleached vs. control* CBAS specimens after removing sample *CBAS_Bleached_5*.
 
 ***
 
