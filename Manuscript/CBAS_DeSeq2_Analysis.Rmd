@@ -376,7 +376,7 @@ mtext("Mean log fold", side=2, outer=TRUE)
 
 ***
 
-Libraries were also compared in terms of the *FPKM* and *TPM* distribution of the transcripts (Fig. 7). This analysis revealed that two libraries (i.e. CBAS_Control_2 and CBAS_Control_3) differed markedly from all other sequenced libraries. Thus, we restricted the count matrix to include only *trinity genes* that could be translated using Transdecoder. After this, the libraries were comparable in terms of the distribution of TPM and FPKM values. The analysis of differential expression was conducted on this reduced data matrix.
+Libraries were also compared in terms of the *FPKM* and *TPM* distribution of the transcripts (Fig. 7). This analysis revealed that two libraries (i.e. CBAS_Control_2 and CBAS_Control_3) differed markedly from all other sequenced libraries. Thus, we restricted the count matrix to include only *trinity genes* that could be translated using Transdecoder (29,705 transcripts) . After this, the libraries were comparable in terms of the distribution of TPM and FPKM values. The analysis of differential expression was conducted on this reduced data matrix.
 
 
 ```{r prepare_TPM_and_FPKM_matrices_for_plotting, include=FALSE, results='hide'}
@@ -497,7 +497,7 @@ plotPCA(CBAS_DeSeq_Transdecoded_Only_NoOutliers_rlog, intgroup=c("condition"))
 
 ***
 
-```{r differential expression analysis, include=FALSE, results='hide'}
+```{r differential_expression_analysis, include=FALSE, results='hide'}
 
 CBAS_DeSeq_Transdecoded_Only_NoOutliers<-estimateSizeFactors(CBAS_DeSeq_Transdecoded_Only_NoOutliers)
 CBAS_DeSeq_Transdecoded_Only_NoOutliers<-estimateDispersions(CBAS_DeSeq_Transdecoded_Only_NoOutliers)
@@ -511,17 +511,18 @@ CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results<-results(CBAS_DeSeq_Transdecoded
 
 #need to use this in the results
 #number of DE genes at 0.01 significance level
-table(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$padj < 0.01)
-
-#number of DE genes at 0.01 significance level and log fold change > 2
-table(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$padj < 0.01 & abs(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$log2FoldChange) > 2)
+CBAS_DE_Genes<-table(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$padj < 0.01)
 
 #number of overexpressed genes at 0.01 significance level and log fold change > 2
-table(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$padj < 0.01 & CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$log2FoldChange > 2)
+CBAS_DE_Genes_Over<-table(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$padj < 0.01 & CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$log2FoldChange >= 2)
 
 #number of underexpressed genes at 0.01 significance level and log fold change < -2
-table(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$padj < 0.01 & CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$log2FoldChange < -2)
+CBAS_DE_Genes_Under<-table(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$padj < 0.01 & CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$log2FoldChange <= -2)
 
+```
+In this reduced dataset, a total of `r as.vector(CBAS_DE_Genes)[2]` transcripts were differentially expressed between the *control* and *bleached* sponges. Of these transcripts, `r as.vector(CBAS_DE_Genes_Over)[2]` were overexpressed (with a log2 fold change higher or equal to 2) in *bleached vs. control* sponges and `r as.vector(CBAS_DE_Genes_Under)[2]` were expressed at lower levels (a log2 fold change lower or equal than -2) in *bleached vs. control* specimens.
+
+```{r differential_expression_analysis_2, include=FALSE, results='hide'}
 #plot of p values
 #hist(CBAS_DeSeq_NoOutliers_Results$pvalue, main = "Bleached vs. Control", xlab="p-values")
 
@@ -529,16 +530,16 @@ table(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$padj < 0.01 & CBAS_DeSeq_T
 #plotMA(CBAS_DeSeq_NoOutliers_Results, alpha=0.01)
 
 #get significant genes
-#degs_names<-rownames(subset(CBAS_DeSeq_NoOutliers_Results, padj<0.01 & abs(log2FoldChange) > 2))
+#degs_names<-rownames(subset(CBAS_DeSeq_NoOutliers_Results, padj<0.01 & abs(log2FoldChange) >= 2))
 #write.csv(degs_names, "~/Desktop/CBAS/DeSeq2/Results/all_degs_p001_2LFC.csv")
 
 #get significantly overexpressed in treatment:
-#over_deg_names<-rownames(subset(CBAS_DeSeq_NoOutliers_Results, padj<0.01 & log2FoldChange > 2))
+#over_deg_names<-rownames(subset(CBAS_DeSeq_NoOutliers_Results, padj<0.01 & log2FoldChange >= 2))
 #write.csv(over_deg_names, "~/Desktop/CBAS/DeSeq2/Results/over_degs_p001_2LFC.csv")
 #heatmap.2(log2(counts(CBAS_DeSeq_NoOutliers, normalized=T)[rownames(CBAS_DeSeq_NoOutliers) %in% over_deg_names, ]+1), scale="row", trace = "none", dendrogram = "column", col= colorRampPalette(rev(brewer.pal(9, "RdBu"))))
 
 #get significantly underexpressed in treatment:
-#under_deg_names<-rownames(subset(CBAS_DeSeq_NoOutliers_Results, padj<0.01 & log2FoldChange < -2))
+#under_deg_names<-rownames(subset(CBAS_DeSeq_NoOutliers_Results, padj<0.01 & log2FoldChange <= -2))
 #write.csv(under_deg_names, "~/Desktop/CBAS/DeSeq2/Results/under_degs_p001_2LFC.csv")
 #heatmap.2(log2(counts(CBAS_DeSeq_NoOutliers, normalized=T)[rownames(CBAS_DeSeq_NoOutliers) %in% under_deg_names, ]+1), scale="row", trace = "none", dendrogram = "column", col= colorRampPalette(rev(brewer.pal(9, "RdBu"))))
 

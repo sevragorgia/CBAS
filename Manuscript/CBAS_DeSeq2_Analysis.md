@@ -191,7 +191,7 @@ A pairwise comparison of the individual libraries (Fig 6.) provided further evid
 
 ------------------------------------------------------------------------
 
-Libraries were also compared in terms of the *FPKM* and *TPM* distribution of the transcripts (Fig. 7). This analysis revealed that two libraries (i.e. CBAS\_Control\_2 and CBAS\_Control\_3) differed markedly from all other sequenced libraries. Thus, we restricted the count matrix to include only *trinity genes* that could be translated using Transdecoder. After this, the libraries were comparable in terms of the distribution of TPM and FPKM values. The analysis of differential expression was conducted on this reduced data matrix.
+Libraries were also compared in terms of the *FPKM* and *TPM* distribution of the transcripts (Fig. 7). This analysis revealed that two libraries (i.e. CBAS\_Control\_2 and CBAS\_Control\_3) differed markedly from all other sequenced libraries. Thus, we restricted the count matrix to include only *trinity genes* that could be translated using Transdecoder (29,705 transcripts) . After this, the libraries were comparable in terms of the distribution of TPM and FPKM values. The analysis of differential expression was conducted on this reduced data matrix.
 
 <img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/TPM_figure-1.png" style="display: block; margin: auto;" /> **Figure 7.** TPM and FPKM distribution in datasets including all trinity genes (All Genes) and only trinity genes that could be translated with trandescoder (Transdecoded Genes). In general, libraries should have similar TPM/FPKM distributions to be comparable.
 
@@ -211,9 +211,11 @@ If sample *CBAS\_Bleached\_5* is removed from the analysis, *bleached* samples a
 
 <img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/drop_anomalous_sample_and_replot-1.png" style="display: block; margin: auto;" /><img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/drop_anomalous_sample_and_replot-2.png" style="display: block; margin: auto;" />
 
-Figure 10. Cluster and Principal Component Analysis of the *rlog* transformed counts for *bleached vs. control* CBAS specimens after removing sample *CBAS\_Bleached\_5*.
+**Figure 10.** Cluster and Principal Component Analysis of the *rlog* transformed counts for *bleached vs. control* CBAS specimens after removing sample *CBAS\_Bleached\_5*.
 
 ------------------------------------------------------------------------
+
+In this reduced dataset, a total of 5508 transcripts were differentially expressed between the *control* and *bleached* sponges. Of these transcripts, 407 were overexpressed (with at least a 2 log2 fold change) in *bleached vs. control* sponges and 1597 were expressed at lower levels (at least a -2 log2 fold change) in *bleached vs. control* specimens.
 
 Inmune response transcripts are highly repressed when symbionts are not active or absent
 ----------------------------------------------------------------------------------------
