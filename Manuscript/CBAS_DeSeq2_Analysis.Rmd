@@ -552,11 +552,22 @@ write.csv(degs_names, "~/Repos/CBAS/Results/DEGs/all_degs_p001_2LFC.csv")
 #get significantly overexpressed in treatment:
 over_deg_names<-rownames(subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & log2FoldChange >= 2))
 write.csv(over_deg_names, "~/Repos/CBAS/Results/DEGs/over_degs_p001_2LFC.csv")
-#heatmap.2(log2(counts(CBAS_DeSeq_Transdecoded_Only_NoOutliers, normalized=T)[rownames(CBAS_DeSeq_Transdecoded_Only_NoOutliers) %in% over_deg_names, ]+1), scale="row", trace = "none", dendrogram = "column", col= colorRampPalette(rev(brewer.pal(9, "RdBu"))))
 
 #get significantly underexpressed in treatment:
 under_deg_names<-rownames(subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & log2FoldChange <= -2))
 write.csv(under_deg_names, "~/Repos/CBAS/Results/DEGs/under_degs_p001_2LFC.csv")
+
+```
+
+
+```{r expression_heat_maps, echo=FALSE, fig.align='center'}
+
+#merge under and over datasets with results object to sort by wald stat or p-value and produce a heat map.
+
+#merge(CBAS_DeSeq_Transdecoded_Only_NoOutliers_log2Counts_Over,CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results[rownames(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results) %in% over_deg_names, ], by="row.names", all=T)
+#heatmap.2(log2(counts(CBAS_DeSeq_Transdecoded_Only_NoOutliers, normalized=T)[rownames(CBAS_DeSeq_Transdecoded_Only_NoOutliers) %in% over_deg_names, ]+1), scale="row", trace = "none", dendrogram = "column", col= colorRampPalette(rev(brewer.pal(9, "RdBu"))))
+
+#merge(CBAS_DeSeq_Transdecoded_Only_NoOutliers_log2Counts_Under,CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results[rownames(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results) %in% under_deg_names, ], by="row.names", all=T)
 #heatmap.2(log2(counts(CBAS_DeSeq_Transdecoded_Only_NoOutliers, normalized=T)[rownames(CBAS_DeSeq_Transdecoded_Only_NoOutliers) %in% under_deg_names, ]+1), scale="row", trace = "none", dendrogram = "column", col= colorRampPalette(rev(brewer.pal(9, "RdBu"))))
 
 ```
