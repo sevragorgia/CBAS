@@ -242,8 +242,8 @@ CBAS_DE<-CBAS_DE[(rowSums(CBAS_DE) > 0),]
 #create DeSeq2 object
 CBAS_DeSeq<-DESeqDataSetFromMatrix(countData=CBAS_DE, colData=CBAS_DE_INFO, design=~condition)
 
-#relevel the factors so that "control" is the reference treatment
-CBAS_DeSeq$condition<-relevel(CBAS_DeSeq$condition,ref="control")
+#relevel the factors so that Control" is the reference treatment
+CBAS_DeSeq$condition<-relevel(CBAS_DeSeq$condition,ref="Control")
 
 #estimate size factors
 #If all size factors are roughly equal to one, the libraries have been sequenced equally deeply.
@@ -440,8 +440,8 @@ CBAS_DE_Transdecoded_Only<-subset(CBAS_DE_Transdecoded_Only, ,-c(WasTransdecoded
 
 CBAS_DeSeq_Transdecoded_Only<-DESeqDataSetFromMatrix(countData=CBAS_DE_Transdecoded_Only, colData=CBAS_DE_INFO, design=~condition)
 
-#relevel the factors so that "control" is the reference treatment
-CBAS_DeSeq_Transdecoded_Only$condition<-relevel(CBAS_DeSeq_Transdecoded_Only$condition,ref="control")
+#relevel the factors so that "Control" is the reference treatment
+CBAS_DeSeq_Transdecoded_Only$condition<-relevel(CBAS_DeSeq_Transdecoded_Only$condition,ref="Control")
 
 #estimate size factors
 #If all size factors are roughly equal to one, the libraries have been sequenced equally deeply.
@@ -520,31 +520,46 @@ CBAS_DE_Genes_Over<-table(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$padj <
 CBAS_DE_Genes_Under<-table(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$padj < 0.01 & CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$log2FoldChange <= -2)
 
 ```
-In this reduced dataset, a total of `r as.vector(CBAS_DE_Genes)[2]` transcripts were differentially expressed between the *control* and *bleached* sponges. Of these transcripts, `r as.vector(CBAS_DE_Genes_Over)[2]` were overexpressed (with a log2 fold change higher or equal to 2) in *bleached vs. control* sponges and `r as.vector(CBAS_DE_Genes_Under)[2]` were expressed at lower levels (a log2 fold change lower or equal than -2) in *bleached vs. control* specimens.
+In this reduced dataset, a total of `r as.vector(CBAS_DE_Genes)[2]` transcripts were differentially expressed between the *control* and *bleached* sponges (Fig. 11). Of these transcripts, `r as.vector(CBAS_DE_Genes_Over)[2]` were overexpressed (with a log2 fold change higher or equal to 2) in *bleached vs. control* sponges and `r as.vector(CBAS_DE_Genes_Under)[2]` were expressed at lower levels (a log2 fold change lower or equal than -2) in *bleached vs. control* specimens.
 
-```{r differential_expression_analysis_2, include=FALSE, results='hide'}
-#plot of p values
-#hist(CBAS_DeSeq_NoOutliers_Results$pvalue, main = "Bleached vs. Control", xlab="p-values")
+```{r MA_plot, echo=FALSE, fig.align='center'}
 
 #need to plot this
-#plotMA(CBAS_DeSeq_NoOutliers_Results, alpha=0.01)
-
-#get significant genes
-#degs_names<-rownames(subset(CBAS_DeSeq_NoOutliers_Results, padj<0.01 & abs(log2FoldChange) >= 2))
-#write.csv(degs_names, "~/Desktop/CBAS/DeSeq2/Results/all_degs_p001_2LFC.csv")
-
-#get significantly overexpressed in treatment:
-#over_deg_names<-rownames(subset(CBAS_DeSeq_NoOutliers_Results, padj<0.01 & log2FoldChange >= 2))
-#write.csv(over_deg_names, "~/Desktop/CBAS/DeSeq2/Results/over_degs_p001_2LFC.csv")
-#heatmap.2(log2(counts(CBAS_DeSeq_NoOutliers, normalized=T)[rownames(CBAS_DeSeq_NoOutliers) %in% over_deg_names, ]+1), scale="row", trace = "none", dendrogram = "column", col= colorRampPalette(rev(brewer.pal(9, "RdBu"))))
-
-#get significantly underexpressed in treatment:
-#under_deg_names<-rownames(subset(CBAS_DeSeq_NoOutliers_Results, padj<0.01 & log2FoldChange <= -2))
-#write.csv(under_deg_names, "~/Desktop/CBAS/DeSeq2/Results/under_degs_p001_2LFC.csv")
-#heatmap.2(log2(counts(CBAS_DeSeq_NoOutliers, normalized=T)[rownames(CBAS_DeSeq_NoOutliers) %in% under_deg_names, ]+1), scale="row", trace = "none", dendrogram = "column", col= colorRampPalette(rev(brewer.pal(9, "RdBu"))))
-
+plotMA(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, alpha=0.01)
 ```
 
+**Figure 11.** MA-plot showing the relation between log-fold change and mean count for each analyzed CBAS transcript. Transcripts significant at 0.01 are highlighted in red.
+
+***
+
+It is worth noting that DeSeq2 was able to adecuately model the variance in the dataset and could correctly calculate the p-values for the transcripts analyzed (Fig 12).
+
+
+```{r probability_plot, echo=FALSE, fig.align='center'}
+#plot of p values
+hist(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$pvalue, main = "", xlab="p-values")
+```
+
+**Figure 12.** Histogram of the p-values obtained for the transcripts analyzed using DeSeq2. A uniform distribution between 0 and 1, with a peak at zero, should be observed if the variance of the dataset could be correctly modelled.
+
+***
+
+```{r differential_expression_analysis_2, include=FALSE, results='hide'}
+#get significant genes
+degs_names<-rownames(subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & abs(log2FoldChange) >= 2))
+write.csv(degs_names, "~/Repos/CBAS/Results/DEGs/all_degs_p001_2LFC.csv")
+
+#get significantly overexpressed in treatment:
+over_deg_names<-rownames(subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & log2FoldChange >= 2))
+write.csv(over_deg_names, "~/Repos/CBAS/Results/DEGs/over_degs_p001_2LFC.csv")
+#heatmap.2(log2(counts(CBAS_DeSeq_Transdecoded_Only_NoOutliers, normalized=T)[rownames(CBAS_DeSeq_Transdecoded_Only_NoOutliers) %in% over_deg_names, ]+1), scale="row", trace = "none", dendrogram = "column", col= colorRampPalette(rev(brewer.pal(9, "RdBu"))))
+
+#get significantly underexpressed in treatment:
+under_deg_names<-rownames(subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & log2FoldChange <= -2))
+write.csv(under_deg_names, "~/Repos/CBAS/Results/DEGs/under_degs_p001_2LFC.csv")
+#heatmap.2(log2(counts(CBAS_DeSeq_Transdecoded_Only_NoOutliers, normalized=T)[rownames(CBAS_DeSeq_Transdecoded_Only_NoOutliers) %in% under_deg_names, ]+1), scale="row", trace = "none", dendrogram = "column", col= colorRampPalette(rev(brewer.pal(9, "RdBu"))))
+
+```
 
 ##Inmune response transcripts are highly repressed when symbionts are not active or absent
 
