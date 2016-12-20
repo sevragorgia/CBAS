@@ -383,12 +383,12 @@ Libraries were also compared in terms of the *FPKM* and *TPM* distribution of th
 #melt for graphs
 tpm_matrix_melted<-melt(tpm_matrix)
 colnames(tpm_matrix_melted)<-c("Transcript_ID", "Library", "Value")
-tpm_matrix_melted[,"Gen_set"]<-rep("All Genes", nrow(tpm_matrix_melted))
+tpm_matrix_melted[,"Gen_set"]<-rep("All Transcripts", nrow(tpm_matrix_melted))
 tpm_matrix_melted[,"Variable"]<-rep("TPM", nrow(tpm_matrix_melted))
 
 fpkm_matrix_melted<-melt(fpkm_matrix)
 colnames(fpkm_matrix_melted)<-c("Transcript_ID", "Library", "Value")
-fpkm_matrix_melted[,"Gen_set"]<-rep("All Genes", nrow(fpkm_matrix_melted))
+fpkm_matrix_melted[,"Gen_set"]<-rep("All Transcripts", nrow(fpkm_matrix_melted))
 fpkm_matrix_melted[,"Variable"]<-rep("FPKM", nrow(fpkm_matrix_melted))
 
 #create a new tpm matrix with only those genes sucessfully transdecoded
@@ -400,7 +400,7 @@ tpm_matrix_transdecoded_only<-subset(tpm_matrix_transdecoded_only, ,-c(WasTransd
 #melt for graphs
 tpm_matrix_transdecoded_only_melted<-melt(tpm_matrix_transdecoded_only)
 colnames(tpm_matrix_transdecoded_only_melted)<-c("Transcript_ID", "Library", "Value")
-tpm_matrix_transdecoded_only_melted[,"Gen_set"]<-rep("Transdecoded Genes", nrow(tpm_matrix_transdecoded_only_melted))
+tpm_matrix_transdecoded_only_melted[,"Gen_set"]<-rep("Transdecoded Transcripts", nrow(tpm_matrix_transdecoded_only_melted))
 tpm_matrix_transdecoded_only_melted[,"Variable"]<-rep("TPM", nrow(tpm_matrix_transdecoded_only_melted))
 
 #create a new fpkm matrix with only those genes sucessfully transdecoded
@@ -411,7 +411,7 @@ fpkm_matrix_transdecoded_only<-subset(fpkm_matrix_transdecoded_only, ,-c(WasTran
 
 fpkm_matrix_transdecoded_only_melted<-melt(fpkm_matrix_transdecoded_only)
 colnames(fpkm_matrix_transdecoded_only_melted)<-c("Transcript_ID", "Library", "Value")
-fpkm_matrix_transdecoded_only_melted[,"Gen_set"]<-rep("Transdecoded Genes", nrow(fpkm_matrix_transdecoded_only_melted))
+fpkm_matrix_transdecoded_only_melted[,"Gen_set"]<-rep("Transdecoded Transcripts", nrow(fpkm_matrix_transdecoded_only_melted))
 fpkm_matrix_transdecoded_only_melted[,"Variable"]<-rep("FPKM", nrow(fpkm_matrix_transdecoded_only_melted))
 
 tpm_fpkm_matrix_melted<-rbind(tpm_matrix_melted, fpkm_matrix_melted, tpm_matrix_transdecoded_only_melted, fpkm_matrix_transdecoded_only_melted)
@@ -423,7 +423,7 @@ tpm_fpkm_matrix_melted<-rbind(tpm_matrix_melted, fpkm_matrix_melted, tpm_matrix_
 ggplot(tpm_fpkm_matrix_melted, aes(Library,Value+0.0001)) + geom_boxplot() + theme_bw() + scale_y_log10(name="") + theme(axis.text.x=element_text(angle=45, vjust=0.9, hjust=1)) + scale_x_discrete(name="Library", labels=c("CBAS_Bleached_1", "CBAS_Bleached_2", "CBAS_Bleached_3", "CBAS_Bleached_4", "CBAS_Bleached_5", "CBAS_Control_1", "CBAS_Control_2", "CBAS_Control_3", "CBAS_Control_4")) + facet_grid(Gen_set~Variable)
 
 ```
-**Figure 7.** TPM and FPKM distribution in datasets including all trinity genes (All Genes) and only trinity genes that could be translated with trandescoder (Transdecoded Genes). In general, libraries should have similar TPM/FPKM distributions to be comparable.
+**Figure 7.** TPM and FPKM distribution in datasets including all trinity genes (All transcripts) and only trinity genes that could be translated with trandescoder (Transdecoded transcripts). In general, libraries should have similar TPM/FPKM distributions to be comparable.
 
 ***
 
@@ -561,15 +561,14 @@ write.csv(under_deg_names, "~/Repos/CBAS/Results/DEGs/under_degs_p001_2LFC.csv")
 
 
 ```{r expression_heat_maps, echo=FALSE, fig.align='center', fig.height=15, fig.width=10}
-
+par(oma=c(4,2,2,4))
 #first generate a list of genes with a high LFC between treatments
 highLFC_deg_names<-rownames(subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & abs(log2FoldChange) >= 6.0))
 
 #then use those genes to present a heatmap
-heatmap.2(log2(counts(CBAS_DeSeq_Transdecoded_Only_NoOutliers, normalized=T)[rownames(CBAS_DeSeq_Transdecoded_Only_NoOutliers) %in% highLFC_deg_names, ]+1), scale="row", trace = "none", dendrogram = "column", col= colorRampPalette(rev(brewer.pal(9, "RdBu"))))
+heatmap.2(log2(counts(CBAS_DeSeq_Transdecoded_Only_NoOutliers, normalized=T)[rownames(CBAS_DeSeq_Transdecoded_Only_NoOutliers) %in% highLFC_deg_names, ]+1), cexCol=1, cexRow=0.8, scale="row", trace = "none", dendrogram = "column", col= colorRampPalette(rev(brewer.pal(9, "RdBu"))))
 
 ```
-
 **Figure 13.** Heatplot showing transcripts with a high log-fold change (LFC $\geq$ 6) between treatments.
 
 ***
