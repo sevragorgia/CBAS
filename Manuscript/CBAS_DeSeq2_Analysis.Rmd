@@ -564,8 +564,21 @@ write.csv(under_deg_names, "~/Repos/CBAS/Results/DEGs/under_degs_p001_2LFC.csv")
 
 #merge under and over datasets with results object to sort by wald stat or p-value and produce a heat map.
 
-#merge(CBAS_DeSeq_Transdecoded_Only_NoOutliers_log2Counts_Over,CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results[rownames(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results) %in% over_deg_names, ], by="row.names", all=T)
-#heatmap.2(log2(counts(CBAS_DeSeq_Transdecoded_Only_NoOutliers, normalized=T)[rownames(CBAS_DeSeq_Transdecoded_Only_NoOutliers) %in% over_deg_names, ]+1), scale="row", trace = "none", dendrogram = "column", col= colorRampPalette(rev(brewer.pal(9, "RdBu"))))
+#CBAS_DeSeq_Transdecoded_Only_NoOutliers_log2Counts_Over<-log2(counts(CBAS_DeSeq_Transdecoded_Only_NoOutliers, normalized=T)[rownames(CBAS_DeSeq_Transdecoded_Only_NoOutliers) %in% over_deg_names, ]+0.0001)
+
+#CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results_Over<-CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results[rownames(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results) %in% over_deg_names, ]
+
+
+
+#CBAS_DeSeq_Transdecoded_Only_NoOutliers_log2Counts_Over<-merge(CBAS_DeSeq_Transdecoded_Only_NoOutliers_log2Counts_Over,CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results[rownames(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results) %in% over_deg_names, ], by="row.names", all=T)
+
+#CBAS_DeSeq_Transdecoded_Only_NoOutliers_log2Counts_Over<-CBAS_DeSeq_Transdecoded_Only_NoOutliers_log2Counts_Over[order(CBAS_DeSeq_Transdecoded_Only_NoOutliers_log2Counts_Over$padj),]
+
+#heatmap.2(CBAS_DeSeq_Transdecoded_Only_NoOutliers_log2Counts_Over[], scale="row", trace = "none", dendrogram = "column", col= colorRampPalette(rev(brewer.pal(9, "RdBu"))))
+
+
+CBAS_DeSeq_Transdecoded_Only_NoOutliers_log2Counts_Under<-log2(counts(CBAS_DeSeq_Transdecoded_Only_NoOutliers, normalized=T)[rownames(CBAS_DeSeq_Transdecoded_Only_NoOutliers) %in% under_deg_names, ]+0.0001)
+
 
 #merge(CBAS_DeSeq_Transdecoded_Only_NoOutliers_log2Counts_Under,CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results[rownames(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results) %in% under_deg_names, ], by="row.names", all=T)
 #heatmap.2(log2(counts(CBAS_DeSeq_Transdecoded_Only_NoOutliers, normalized=T)[rownames(CBAS_DeSeq_Transdecoded_Only_NoOutliers) %in% under_deg_names, ]+1), scale="row", trace = "none", dendrogram = "column", col= colorRampPalette(rev(brewer.pal(9, "RdBu"))))
