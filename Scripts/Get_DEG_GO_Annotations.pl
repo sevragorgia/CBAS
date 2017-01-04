@@ -1,4 +1,4 @@
-  #!/usr/bin/perl
+#!/usr/bin/perl
 
 #Sergio Vargas R. 2015. Munich, Germany
 
@@ -36,7 +36,7 @@ The following options have to be provided:
 A normal command line would look like:
 	perl Get_GO_Annotations.pl --background back.csv --degs up.csv --component component_go_annotations.csv
 
-The options --background, --up and --back requires you to pass a list of transcripts of interest which GOs will be fetched.
+The options --background and --degs requires you to pass a list of transcripts of interest which GOs will be fetched.
 
 The list is simply a list of transcripts with no headers, footers or blank lines, e.g.:
 
@@ -56,21 +56,7 @@ TR3|c0_g1_i1	GO:0005524,GO:0008270,GO:0031072,GO:0046872,GO:0051082,GO:0051082
 
 it extracts the transcript name and the associated annotations and saves them if the transcript is list of background, up or down regulated genes.
 
-The script produces the following output files:
-
-function_up.csv
-function_down.csv
-function_background.csv
-
-process_up.tsv
-process_down.tsv
-process_background.tsv
-
-component_up.tsv
-component_down.tsv
-component_background.tsv
-
-with the go terms for each transcript as follows:
+The script produces output files ending wiht .function.gos, .process.gos and component.gos with the go terms for each transcript as follows:
 
 TR41535|c9_g1_i1	GO:XXXX,GO:YYYY
 

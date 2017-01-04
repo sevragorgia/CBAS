@@ -16,6 +16,8 @@ library("geneplotter")
 library("RColorBrewer")
 library("genefilter")
 
+library("topGO")
+
 library("BiocParallel")
 register(MulticoreParam(4))
 
@@ -547,15 +549,15 @@ hist(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$pvalue, main = "", xlab="p-
 ```{r differential_expression_analysis_2, include=FALSE, results='hide'}
 #get significant genes
 degs_names<-rownames(subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & abs(log2FoldChange) >= 2))
-write.csv(degs_names, "~/Repos/CBAS/Results/DEGs/all_degs_p001_2LFC.csv")
+write.csv(degs_names, "../Results/DEGs/all_degs_p001_2LFC.csv")
 
 #get significantly overexpressed in treatment:
 over_deg_names<-rownames(subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & log2FoldChange >= 2))
-write.csv(over_deg_names, "~/Repos/CBAS/Results/DEGs/over_degs_p001_2LFC.csv")
+write.csv(over_deg_names, "../Results/DEGs/over_degs_p001_2LFC.csv")
 
 #get significantly underexpressed in treatment:
 under_deg_names<-rownames(subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & log2FoldChange <= -2))
-write.csv(under_deg_names, "~/Repos/CBAS/Results/DEGs/under_degs_p001_2LFC.csv")
+write.csv(under_deg_names, "../Results/DEGs/under_degs_p001_2LFC.csv")
 
 ```
 
@@ -597,9 +599,9 @@ GO_Over_Background_Gene_Names<-setdiff(GO_Over_Background_Gene_Names, over_deg_n
 GO_Under_Background_Gene_Names<-setdiff(GO_Under_Background_Gene_Names, under_deg_names)
 
 #save the names:
-write.csv(GO_Background_Gene_Names, "~/Repos/CBAS/Results/DEGs/Back_degs_p001_2LFC.csv")
-write.csv(GO_Over_Background_Gene_Names, "~/Repos/CBAS/Results/DEGs/Back_over_degs_p001_2LFC.csv")
-write.csv(GO_Under_Background_Gene_Names, "~/Repos/CBAS/Results/DEGs/Back_under_degs_p001_2LFC.csv")
+write.csv(GO_Background_Gene_Names, "../Results/DEGs/Back_degs_p001_2LFC.csv")
+write.csv(GO_Over_Background_Gene_Names, "../Results/DEGs/Back_over_degs_p001_2LFC.csv")
+write.csv(GO_Under_Background_Gene_Names, "../Results/DEGs/Back_under_degs_p001_2LFC.csv")
 ```
 
 ```{r plot_back_vs_forground_dist, echo=FALSE, fig.align='center', fig.height=10, fig.width=10}
@@ -616,6 +618,40 @@ multidensity( list(fore=log2(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results[ove
 
 multidensity( list(fore=log2(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results[under_deg_names, "baseMean"]),  back=log2(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results[GO_Under_Background_Gene_Names, "baseMean"])),  xlab="log2 mean counts", main = "")
 
+```
+
+#HERE
+
+```{r GO_Function_analysis, include=FALSE, results='hide'}
+
+#for this step you need to run the script Get_DEG_GO_Annotation.pl, which will take a list of transcripts and will return a TopGO ready file for the following analyses
+#using the background and degs and the GO annotations for the transcripts in the universe use topGO to assess enrichment
+
+#function GO analysis
+alldegs_Function_GO<-readMappings("../Results/GOs/all_degs_p001_2LFC.functions.gos")
+allback_Function_GO<-readMappings("../Results/GOs/Back_degs_p001_2LFC.functions.gos")
+
+universe_for_function_topgo<-c(alldegs_Function_GO, allback_Function_GO)
+
+#get names of genes in different groups
+genes_of_interest_for_function<-names(alldegs_Function_GO)
+genes_in_background_for_function<-names(allback_Function_GO)
+genes_in_universe_for_function<-names(universe_for_function_topgo)
+
+#get the list of genes of interest in the universe
+genes_of_interest_list_for_function<-factor(as.integer(genes_in_universe_for_function %in% genes_of_interest_for_function))
+names(genes_of_interest_list_for_function)<-genes_in_universe_for_function
+
+#create a topGO object for Molecular Function
+functions_go_data<-new("topGOdata", ontology="MF", allGenes=genes_of_interest_list_for_function, annot=annFUN.gene2GO, gene2GO=universe_for_function_topgo)
+
+#create a test object
+resultsFisher_functions<-runTest(functions_go_data, algorithm = "classic", statistic="fisher")
+
+#generate table of results
+GenTable(functions_go_data, classic=resultsFisher_functions, topNodes=50)
+#generate graph of results
+showSigOfNodes(functions_go_data, score(resultsFisher_functions), useInfo = "all")
 ```
 
 #Discussion
