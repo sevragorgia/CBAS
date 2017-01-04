@@ -705,6 +705,90 @@ GenTable(over_component_go_data, classic=over_resultsFisher_component, topNodes=
 #generate graph of results
 #showSigOfNodes(over_component_go_data, score(over_resultsFisher_component), useInfo = "all")
 
+```
+
+```{r Under_GO_analysis, include=FALSE, results='hide'}
+#underexpressed genes only
+
+#function GO analysis
+underdegs_Function_GO<-readMappings("../Results/GOs/under_degs_p001_2LFC.functions.gos")
+underback_Function_GO<-readMappings("../Results/GOs/Back_under_degs_p001_2LFC.functions.gos")
+
+under_universe_for_function_topgo<-c(underdegs_Function_GO, underback_Function_GO)
+
+#get names of genes in different groups
+under_genes_of_interest_for_function<-names(underdegs_Function_GO)
+under_genes_in_background_for_function<-names(underback_Function_GO)
+under_genes_in_universe_for_function<-names(under_universe_for_function_topgo)
+
+#get the list of genes of interest in the universe
+under_genes_of_interest_list_for_function<-factor(as.integer(under_genes_in_universe_for_function %in% under_genes_of_interest_for_function))
+names(under_genes_of_interest_list_for_function)<-under_genes_in_universe_for_function
+
+#create a topGO object for Molecular Function
+under_functions_go_data<-new("topGOdata", ontology="MF", allGenes=under_genes_of_interest_list_for_function, annot=annFUN.gene2GO, gene2GO=under_universe_for_function_topgo)
+
+#create a test object
+under_resultsFisher_functions<-runTest(under_functions_go_data, algorithm = "classic", statistic="fisher")
+
+#generate table of results
+GenTable(under_functions_go_data, classic=under_resultsFisher_functions, topNodes=50)
+#generate graph of results
+#showSigOfNodes(under_functions_go_data, score(under_resultsFisher_functions), useInfo = "all")
+
+
+#process GO analysis
+underdegs_Process_GO<-readMappings("../Results/GOs/under_degs_p001_2LFC.processes.gos")
+underback_Process_GO<-readMappings("../Results/GOs/Back_under_degs_p001_2LFC.processes.gos")
+
+under_universe_for_process_topgo<-c(underdegs_Process_GO, underback_Process_GO)
+
+#get names of genes in different groups
+under_genes_of_interest_for_process<-names(underdegs_Process_GO)
+under_genes_in_background_for_process<-names(underback_Process_GO)
+under_genes_in_universe_for_process<-names(under_universe_for_process_topgo)
+
+#get the list of genes of interest in the universe
+under_genes_of_interest_list_for_process<-factor(as.integer(under_genes_in_universe_for_process %in% under_genes_of_interest_for_process))
+names(under_genes_of_interest_list_for_process)<-under_genes_in_universe_for_process
+
+#create a topGO object for Molecular Function
+under_process_go_data<-new("topGOdata", ontology="BP", allGenes=under_genes_of_interest_list_for_process, annot=annFUN.gene2GO, gene2GO=under_universe_for_process_topgo)
+
+#create a test object
+under_resultsFisher_process<-runTest(under_process_go_data, algorithm = "classic", statistic="fisher")
+
+#generate table of results
+GenTable(under_process_go_data, classic=under_resultsFisher_process, topNodes=50)
+#generate graph of results
+#showSigOfNodes(under_process_go_data, score(under_resultsFisher_process), useInfo = "all")
+
+
+#component GO analysis
+underdegs_Component_GO<-readMappings("../Results/GOs/under_degs_p001_2LFC.components.gos")
+underback_Component_GO<-readMappings("../Results/GOs/Back_under_degs_p001_2LFC.components.gos")
+
+under_universe_for_component_topgo<-c(underdegs_Component_GO, underback_Component_GO)
+
+#get names of genes in different groups
+under_genes_of_interest_for_component<-names(underdegs_Component_GO)
+under_genes_in_background_for_component<-names(underback_Component_GO)
+under_genes_in_universe_for_component<-names(under_universe_for_component_topgo)
+
+#get the list of genes of interest in the universe
+under_genes_of_interest_list_for_component<-factor(as.integer(under_genes_in_universe_for_component %in% under_genes_of_interest_for_component))
+names(under_genes_of_interest_list_for_component)<-under_genes_in_universe_for_component
+
+#create a topGO object for Molecular Function
+under_component_go_data<-new("topGOdata", ontology="CC", allGenes=under_genes_of_interest_list_for_component, annot=annFUN.gene2GO, gene2GO=under_universe_for_component_topgo)
+
+#create a test object
+under_resultsFisher_component<-runTest(under_component_go_data, algorithm = "classic", statistic="fisher")
+
+#generate table of results
+GenTable(under_component_go_data, classic=under_resultsFisher_component, topNodes=50)
+#generate graph of results
+#showSigOfNodes(under_component_go_data, score(under_resultsFisher_component), useInfo = "all")
 
 ```
 
