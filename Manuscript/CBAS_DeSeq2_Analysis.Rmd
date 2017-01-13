@@ -5,6 +5,7 @@ date: 2016-07-26
 output: github_document
 ---
 ```{r load_libraries, include=FALSE}
+library(knitr)
 library(ggplot2)
 library(reshape2)
 
@@ -534,7 +535,7 @@ plotMA(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, alpha=0.01)
 
 ***
 
-It is worth noting that DeSeq2 was able to adecuately model the variance in the dataset and could correctly calculate the p-values for the transcripts analyzed (Fig 12).
+It is worth noting that DeSeq2 was able to adecuately model the variance in the dataset and could correctly calculate the p-values for the analyzed transcripts (Fig 12).
 
 
 ```{r probability_plot, echo=FALSE, fig.align='center'}
@@ -563,17 +564,17 @@ under_deg_names<-rownames(subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results
 
 
 ```{r expression_heat_maps, echo=FALSE, fig.align='center', fig.height=15, fig.width=10}
-par(oma=c(4,2,2,4))
+#par(oma=c(4,2,2,4))
 #first generate a list of genes with a high LFC between treatments
-highLFC_deg_names<-rownames(subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & abs(log2FoldChange) >= 6.0))
+#highLFC_deg_names<-rownames(subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & abs(log2FoldChange) >= 6.0))
 
 #then use those genes to present a heatmap
-heatmap.2(log2(counts(CBAS_DeSeq_Transdecoded_Only_NoOutliers, normalized=T)[rownames(CBAS_DeSeq_Transdecoded_Only_NoOutliers) %in% highLFC_deg_names, ]+1), cexCol=1, cexRow=0.8, scale="row", trace = "none", dendrogram = "column", col= colorRampPalette(rev(brewer.pal(9, "RdBu"))))
+#heatmap.2(log2(counts(CBAS_DeSeq_Transdecoded_Only_NoOutliers, normalized=T)[rownames(CBAS_DeSeq_Transdecoded_Only_NoOutliers) %in% highLFC_deg_names, ]+1), cexCol=1, cexRow=0.8, scale="row", trace = "none", dendrogram = "column", col= colorRampPalette(rev(brewer.pal(9, "RdBu"))))
 
+#**Figure 13.** Heatplot showing transcripts with a high log-fold change (LFC $\geq$ 6) between treatments.
+
+#***
 ```
-**Figure 13.** Heatplot showing transcripts with a high log-fold change (LFC $\geq$ 6) between treatments.
-
-***
 
 ##Inmune response transcripts are highly repressed when symbionts are not active or absent
 
@@ -604,6 +605,8 @@ GO_Under_Background_Gene_Names<-setdiff(GO_Under_Background_Gene_Names, under_de
 #write.csv(GO_Under_Background_Gene_Names, "../Results/DEGs/Back_under_degs_p001_2LFC.csv")
 ```
 
+For Gene Ontology (GO) enrichment analyses we were able to select a background set of transcripts showing similar expression patterns but no significant change between conditions for all transcripts as well as for overexpressed and underexpressed transcripts (Fig. 13). Enriched Function, Process and Compartment GO terms for over- and underexpressed genes can be found in Tables 5-10.
+
 ```{r plot_back_vs_forground_dist, echo=FALSE, fig.align='center', fig.height=10, fig.width=10}
 #number of background genes
 #length(GO_Background_Gene_names)
@@ -620,10 +623,7 @@ multidensity( list(fore=log2(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results[und
 
 ```
 
-#HERE
-
 ```{r Over_GO_analysis, include=FALSE, results='hide'}
-
 #overexpressed genes only
 #function GO analysis
 overdegs_Function_GO<-readMappings("../Results/GOs/over_degs_p001_2LFC.functions.gos")
@@ -647,10 +647,9 @@ over_functions_go_data<-new("topGOdata", ontology="MF", allGenes=over_genes_of_i
 over_resultsFisher_functions<-runTest(over_functions_go_data, algorithm = "classic", statistic="fisher")
 
 #generate table of results
-GenTable(over_functions_go_data, classic=over_resultsFisher_functions, topNodes=50)
+#kable(GenTable(over_functions_go_data, classic=over_resultsFisher_functions, topNodes=50))
 #generate graph of results
 #showSigOfNodes(over_functions_go_data, score(over_resultsFisher_functions), useInfo = "all")
-
 
 #process GO analysis
 overdegs_Process_GO<-readMappings("../Results/GOs/over_degs_p001_2LFC.processes.gos")
@@ -674,7 +673,7 @@ over_process_go_data<-new("topGOdata", ontology="BP", allGenes=over_genes_of_int
 over_resultsFisher_process<-runTest(over_process_go_data, algorithm = "classic", statistic="fisher")
 
 #generate table of results
-GenTable(over_process_go_data, classic=over_resultsFisher_process, topNodes=50)
+#kable(GenTable(over_process_go_data, classic=over_resultsFisher_process, topNodes=50))
 #generate graph of results
 #showSigOfNodes(over_process_go_data, score(over_resultsFisher_process), useInfo = "all")
 
@@ -701,10 +700,29 @@ over_component_go_data<-new("topGOdata", ontology="CC", allGenes=over_genes_of_i
 over_resultsFisher_component<-runTest(over_component_go_data, algorithm = "classic", statistic="fisher")
 
 #generate table of results
-GenTable(over_component_go_data, classic=over_resultsFisher_component, topNodes=50)
+#kable(GenTable(over_component_go_data, classic=over_resultsFisher_component, topNodes=50))
 #generate graph of results
 #showSigOfNodes(over_component_go_data, score(over_resultsFisher_component), useInfo = "all")
 
+```
+
+Table 5
+
+```{r Generate_Over_GO_Function_analysis_table, echo=FALSE}
+#generate table of results
+kable(GenTable(over_functions_go_data, classic=over_resultsFisher_functions, topNodes=50))
+```
+
+Table 6
+```{r Generate_Over_GO_Process_analysis_table, echo=FALSE}
+#generate table of results
+kable(GenTable(over_process_go_data, classic=over_resultsFisher_process, topNodes=50))
+```
+
+Table 7
+```{r Generate_Over_GO_Component_analysis_table, echo=FALSE}
+#generate table of results
+kable(GenTable(over_component_go_data, classic=over_resultsFisher_component, topNodes=50))
 ```
 
 ```{r Under_GO_analysis, include=FALSE, results='hide'}
@@ -732,7 +750,7 @@ under_functions_go_data<-new("topGOdata", ontology="MF", allGenes=under_genes_of
 under_resultsFisher_functions<-runTest(under_functions_go_data, algorithm = "classic", statistic="fisher")
 
 #generate table of results
-GenTable(under_functions_go_data, classic=under_resultsFisher_functions, topNodes=50)
+#GenTable(under_functions_go_data, classic=under_resultsFisher_functions, topNodes=50)
 #generate graph of results
 #showSigOfNodes(under_functions_go_data, score(under_resultsFisher_functions), useInfo = "all")
 
@@ -759,7 +777,7 @@ under_process_go_data<-new("topGOdata", ontology="BP", allGenes=under_genes_of_i
 under_resultsFisher_process<-runTest(under_process_go_data, algorithm = "classic", statistic="fisher")
 
 #generate table of results
-GenTable(under_process_go_data, classic=under_resultsFisher_process, topNodes=50)
+#GenTable(under_process_go_data, classic=under_resultsFisher_process, topNodes=50)
 #generate graph of results
 #showSigOfNodes(under_process_go_data, score(under_resultsFisher_process), useInfo = "all")
 
@@ -786,9 +804,86 @@ under_component_go_data<-new("topGOdata", ontology="CC", allGenes=under_genes_of
 under_resultsFisher_component<-runTest(under_component_go_data, algorithm = "classic", statistic="fisher")
 
 #generate table of results
-GenTable(under_component_go_data, classic=under_resultsFisher_component, topNodes=50)
+#GenTable(under_component_go_data, classic=under_resultsFisher_component, topNodes=50)
 #generate graph of results
 #showSigOfNodes(under_component_go_data, score(under_resultsFisher_component), useInfo = "all")
+
+```
+
+Table 8
+```{r Generate_Under_GO_Function_analysis_table, echo=FALSE}
+kable(GenTable(under_functions_go_data, classic=under_resultsFisher_functions, topNodes=50))
+```
+
+Table 9
+```{r Generate_Under_GO_Process_analysis_table, echo=FALSE}
+kable(GenTable(under_process_go_data, classic=under_resultsFisher_process, topNodes=50))
+```
+
+Table 10
+```{r Generate_Under_GO_Component_analysis_table, echo=FALSE}
+kable(GenTable(under_component_go_data, classic=under_resultsFisher_component, topNodes=50))
+```
+
+#PFAM
+```{r Pfam_over_enrichment_analysis, include=FALSE, results='hide'}
+
+over_degs_pfam<-read.csv("../Results/Pfam/over_degs_p001_2LFC.pfam", sep="\t", head=F)
+over_back_pfam<-read.csv("../Results/Pfam/Back_over_degs_p001_2LFC.pfam", sep = "\t", head=F)
+
+over_domain_col<-c()
+over_domain_in_degs_col<-c()
+over_domain_in_back_col<-c()
+over_domain_pval_col<-c()
+
+over_count_in_degs<-nrow(degs_pfam)
+over_count_in_back<-nrow(back_pfam)
+
+over_domains<-read.csv("../Results/Pfam/over_degs_p001_2LFC.pfam.list", sep="\t", head=F)
+
+for(over_domain in over_domains$V2){
+  over_domain_count_in_degs<-nrow(over_degs_pfam[grep(over_domain, over_degs_pfam$V2),])
+  over_domain_count_in_back<-nrow(over_back_pfam[grep(over_domain, over_back_pfam$V2),])
+
+  over_domain_col<-c(over_domain_col,over_domain)
+  over_domain_in_degs_col<-c(over_domain_in_degs_col, over_domain_count_in_degs)
+  over_domain_in_back_col<-c(over_domain_in_back_col, over_domain_count_in_back)
+  
+  over_domain_pval_col<-c(over_domain_pval_col, phyper(over_domain_count_in_degs,over_domain_count_in_back,(over_count_in_back-over_domain_count_in_back),over_count_in_degs, lower.tail = F))
+}
+
+over_pfam_domain_enrichment_df<-data.frame(over_domain_col, over_domain_in_degs_col, over_domain_in_back_col, over_domain_pval_col)
+
+```
+
+```{r Pfam_under_enrichment_analysis, include=FALSE, results='hide'}
+#yes I know this code could be modularized better...
+
+under_degs_pfam<-read.csv("../Results/Pfam/under_degs_p001_2LFC.pfam", sep="\t", head=F)
+under_back_pfam<-read.csv("../Results/Pfam/Back_under_degs_p001_2LFC.pfam", sep = "\t", head=F)
+
+under_domain_col<-c()
+under_domain_in_degs_col<-c()
+under_domain_in_back_col<-c()
+under_domain_pval_col<-c()
+
+under_count_in_degs<-nrow(degs_pfam)
+under_count_in_back<-nrow(back_pfam)
+
+under_domains<-read.csv("../Results/Pfam/under_degs_p001_2LFC.pfam.list", sep="\t", head=F)
+
+for(under_domain in under_domains$V2){
+  under_domain_count_in_degs<-nrow(under_degs_pfam[grep(under_domain, under_degs_pfam$V2),])
+  under_domain_count_in_back<-nrow(under_back_pfam[grep(under_domain, under_back_pfam$V2),])
+
+  under_domain_col<-c(under_domain_col,under_domain)
+  under_domain_in_degs_col<-c(under_domain_in_degs_col, under_domain_count_in_degs)
+  under_domain_in_back_col<-c(under_domain_in_back_col, under_domain_count_in_back)
+  
+  under_domain_pval_col<-c(under_domain_pval_col, phyper(under_domain_count_in_degs,under_domain_count_in_back,(under_count_in_back-under_domain_count_in_back),under_count_in_degs, lower.tail = F))
+}
+
+under_pfam_domain_enrichment_df<-data.frame(under_domain_col, under_domain_in_degs_col, under_domain_in_back_col, under_domain_pval_col)
 
 ```
 
