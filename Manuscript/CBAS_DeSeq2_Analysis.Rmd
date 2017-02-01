@@ -576,7 +576,7 @@ under_deg_names<-rownames(subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results
 #***
 ```
 
-##Inmune response transcripts are highly repressed when symbionts are not active or absent
+##The expression of immune response related transcripts changes between symbiontic states
 
 ```{r prepare_for_GO_analysis, include=FALSE, results='hide'}
 #ontologies: MF=Molecular Function, BP=Biochemical Process, CC=Cellular Component
@@ -706,23 +706,23 @@ over_resultsFisher_component<-runTest(over_component_go_data, algorithm = "class
 
 ```
 
-Table 5
+Table 5: GO-Term functions overrepresented in the set of overexpressed DEGs.
 
 ```{r Generate_Over_GO_Function_analysis_table, echo=FALSE}
 #generate table of results
-kable(GenTable(over_functions_go_data, classic=over_resultsFisher_functions, topNodes=50))
+kable(GenTable(over_functions_go_data, classic=over_resultsFisher_functions, topNodes=15))
 ```
 
-Table 6
+Table 6: GO-Term processes overrepresented in the set of overexpressed DEGs.
 ```{r Generate_Over_GO_Process_analysis_table, echo=FALSE}
 #generate table of results
-kable(GenTable(over_process_go_data, classic=over_resultsFisher_process, topNodes=50))
+kable(GenTable(over_process_go_data, classic=over_resultsFisher_process, topNodes=15))
 ```
 
-Table 7
+Table 7: GO-Term compartments overrepresented in the set of overexpressed DEGs.
 ```{r Generate_Over_GO_Component_analysis_table, echo=FALSE}
 #generate table of results
-kable(GenTable(over_component_go_data, classic=over_resultsFisher_component, topNodes=50))
+kable(GenTable(over_component_go_data, classic=over_resultsFisher_component, topNodes=15))
 ```
 
 ```{r Under_GO_analysis, include=FALSE, results='hide'}
@@ -810,22 +810,22 @@ under_resultsFisher_component<-runTest(under_component_go_data, algorithm = "cla
 
 ```
 
-Table 8
+Table 8: GO-Term functions overrepresented in the set of underexpressed DEGs.
 ```{r Generate_Under_GO_Function_analysis_table, echo=FALSE}
-kable(GenTable(under_functions_go_data, classic=under_resultsFisher_functions, topNodes=50))
+kable(GenTable(under_functions_go_data, classic=under_resultsFisher_functions, topNodes=15))
 ```
 
-Table 9
+Table 9: GO-Term processes overrepresented in the set of underexpressed DEGs.
 ```{r Generate_Under_GO_Process_analysis_table, echo=FALSE}
-kable(GenTable(under_process_go_data, classic=under_resultsFisher_process, topNodes=50))
+kable(GenTable(under_process_go_data, classic=under_resultsFisher_process, topNodes=15))
 ```
 
-Table 10
+Table 10: GO-Term compartments overrepresented in the set of underexpressed DEGs.
 ```{r Generate_Under_GO_Component_analysis_table, echo=FALSE}
-kable(GenTable(under_component_go_data, classic=under_resultsFisher_component, topNodes=50))
+kable(GenTable(under_component_go_data, classic=under_resultsFisher_component, topNodes=15))
 ```
 
-#PFAM
+##Pfam domains
 ```{r Pfam_over_enrichment_analysis, include=FALSE, results='hide'}
 
 over_degs_pfam<-read.csv("../Results/Pfam/over_degs_p001_2LFC.pfam", sep="\t", head=F)
@@ -836,8 +836,8 @@ over_domain_in_degs_col<-c()
 over_domain_in_back_col<-c()
 over_domain_pval_col<-c()
 
-over_count_in_degs<-nrow(degs_pfam)
-over_count_in_back<-nrow(back_pfam)
+over_count_in_degs<-nrow(over_degs_pfam)
+over_count_in_back<-nrow(over_back_pfam)
 
 over_domains<-read.csv("../Results/Pfam/over_degs_p001_2LFC.pfam.list", sep="\t", head=F)
 
@@ -852,7 +852,9 @@ for(over_domain in over_domains$V2){
   over_domain_pval_col<-c(over_domain_pval_col, phyper(over_domain_count_in_degs,over_domain_count_in_back,(over_count_in_back-over_domain_count_in_back),over_count_in_degs, lower.tail = F))
 }
 
-over_pfam_domain_enrichment_df<-data.frame(over_domain_col, over_domain_in_degs_col, over_domain_in_back_col, over_domain_pval_col)
+over_domain_pval_adjusted_col<-p.adjust(over_domain_pval_col, method="fdr")
+
+over_pfam_domain_enrichment_df<-data.frame(over_domain_col, over_domain_in_degs_col, over_domain_in_back_col, over_domain_pval_col, over_domain_pval_adjusted_col)
 
 ```
 
@@ -867,8 +869,8 @@ under_domain_in_degs_col<-c()
 under_domain_in_back_col<-c()
 under_domain_pval_col<-c()
 
-under_count_in_degs<-nrow(degs_pfam)
-under_count_in_back<-nrow(back_pfam)
+under_count_in_degs<-nrow(under_degs_pfam)
+under_count_in_back<-nrow(under_back_pfam)
 
 under_domains<-read.csv("../Results/Pfam/under_degs_p001_2LFC.pfam.list", sep="\t", head=F)
 
@@ -883,7 +885,9 @@ for(under_domain in under_domains$V2){
   under_domain_pval_col<-c(under_domain_pval_col, phyper(under_domain_count_in_degs,under_domain_count_in_back,(under_count_in_back-under_domain_count_in_back),under_count_in_degs, lower.tail = F))
 }
 
-under_pfam_domain_enrichment_df<-data.frame(under_domain_col, under_domain_in_degs_col, under_domain_in_back_col, under_domain_pval_col)
+under_domain_pval_adjusted_col<-p.adjust(under_domain_pval_col, method="fdr")
+
+under_pfam_domain_enrichment_df<-data.frame(under_domain_col, under_domain_in_degs_col, under_domain_in_back_col, under_domain_pval_col, under_domain_pval_adjusted_col)
 
 ```
 

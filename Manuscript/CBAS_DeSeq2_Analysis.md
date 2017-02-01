@@ -238,7 +238,7 @@ For Gene Ontology (GO) enrichment analyses we were able to select a background s
 
 <img src="CBAS_DeSeq2_Analysis_files/figure-markdown_github/plot_back_vs_forground_dist-1.png" style="display: block; margin: auto;" />
 
-Table 5
+Table 5: GO-Term functions overrepresented in the set of overexpressed DEGs.
 
 | GO.ID        | Term                                        |  Annotated|  Significant|  Expected| classic |
 |:-------------|:--------------------------------------------|----------:|------------:|---------:|:--------|
@@ -257,43 +257,8 @@ Table 5
 | <GO:0005507> | copper ion binding                          |         14|            7|      1.57| 0.00034 |
 | <GO:0004497> | monooxygenase activity                      |         17|            7|      1.90| 0.00142 |
 | <GO:0019783> | ubiquitin-like protein-specific protease... |         13|            6|      1.45| 0.00157 |
-| <GO:0017111> | nucleoside-triphosphatase activity          |        118|           24|     13.20| 0.00178 |
-| <GO:0035375> | zymogen binding                             |         14|            6|      1.57| 0.00250 |
-| <GO:0043130> | ubiquitin binding                           |         14|            6|      1.57| 0.00250 |
-| <GO:0016462> | pyrophosphatase activity                    |        121|           24|     13.53| 0.00256 |
-| <GO:0016817> | hydrolase activity, acting on acid anhyd... |        121|           24|     13.53| 0.00256 |
-| <GO:0016818> | hydrolase activity, acting on acid anhyd... |        121|           24|     13.53| 0.00256 |
-| <GO:0004843> | ubiquitin-specific protease activity        |         10|            5|      1.12| 0.00261 |
-| <GO:0036459> | ubiquitinyl hydrolase activity              |         10|            5|      1.12| 0.00261 |
-| <GO:0004175> | endopeptidase activity                      |        122|           24|     13.64| 0.00288 |
-| <GO:0032182> | ubiquitin-like protein binding              |         15|            6|      1.68| 0.00379 |
-| <GO:0016715> | oxidoreductase activity, acting on paire... |          7|            4|      0.78| 0.00403 |
-| <GO:0042393> | histone binding                             |         11|            5|      1.23| 0.00435 |
-| <GO:0004435> | phosphatidylinositol phospholipase C act... |          4|            3|      0.45| 0.00505 |
-| <GO:0004629> | phospholipase C activity                    |          4|            3|      0.45| 0.00505 |
-| <GO:0016682> | oxidoreductase activity, acting on diphe... |          4|            3|      0.45| 0.00505 |
-| <GO:0052716> | hydroquinone:oxygen oxidoreductase activ... |          4|            3|      0.45| 0.00505 |
-| <GO:0003824> | catalytic activity                          |        814|          107|     91.03| 0.00603 |
-| <GO:0060089> | molecular transducer activity               |        137|           25|     15.32| 0.00676 |
-| <GO:0005198> | structural molecule activity                |         84|           17|      9.39| 0.00900 |
-| <GO:0016705> | oxidoreductase activity, acting on paire... |         23|            7|      2.57| 0.01001 |
-| <GO:0016679> | oxidoreductase activity, acting on diphe... |          5|            3|      0.56| 0.01160 |
-| <GO:0036094> | small molecule binding                      |        394|           57|     44.06| 0.01191 |
-| <GO:0003746> | translation elongation factor activity      |          9|            4|      1.01| 0.01212 |
-| <GO:0003979> | UDP-glucose 6-dehydrogenase activity        |          2|            2|      0.22| 0.01244 |
-| <GO:0004614> | phosphoglucomutase activity                 |          2|            2|      0.22| 0.01244 |
-| <GO:0004796> | thromboxane-A synthase activity             |          2|            2|      0.22| 0.01244 |
-| <GO:0016868> | intramolecular transferase activity, pho... |          2|            2|      0.22| 0.01244 |
-| <GO:0050811> | GABA receptor binding                       |          2|            2|      0.22| 0.01244 |
-| <GO:0016491> | oxidoreductase activity                     |        115|           21|     12.86| 0.01287 |
-| <GO:0004872> | receptor activity                           |        126|           22|     14.09| 0.01833 |
-| <GO:0001882> | nucleoside binding                          |        329|           48|     36.79| 0.01934 |
-| <GO:0001883> | purine nucleoside binding                   |        329|           48|     36.79| 0.01934 |
-| <GO:0016853> | isomerase activity                          |         15|            5|      1.68| 0.01947 |
-| <GO:0008329> | signaling pattern recognition receptor a... |          6|            3|      0.67| 0.02130 |
-| <GO:0038187> | pattern recognition receptor activity       |          6|            3|      0.67| 0.02130 |
 
-Table 6
+Table 6: GO-Term processes overrepresented in the set of overexpressed DEGs.
 
 | GO.ID        | Term                                        |  Annotated|  Significant|  Expected| classic |
 |:-------------|:--------------------------------------------|----------:|------------:|---------:|:--------|
@@ -312,98 +277,28 @@ Table 6
 | <GO:0021891> | olfactory bulb interneuron development      |          7|            4|      0.77| 0.00372 |
 | <GO:0050920> | regulation of chemotaxis                    |         20|            7|      2.19| 0.00375 |
 | <GO:0009698> | phenylpropanoid metabolic process           |          4|            3|      0.44| 0.00475 |
-| <GO:0009808> | lignin metabolic process                    |          4|            3|      0.44| 0.00475 |
-| <GO:0009814> | defense response, incompatible interacti... |          4|            3|      0.44| 0.00475 |
-| <GO:0009816> | defense response to bacterium, incompati... |          4|            3|      0.44| 0.00475 |
-| <GO:0046271> | phenylpropanoid catabolic process           |          4|            3|      0.44| 0.00475 |
-| <GO:0046274> | lignin catabolic process                    |          4|            3|      0.44| 0.00475 |
-| <GO:0030163> | protein catabolic process                   |         81|           17|      8.87| 0.00492 |
-| <GO:0050772> | positive regulation of axonogenesis         |         12|            5|      1.31| 0.00619 |
-| <GO:0044257> | cellular protein catabolic process          |         70|           15|      7.66| 0.00668 |
-| <GO:0016578> | histone deubiquitination                    |          8|            4|      0.88| 0.00682 |
-| <GO:0021872> | forebrain generation of neurons             |          8|            4|      0.88| 0.00682 |
-| <GO:0021879> | forebrain neuron differentiation            |          8|            4|      0.88| 0.00682 |
-| <GO:0021884> | forebrain neuron development                |          8|            4|      0.88| 0.00682 |
-| <GO:0070646> | protein modification by small protein re... |         17|            6|      1.86| 0.00696 |
-| <GO:0001554> | luteolysis                                  |          5|            3|      0.55| 0.01091 |
-| <GO:0009767> | photosynthetic electron transport chain     |          5|            3|      0.55| 0.01091 |
-| <GO:0051932> | synaptic transmission, GABAergic            |          5|            3|      0.55| 0.01091 |
-| <GO:0061364> | apoptotic process involved in luteolysis    |          5|            3|      0.55| 0.01091 |
-| <GO:1903524> | positive regulation of blood circulation    |          5|            3|      0.55| 0.01091 |
-| <GO:0021772> | olfactory bulb development                  |          9|            4|      0.99| 0.01123 |
-| <GO:0021988> | olfactory lobe development                  |          9|            4|      0.99| 0.01123 |
-| <GO:0050770> | regulation of axonogenesis                  |         24|            7|      2.63| 0.01144 |
-| <GO:0001516> | prostaglandin biosynthetic process          |          2|            2|      0.22| 0.01192 |
-| <GO:0006065> | UDP-glucuronate biosynthetic process        |          2|            2|      0.22| 0.01192 |
-| <GO:0009737> | response to abscisic acid                   |          2|            2|      0.22| 0.01192 |
-| <GO:0009739> | response to gibberellin                     |          2|            2|      0.22| 0.01192 |
-| <GO:0010150> | leaf senescence                             |          2|            2|      0.22| 0.01192 |
-| <GO:0010207> | photosystem II assembly                     |          2|            2|      0.22| 0.01192 |
-| <GO:0010260> | organ senescence                            |          2|            2|      0.22| 0.01192 |
-| <GO:0014909> | smooth muscle cell migration                |          2|            2|      0.22| 0.01192 |
-| <GO:0014910> | regulation of smooth muscle cell migrati... |          2|            2|      0.22| 0.01192 |
-| <GO:0030002> | cellular anion homeostasis                  |          2|            2|      0.22| 0.01192 |
-| <GO:0030320> | cellular monovalent inorganic anion home... |          2|            2|      0.22| 0.01192 |
-| <GO:0030644> | cellular chloride ion homeostasis           |          2|            2|      0.22| 0.01192 |
-| <GO:0031644> | regulation of neurological system proces... |          2|            2|      0.22| 0.01192 |
-| <GO:0031646> | positive regulation of neurological syst... |          2|            2|      0.22| 0.01192 |
 
-Table 7
+Table 7: GO-Term compartments overrepresented in the set of overexpressed DEGs.
 
-| GO.ID        | Term                               |  Annotated|  Significant|  Expected| classic |
-|:-------------|:-----------------------------------|----------:|------------:|---------:|:--------|
-| <GO:0005618> | cell wall                          |         17|            9|      1.97| 3.3e-05 |
-| <GO:0030312> | external encapsulating structure   |         19|            9|      2.20| 0.00010 |
-| <GO:0005576> | extracellular region               |        344|           60|     39.92| 0.00016 |
-| <GO:0005615> | extracellular space                |         70|           17|      8.12| 0.00177 |
-| <GO:0042588> | zymogen granule                    |         14|            6|      1.62| 0.00304 |
-| <GO:0042589> | zymogen granule membrane           |         14|            6|      1.62| 0.00304 |
-| <GO:0005874> | microtubule                        |         45|           12|      5.22| 0.00373 |
-| <GO:0005773> | vacuole                            |         69|           16|      8.01| 0.00401 |
-| <GO:0045335> | phagocytic vesicle                 |         16|            6|      1.86| 0.00663 |
-| <GO:0030667> | secretory granule membrane         |         21|            7|      2.44| 0.00708 |
-| <GO:0043083> | synaptic cleft                     |          8|            4|      0.93| 0.00843 |
-| <GO:0044434> | chloroplast part                   |         23|            7|      2.67| 0.01221 |
-| <GO:0044435> | plastid part                       |         23|            7|      2.67| 0.01221 |
-| <GO:0000325> | plant-type vacuole                 |          2|            2|      0.23| 0.01340 |
-| <GO:0010282> | senescence-associated vacuole      |          2|            2|      0.23| 0.01340 |
-| <GO:0005578> | proteinaceous extracellular matrix |         65|           14|      7.54| 0.01377 |
-| <GO:0031012> | extracellular matrix               |         66|           14|      7.66| 0.01573 |
-| <GO:0005581> | collagen trimer                    |         14|            5|      1.62| 0.01659 |
-| <GO:0009507> | chloroplast                        |         30|            8|      3.48| 0.01728 |
-| <GO:0009536> | plastid                            |         30|            8|      3.48| 0.01728 |
-| <GO:0030424> | axon                               |         61|           13|      7.08| 0.01898 |
-| <GO:0030673> | axolemma                           |         10|            4|      1.16| 0.02096 |
-| <GO:0032589> | neuron projection membrane         |         10|            4|      1.16| 0.02096 |
-| <GO:0019898> | extrinsic component of membrane    |         37|            9|      4.29| 0.02152 |
-| <GO:0009535> | chloroplast thylakoid membrane     |         15|            5|      1.74| 0.02259 |
-| <GO:0055035> | plastid thylakoid membrane         |         15|            5|      1.74| 0.02259 |
-| <GO:0009534> | chloroplast thylakoid              |         16|            5|      1.86| 0.02985 |
-| <GO:0031256> | leading edge membrane              |         16|            5|      1.86| 0.02985 |
-| <GO:0031976> | plastid thylakoid                  |         16|            5|      1.86| 0.02985 |
-| <GO:0005764> | lysosome                           |         52|           11|      6.03| 0.03160 |
-| <GO:0033267> | axon part                          |         34|            8|      3.95| 0.03574 |
-| <GO:0034357> | photosynthetic membrane            |         17|            5|      1.97| 0.03842 |
-| <GO:0042651> | thylakoid membrane                 |         17|            5|      1.97| 0.03842 |
-| <GO:0044436> | thylakoid part                     |         17|            5|      1.97| 0.03842 |
-| <GO:0000323> | lytic vacuole                      |         54|           11|      6.27| 0.04072 |
-| <GO:0030670> | phagocytic vesicle membrane        |         12|            4|      1.39| 0.04104 |
-| <GO:0030141> | secretory granule                  |         35|            8|      4.06| 0.04188 |
-| <GO:0031410> | cytoplasmic vesicle                |        111|           19|     12.88| 0.04694 |
-| <GO:0009579> | thylakoid                          |         18|            5|      2.09| 0.04835 |
-| <GO:0030139> | endocytic vesicle                  |         25|            6|      2.90| 0.06045 |
-| <GO:0000786> | nucleosome                         |          4|            2|      0.46| 0.06860 |
-| <GO:0044815> | DNA packaging complex              |          4|            2|      0.46| 0.06860 |
-| <GO:0005788> | endoplasmic reticulum lumen        |         14|            4|      1.62| 0.06905 |
-| <GO:0043195> | terminal bouton                    |         14|            4|      1.62| 0.06905 |
-| <GO:0009279> | cell outer membrane                |          9|            3|      1.04| 0.07614 |
-| <GO:0009523> | photosystem II                     |          9|            3|      1.04| 0.07614 |
-| <GO:0044304> | main axon                          |         15|            4|      1.74| 0.08594 |
-| <GO:0005737> | cytoplasm                          |        987|          123|    114.53| 0.09142 |
-| <GO:0000790> | nuclear chromatin                  |         10|            3|      1.16| 0.09979 |
-| <GO:0009521> | photosystem                        |         10|            3|      1.16| 0.09979 |
+| GO.ID        | Term                             |  Annotated|  Significant|  Expected| classic |
+|:-------------|:---------------------------------|----------:|------------:|---------:|:--------|
+| <GO:0005618> | cell wall                        |         17|            9|      1.97| 3.3e-05 |
+| <GO:0030312> | external encapsulating structure |         19|            9|      2.20| 0.00010 |
+| <GO:0005576> | extracellular region             |        344|           60|     39.92| 0.00016 |
+| <GO:0005615> | extracellular space              |         70|           17|      8.12| 0.00177 |
+| <GO:0042588> | zymogen granule                  |         14|            6|      1.62| 0.00304 |
+| <GO:0042589> | zymogen granule membrane         |         14|            6|      1.62| 0.00304 |
+| <GO:0005874> | microtubule                      |         45|           12|      5.22| 0.00373 |
+| <GO:0005773> | vacuole                          |         69|           16|      8.01| 0.00401 |
+| <GO:0045335> | phagocytic vesicle               |         16|            6|      1.86| 0.00663 |
+| <GO:0030667> | secretory granule membrane       |         21|            7|      2.44| 0.00708 |
+| <GO:0043083> | synaptic cleft                   |          8|            4|      0.93| 0.00843 |
+| <GO:0044434> | chloroplast part                 |         23|            7|      2.67| 0.01221 |
+| <GO:0044435> | plastid part                     |         23|            7|      2.67| 0.01221 |
+| <GO:0000325> | plant-type vacuole               |          2|            2|      0.23| 0.01340 |
+| <GO:0010282> | senescence-associated vacuole    |          2|            2|      0.23| 0.01340 |
 
-Table 8
+Table 8: GO-Term functions overrepresented in the set of underexpressed DEGs.
 
 | GO.ID        | Term                                        |  Annotated|  Significant|  Expected| classic |
 |:-------------|:--------------------------------------------|----------:|------------:|---------:|:--------|
@@ -422,43 +317,8 @@ Table 8
 | <GO:0005432> | calcium:sodium antiporter activity          |         12|            8|      1.62| 3.2e-05 |
 | <GO:0015368> | calcium:cation antiporter activity          |         12|            8|      1.62| 3.2e-05 |
 | <GO:0017111> | nucleoside-triphosphatase activity          |        471|           94|     63.67| 3.3e-05 |
-| <GO:0020037> | heme binding                                |         72|           23|      9.73| 4.2e-05 |
-| <GO:0008191> | metalloendopeptidase inhibitor activity     |          5|            5|      0.68| 4.5e-05 |
-| <GO:0010576> | metalloenzyme regulator activity            |          5|            5|      0.68| 4.5e-05 |
-| <GO:0048551> | metalloenzyme inhibitor activity            |          5|            5|      0.68| 4.5e-05 |
-| <GO:0015081> | sodium ion transmembrane transporter act... |         23|           11|      3.11| 7.4e-05 |
-| <GO:0016776> | phosphotransferase activity, phosphate g... |         20|           10|      2.70| 9.9e-05 |
-| <GO:0016462> | pyrophosphatase activity                    |        486|           94|     65.70| 0.00011 |
-| <GO:0016817> | hydrolase activity, acting on acid anhyd... |        487|           94|     65.83| 0.00012 |
-| <GO:0016818> | hydrolase activity, acting on acid anhyd... |        487|           94|     65.83| 0.00012 |
-| <GO:0015491> | cation:cation antiporter activity           |         14|            8|      1.89| 0.00015 |
-| <GO:0004497> | monooxygenase activity                      |         55|           18|      7.44| 0.00020 |
-| <GO:0015298> | solute:cation antiporter activity           |         18|            9|      2.43| 0.00022 |
-| <GO:0016682> | oxidoreductase activity, acting on diphe... |          6|            5|      0.81| 0.00024 |
-| <GO:0052716> | hydroquinone:oxygen oxidoreductase activ... |          6|            5|      0.81| 0.00024 |
-| <GO:0016712> | oxidoreductase activity, acting on paire... |         12|            7|      1.62| 0.00034 |
-| <GO:0070330> | aromatase activity                          |         12|            7|      1.62| 0.00034 |
-| <GO:0004796> | thromboxane-A synthase activity             |          7|            5|      0.95| 0.00074 |
-| <GO:0016679> | oxidoreductase activity, acting on diphe... |          7|            5|      0.95| 0.00074 |
-| <GO:0005518> | collagen binding                            |         25|           10|      3.38| 0.00092 |
-| <GO:0019205> | nucleobase-containing compound kinase ac... |         25|           10|      3.38| 0.00092 |
-| <GO:0004857> | enzyme inhibitor activity                   |         87|           23|     11.76| 0.00093 |
-| <GO:0072509> | divalent inorganic cation transmembrane ... |         53|           16|      7.16| 0.00121 |
-| <GO:0005516> | calmodulin binding                          |         94|           24|     12.71| 0.00123 |
-| <GO:0004161> | dimethylallyltranstransferase activity      |          5|            4|      0.68| 0.00148 |
-| <GO:0004337> | geranyltranstransferase activity            |          5|            4|      0.68| 0.00148 |
-| <GO:0004735> | pyrroline-5-carboxylate reductase activi... |          5|            4|      0.68| 0.00148 |
-| <GO:0030332> | cyclin binding                              |         11|            6|      1.49| 0.00151 |
-| <GO:0004017> | adenylate kinase activity                   |          8|            5|      1.08| 0.00175 |
-| <GO:0005220> | inositol 1,4,5-trisphosphate-sensitive c... |          8|            5|      1.08| 0.00175 |
-| <GO:0043394> | proteoglycan binding                        |         15|            7|      2.03| 0.00193 |
-| <GO:0030246> | carbohydrate binding                        |        114|           27|     15.41| 0.00211 |
-| <GO:0004872> | receptor activity                           |        401|           74|     54.21| 0.00245 |
-| <GO:0015643> | toxic substance binding                     |          3|            3|      0.41| 0.00246 |
-| <GO:0018585> | fluorene oxygenase activity                 |          3|            3|      0.41| 0.00246 |
-| <GO:0048407> | platelet-derived growth factor binding      |          3|            3|      0.41| 0.00246 |
 
-Table 9
+Table 9: GO-Term processes overrepresented in the set of underexpressed DEGs.
 
 | GO.ID        | Term                                        |  Annotated|  Significant|  Expected| classic    |
 |:-------------|:--------------------------------------------|----------:|------------:|---------:|:-----------|
@@ -477,99 +337,29 @@ Table 9
 | <GO:0048646> | anatomical structure formation involved ... |        482|          135|     65.70| 2.7e-18    |
 | <GO:0048858> | cell projection morphogenesis               |        449|          126|     61.20| 3.8e-17    |
 | <GO:0032990> | cell part morphogenesis                     |        452|          126|     61.61| 6.8e-17    |
-| <GO:0070925> | organelle assembly                          |        326|          100|     44.44| 1.6e-16    |
-| <GO:0000226> | microtubule cytoskeleton organization       |        210|           73|     28.63| 2.0e-15    |
-| <GO:0030030> | cell projection organization                |        630|          155|     85.88| 2.9e-15    |
-| <GO:0000902> | cell morphogenesis                          |        560|          140|     76.33| 2.2e-14    |
-| <GO:0070286> | axonemal dynein complex assembly            |         30|           22|      4.09| 1.4e-13    |
-| <GO:0009653> | anatomical structure morphogenesis          |       1009|          213|    137.54| 3.8e-13    |
-| <GO:0032989> | cellular component morphogenesis            |        597|          143|     81.38| 4.5e-13    |
-| <GO:0060285> | cilium-dependent cell motility              |         20|           17|      2.73| 1.3e-12    |
-| <GO:0060294> | cilium movement involved in cell motilit... |         14|           12|      1.91| 2.7e-09    |
-| <GO:0036158> | outer dynein arm assembly                   |         17|           13|      2.32| 7.2e-09    |
-| <GO:0003351> | epithelial cilium movement                  |         13|           11|      1.77| 1.7e-08    |
-| <GO:0048869> | cellular developmental process              |       1327|          243|    180.89| 3.0e-08    |
-| <GO:0042073> | intraciliary transport                      |         21|           14|      2.86| 3.2e-08    |
-| <GO:0048856> | anatomical structure development            |       1740|          304|    237.18| 3.8e-08    |
-| <GO:0036159> | inner dynein arm assembly                   |         12|           10|      1.64| 1.1e-07    |
-| <GO:0007286> | spermatid development                       |         39|           19|      5.32| 1.4e-07    |
-| <GO:0048515> | spermatid differentiation                   |         40|           19|      5.45| 2.3e-07    |
-| <GO:0044767> | single-organism developmental process       |       1963|          330|    267.58| 5.3e-07    |
-| <GO:0032502> | developmental process                       |       1979|          332|    269.76| 6.0e-07    |
-| <GO:0007130> | synaptonemal complex assembly               |          7|            7|      0.95| 8.6e-07    |
-| <GO:0007131> | reciprocal meiotic recombination            |         23|           13|      3.14| 1.6e-06    |
-| <GO:0035825> | reciprocal DNA recombination                |         23|           13|      3.14| 1.6e-06    |
-| <GO:0045143> | homologous chromosome segregation           |         23|           13|      3.14| 1.6e-06    |
-| <GO:0070192> | chromosome organization involved in meio... |         23|           13|      3.14| 1.6e-06    |
-| <GO:0007129> | synapsis                                    |         17|           11|      2.32| 1.6e-06    |
-| <GO:0021591> | ventricular system development              |         30|           15|      4.09| 1.9e-06    |
-| <GO:0007010> | cytoskeleton organization                   |        409|           89|     55.75| 2.1e-06    |
-| <GO:0030198> | extracellular matrix organization           |        112|           34|     15.27| 2.9e-06    |
-| <GO:0043062> | extracellular structure organization        |        118|           35|     16.08| 3.7e-06    |
-| <GO:0007283> | spermatogenesis                             |        148|           41|     20.17| 3.8e-06    |
-| <GO:0007127> | meiosis I                                   |         39|           17|      5.32| 4.4e-06    |
-| <GO:0022607> | cellular component assembly                 |        901|          167|    122.82| 4.5e-06    |
-| <GO:0048232> | male gamete generation                      |        150|           41|     20.45| 5.5e-06    |
-| <GO:0070193> | synaptonemal complex organization           |          8|            7|      1.09| 6.0e-06    |
-| <GO:0007140> | male meiosis                                |         22|           12|      3.00| 6.6e-06    |
 
-Table 10
+Table 10: GO-Term compartments overrepresented in the set of underexpressed DEGs.
 
-| GO.ID        | Term                                        |  Annotated|  Significant|  Expected| classic    |
-|:-------------|:--------------------------------------------|----------:|------------:|---------:|:-----------|
-| <GO:0005929> | cilium                                      |        296|          156|     41.66| &lt; 1e-30 |
-| <GO:0005930> | axoneme                                     |         95|           73|     13.37| &lt; 1e-30 |
-| <GO:0097014> | ciliary cytoplasm                           |         95|           73|     13.37| &lt; 1e-30 |
-| <GO:0044441> | ciliary part                                |        179|          101|     25.19| &lt; 1e-30 |
-| <GO:0032838> | cell projection cytoplasm                   |        112|           74|     15.76| &lt; 1e-30 |
-| <GO:0044447> | axoneme part                                |         48|           44|      6.75| &lt; 1e-30 |
-| <GO:0030286> | dynein complex                              |         68|           50|      9.57| 7.6e-29    |
-| <GO:0042995> | cell projection                             |        801|          223|    112.72| 1.6e-28    |
-| <GO:0031514> | motile cilium                               |         60|           45|      8.44| 1.1e-26    |
-| <GO:0044463> | cell projection part                        |        415|          132|     58.40| 5.3e-22    |
-| <GO:0044430> | cytoskeletal part                           |        598|          166|     84.15| 1.3e-20    |
-| <GO:0005858> | axonemal dynein complex                     |         32|           28|      4.50| 2.0e-20    |
-| <GO:0005856> | cytoskeleton                                |        855|          213|    120.32| 3.2e-20    |
-| <GO:0015630> | microtubule cytoskeleton                    |        507|          146|     71.35| 1.1e-19    |
-| <GO:0005874> | microtubule                                 |        211|           79|     29.69| 5.8e-18    |
-| <GO:0005868> | cytoplasmic dynein complex                  |         38|           29|      5.35| 6.1e-18    |
-| <GO:0005875> | microtubule associated complex              |        118|           55|     16.61| 8.5e-18    |
-| <GO:0005578> | proteinaceous extracellular matrix          |        259|           74|     36.45| 4.1e-10    |
-| <GO:0031012> | extracellular matrix                        |        264|           74|     37.15| 1.1e-09    |
-| <GO:0036126> | sperm flagellum                             |         21|           15|      2.96| 3.6e-09    |
-| <GO:0005814> | centriole                                   |         60|           27|      8.44| 5.9e-09    |
-| <GO:0097223> | sperm part                                  |         40|           21|      5.63| 9.6e-09    |
-| <GO:1990716> | axonemal central apparatus                  |          9|            9|      1.27| 2.1e-08    |
-| <GO:0044450> | microtubule organizing center part          |         76|           30|     10.70| 3.5e-08    |
-| <GO:0005581> | collagen trimer                             |         52|           23|      7.32| 1.2e-07    |
-| <GO:0036156> | inner dynein arm                            |         10|            9|      1.41| 1.8e-07    |
-| <GO:0005813> | centrosome                                  |        212|           57|     29.83| 4.5e-07    |
-| <GO:0030990> | intraciliary transport particle             |         17|           11|      2.39| 2.2e-06    |
-| <GO:0005815> | microtubule organizing center               |        276|           67|     38.84| 2.5e-06    |
-| <GO:0072372> | primary cilium                              |         96|           31|     13.51| 3.7e-06    |
-| <GO:0036064> | ciliary basal body                          |         54|           21|      7.60| 5.3e-06    |
-| <GO:0005583> | fibrillar collagen trimer                   |          6|            6|      0.84| 7.7e-06    |
-| <GO:0098643> | banded collagen fibril                      |          6|            6|      0.84| 7.7e-06    |
-| <GO:0043228> | non-membrane-bounded organelle              |       1512|          264|    212.78| 1.1e-05    |
-| <GO:0043232> | intracellular non-membrane-bounded organ... |       1512|          264|    212.78| 1.1e-05    |
-| <GO:0098644> | complex of collagen trimers                 |          9|            7|      1.27| 3.0e-05    |
-| <GO:0097228> | sperm principal piece                       |          5|            5|      0.70| 5.5e-05    |
-| <GO:1990718> | axonemal central pair projection            |          5|            5|      0.70| 5.5e-05    |
-| <GO:0005615> | extracellular space                         |        286|           64|     40.25| 6.7e-05    |
-| <GO:0030992> | intraciliary transport particle B           |         10|            7|      1.41| 8.7e-05    |
-| <GO:0036157> | outer dynein arm                            |         10|            7|      1.41| 8.7e-05    |
-| <GO:0030141> | secretory granule                           |        114|           31|     16.04| 0.00016    |
-| <GO:0000794> | condensed nuclear chromosome                |         36|           14|      5.07| 0.00020    |
-| <GO:0000795> | synaptonemal complex                        |         14|            8|      1.97| 0.00020    |
-| <GO:0030089> | phycobilisome                               |          4|            4|      0.56| 0.00039    |
-| <GO:0005576> | extracellular region                        |       1190|          204|    167.47| 0.00051    |
-| <GO:0042383> | sarcolemma                                  |         53|           17|      7.46| 0.00063    |
-| <GO:0034357> | photosynthetic membrane                     |         40|           14|      5.63| 0.00071    |
-| <GO:0044436> | thylakoid part                              |         41|           14|      5.77| 0.00094    |
-| <GO:0031512> | motile primary cilium                       |         10|            6|      1.41| 0.00097    |
+| GO.ID        | Term                      |  Annotated|  Significant|  Expected| classic    |
+|:-------------|:--------------------------|----------:|------------:|---------:|:-----------|
+| <GO:0005929> | cilium                    |        296|          156|     41.66| &lt; 1e-30 |
+| <GO:0005930> | axoneme                   |         95|           73|     13.37| &lt; 1e-30 |
+| <GO:0097014> | ciliary cytoplasm         |         95|           73|     13.37| &lt; 1e-30 |
+| <GO:0044441> | ciliary part              |        179|          101|     25.19| &lt; 1e-30 |
+| <GO:0032838> | cell projection cytoplasm |        112|           74|     15.76| &lt; 1e-30 |
+| <GO:0044447> | axoneme part              |         48|           44|      6.75| &lt; 1e-30 |
+| <GO:0030286> | dynein complex            |         68|           50|      9.57| 7.6e-29    |
+| <GO:0042995> | cell projection           |        801|          223|    112.72| 1.6e-28    |
+| <GO:0031514> | motile cilium             |         60|           45|      8.44| 1.1e-26    |
+| <GO:0044463> | cell projection part      |        415|          132|     58.40| 5.3e-22    |
+| <GO:0044430> | cytoskeletal part         |        598|          166|     84.15| 1.3e-20    |
+| <GO:0005858> | axonemal dynein complex   |         32|           28|      4.50| 2.0e-20    |
+| <GO:0005856> | cytoskeleton              |        855|          213|    120.32| 3.2e-20    |
+| <GO:0015630> | microtubule cytoskeleton  |        507|          146|     71.35| 1.1e-19    |
+| <GO:0005874> | microtubule               |        211|           79|     29.69| 5.8e-18    |
 
-PFAM
-====
+Pfam domains
+------------
 
 Discussion
 ==========
