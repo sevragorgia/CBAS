@@ -68,7 +68,7 @@ In order to assess whether certain Gene Ontology terms are "enriched" among the 
 Pfam domain enrichment analysis
 -------------------------------
 
-In addition to the GO-Term enrichment analysis, and due to the difficulties in assigning a meaning to the GO annotations in our sponge model, a Pfam domain enrichment analysis was also done. Essentially the Pfam enrichment analysis works in a similar way that the GO-term enrichment analysis. First, a background set of genes not differentially expressed but showing similar expression patterns than the DEGs is calculated and used to provide a population of transcript against which the differentially expressed transcripts can be compared. Once the background population of transcripts is available, the frequency with which a given domain is found in the background set of transcripts is compared with the frequency with which the same domain is found in the set of differentially expressed transcripts using an hypergeometric test. The background distribution used for the Pfam enrichment domains was the same used for the analysis of GO-term enrichment.
+In addition to the GO-Term enrichment analysis, and due to the difficulties in assigning a meaning to the GO annotations in our sponge model, a Pfam domain enrichment analysis was also done. Essentially the Pfam enrichment analysis works in a similar way that the GO-term enrichment analysis. First, a background set of genes not differentially expressed but showing similar expression patterns than the DEGs is calculated and used to provide a population of transcripts against which the differentially expressed transcripts can be compared. Once the background population of transcripts is available, the frequency with which a given domain is found in the background set of transcripts is compared with the frequency with which the same domain is found in the set of differentially expressed transcripts using an hypergeometric test. To account for multiple comparisons, the p-values are adjusted using the Benjamini-Hochberg correctino. The background distribution used for the Pfam enrichment domains was the same used for the analysis of GO-term enrichment.
 
 Results
 =======
@@ -231,8 +231,8 @@ It is worth noting that DeSeq2 was able to adecuately model the variance in the 
 
 ------------------------------------------------------------------------
 
-Inmune response transcripts are highly repressed when symbionts are not active or absent
-----------------------------------------------------------------------------------------
+The expression of immune response related transcripts changes between symbiontic states
+---------------------------------------------------------------------------------------
 
 For Gene Ontology (GO) enrichment analyses we were able to select a background set of transcripts showing similar expression patterns but no significant change between conditions for all transcripts as well as for overexpressed and underexpressed transcripts (Fig. 13). Enriched Function, Process and Compartment GO terms for over- and underexpressed genes can be found in Tables 5-10.
 

@@ -1,8 +1,11 @@
 ---
-title: Changes in gene expression in a common aquarium sponge under different symbiont activity regimes.
-author: Sergio Vargas R.
-date: 2016-07-26
-output: github_document
+title: Changes in gene expression in a common aquarium sponge under different symbiont
+  activity regimes.
+author: "Sergio Vargas R."
+date: '2016-07-26'
+output:
+  html_document: default
+  pdf_document: default
 ---
 ```{r load_libraries, include=FALSE}
 library(knitr)
@@ -78,7 +81,7 @@ In order to assess whether certain Gene Ontology terms are "enriched" among the 
 
 ##Pfam domain enrichment analysis
 
-In addition to the GO-Term enrichment analysis, and due to the difficulties in assigning a meaning to the GO annotations in our sponge model, a Pfam domain enrichment analysis was also done. Essentially the Pfam enrichment analysis works in a similar way that the GO-term enrichment analysis. First, a background set of genes not differentially expressed but showing similar expression patterns than the DEGs is calculated and used to provide a population of transcript against which the differentially expressed transcripts can be compared. Once the background population of transcripts is available, the frequency with which a given domain is found in the background set of transcripts is compared with the frequency with which the same domain is found in the set of differentially expressed transcripts using an hypergeometric test. The background distribution used for the Pfam enrichment domains was the same used for the analysis of GO-term enrichment.
+In addition to the GO-Term enrichment analysis, and due to the difficulties in assigning a meaning to the GO annotations in our sponge model, a Pfam domain enrichment analysis was also done. Essentially the Pfam enrichment analysis works in a similar way that the GO-term enrichment analysis. First, a background set of genes not differentially expressed but showing similar expression patterns than the DEGs is calculated and used to provide a population of transcripts against which the differentially expressed transcripts can be compared. Once the background population of transcripts is available, the frequency with which a given domain is found in the background set of transcripts is compared with the frequency with which the same domain is found in the set of differentially expressed transcripts using an hypergeometric test. To account for multiple comparisons, the p-values are adjusted using the Benjamini-Hochberg correctino. The background distribution used for the Pfam enrichment domains was the same used for the analysis of GO-term enrichment.
 
 
 #Results
@@ -826,7 +829,10 @@ kable(GenTable(under_component_go_data, classic=under_resultsFisher_component, t
 ```
 
 ##Pfam domains
-```{r Pfam_over_enrichment_analysis, include=FALSE, results='hide'}
+
+Over
+
+```{r Pfam_over_enrichment_analysis, echo=FALSE}
 
 over_degs_pfam<-read.csv("../Results/Pfam/over_degs_p001_2LFC.pfam", sep="\t", head=F)
 over_back_pfam<-read.csv("../Results/Pfam/Back_over_degs_p001_2LFC.pfam", sep = "\t", head=F)
@@ -856,9 +862,19 @@ over_domain_pval_adjusted_col<-p.adjust(over_domain_pval_col, method="fdr")
 
 over_pfam_domain_enrichment_df<-data.frame(over_domain_col, over_domain_in_degs_col, over_domain_in_back_col, over_domain_pval_col, over_domain_pval_adjusted_col)
 
+colnames(over_pfam_domain_enrichment_df)<-c("Domain", "Count_in_DEGs", "Count_in_Background", "p_value", "Corrected_p_value")
+
+selected_over_pfam_domain_enrichment_df<-subset(over_pfam_domain_enrichment_df, (Count_in_Background+Count_in_DEGs) > 5 & Corrected_p_value < 0.05)
+
+selected_over_pfam_domain_enrichment_df<-selected_over_pfam_domain_enrichment_df[with(selected_over_pfam_domain_enrichment_df, order(Corrected_p_value)),]
+
+kable(selected_over_pfam_domain_enrichment_df)
+
 ```
 
-```{r Pfam_under_enrichment_analysis, include=FALSE, results='hide'}
+Under
+
+```{r Pfam_under_enrichment_analysis, echo=FALSE}
 #yes I know this code could be modularized better...
 
 under_degs_pfam<-read.csv("../Results/Pfam/under_degs_p001_2LFC.pfam", sep="\t", head=F)
@@ -888,7 +904,13 @@ for(under_domain in under_domains$V2){
 under_domain_pval_adjusted_col<-p.adjust(under_domain_pval_col, method="fdr")
 
 under_pfam_domain_enrichment_df<-data.frame(under_domain_col, under_domain_in_degs_col, under_domain_in_back_col, under_domain_pval_col, under_domain_pval_adjusted_col)
+colnames(under_pfam_domain_enrichment_df)<-c("Domain", "Count_in_DEGs", "Count_in_Background", "p_value", "Corrected_p_value")
 
+selected_under_pfam_domain_enrichment_df<-subset(under_pfam_domain_enrichment_df, (Count_in_Background+Count_in_DEGs) > 5 & Corrected_p_value < 0.05)
+
+selected_under_pfam_domain_enrichment_df<-selected_under_pfam_domain_enrichment_df[with(selected_under_pfam_domain_enrichment_df, order(Corrected_p_value)),]
+
+kable(selected_under_pfam_domain_enrichment_df)
 ```
 
 #Discussion
