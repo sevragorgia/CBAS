@@ -11,16 +11,18 @@ output:
 library(knitr)
 library(ggplot2)
 library(reshape2)
-
+library("geneplotter")
 library("EDASeq")
 library("DESeq2")
 library("pheatmap")
 library("gplots")
-library("geneplotter")
+
 library("RColorBrewer")
 library("genefilter")
 
 library("topGO")
+
+library("vegan")
 
 library("BiocParallel")
 register(MulticoreParam(4))
@@ -504,6 +506,14 @@ plotPCA(CBAS_DeSeq_Transdecoded_Only_NoOutliers_rlog, intgroup=c("condition"))
 ***
 
 ```{r differential_expression_analysis, include=FALSE, results='hide'}
+#here we assess for global differences in expression using the function adonis from the package vegan.
+
+light_treatments<-data.frame(Condition=c("T","T","T","T","C","C","C","C"))
+
+#now use the function adonis to test for differences between treatments. By default adonis uses the bray-curtis distance.
+adonis(t(assay(CBAS_DeSeq_Transdecoded_Only_NoOutliers_rlog))~Condition, data=light_treatments, method="euclidean")
+
+######
 
 CBAS_DeSeq_Transdecoded_Only_NoOutliers<-estimateSizeFactors(CBAS_DeSeq_Transdecoded_Only_NoOutliers)
 CBAS_DeSeq_Transdecoded_Only_NoOutliers<-estimateDispersions(CBAS_DeSeq_Transdecoded_Only_NoOutliers)
@@ -525,13 +535,36 @@ CBAS_DE_Genes_Over<-table(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$padj <
 #number of underexpressed genes at 0.01 significance level and log fold change < -2
 CBAS_DE_Genes_Under<-table(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$padj < 0.01 & CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$log2FoldChange <= -2)
 
+#get significant genes; uncomment the write.csv method lines if you want to save a new file, otherwise leave commented to use the files in the repo.
+degs_names<-rownames(subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & abs(log2FoldChange) >= 2))
+#write.csv(degs_names, "../Results/DEGs/all_degs_p001_2LFC.csv")
+
+#get significantly overexpressed in treatment:
+over_deg_names<-rownames(subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & log2FoldChange >= 2))
+#write.csv(over_deg_names, "../Results/DEGs/over_degs_p001_2LFC.csv")
+
+#get significantly underexpressed in treatment:
+under_deg_names<-rownames(subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & log2FoldChange <= -2))
+#write.csv(under_deg_names, "../Results/DEGs/under_degs_p001_2LFC.csv")
+
 ```
-In this reduced dataset, a total of `r as.vector(CBAS_DE_Genes)[2]` transcripts were differentially expressed between the *control* and *bleached* sponges (Fig. 11). Of these transcripts, `r as.vector(CBAS_DE_Genes_Over)[2]` were overexpressed (with a log2 fold change higher or equal to 2) in *bleached vs. control* sponges and `r as.vector(CBAS_DE_Genes_Under)[2]` were expressed at lower levels (a log2 fold change lower or equal than -2) in *bleached vs. control* specimens.
 
-```{r MA_plot, echo=FALSE, fig.align='center'}
+We detected significant differences in the global expression patters bewteen treated and control sponges (Adonis PseudoF = 5.1164, df = 1, p-value = 0.039). In this reduced dataset, a total of `r as.vector(CBAS_DE_Genes)[2]` transcripts were differentially expressed between the *control* and *bleached* sponges (Fig. 11). Of these transcripts, `r as.vector(CBAS_DE_Genes_Over)[2]` were overexpressed (with a log2 fold change higher or equal to 2) in *bleached vs. control* sponges and `r as.vector(CBAS_DE_Genes_Under)[2]` were expressed at lower levels (a log2 fold change lower or equal than -2) in *bleached vs. control* specimens.
 
-#need to plot this
+```{r MA_plot, echo=FALSE, fig.align='center', fig.height=10, fig.width=10}
+par(mfrow=c(2,1), oma=c(2,2,2,2))
+
+
+#select only the DEGs from the count matrix and store in a new object for cluster plotting; to be later used to calculate a network.
+CBAS_DeSeq_Transdecoded_Only_NoOutliers_DEGs <- CBAS_DeSeq_Transdecoded_Only_NoOutliers[rownames(CBAS_DeSeq_Transdecoded_Only_NoOutliers) %in% degs_names, ]
+
+CBAS_DeSeq_Transdecoded_Only_NoOutliers_overDEGs <- CBAS_DeSeq_Transdecoded_Only_NoOutliers[rownames(CBAS_DeSeq_Transdecoded_Only_NoOutliers) %in% over_deg_names, ]
+
+heatmap.2(log2(counts(CBAS_DeSeq_Transdecoded_Only_NoOutliers_DEGs, normalized=T)+1), cexCol=0.75, labRow=FALSE, scale="row", trace = "none", dendrogram = "column", col= colorRampPalette(rev(brewer.pal(9, "RdBu"))))
+
 plotMA(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, alpha=0.01)
+
+
 ```
 
 **Figure 11.** MA-plot showing the relation between log-fold change and mean count for each analyzed CBAS transcript. Transcripts significant at 0.01 are highlighted in red.
@@ -550,20 +583,7 @@ hist(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$pvalue, main = "", xlab="p-
 
 ***
 
-```{r differential_expression_analysis_2, include=FALSE, results='hide'}
-#get significant genes; uncomment the write.csv method lines if you want to save a new file, otherwise leave commented to use the files in the repo.
-degs_names<-rownames(subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & abs(log2FoldChange) >= 2))
-#write.csv(degs_names, "../Results/DEGs/all_degs_p001_2LFC.csv")
 
-#get significantly overexpressed in treatment:
-over_deg_names<-rownames(subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & log2FoldChange >= 2))
-#write.csv(over_deg_names, "../Results/DEGs/over_degs_p001_2LFC.csv")
-
-#get significantly underexpressed in treatment:
-under_deg_names<-rownames(subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & log2FoldChange <= -2))
-#write.csv(under_deg_names, "../Results/DEGs/under_degs_p001_2LFC.csv")
-
-```
 
 
 ```{r expression_heat_maps, echo=FALSE, fig.align='center', fig.height=15, fig.width=10}
@@ -911,6 +931,14 @@ selected_under_pfam_domain_enrichment_df<-subset(under_pfam_domain_enrichment_df
 selected_under_pfam_domain_enrichment_df<-selected_under_pfam_domain_enrichment_df[with(selected_under_pfam_domain_enrichment_df, order(Corrected_p_value)),]
 
 kable(selected_under_pfam_domain_enrichment_df)
+```
+
+Coexpression network
+```{r weighted_correlation_network_analysis, echo=FALSE}
+
+hclust(dist(t(counts(CBAS_DeSeq_Transdecoded_Only_NoOutliers_DEGs, normalized=T))), method="average")
+
+
 ```
 
 #Discussion
