@@ -560,6 +560,8 @@ CBAS_DeSeq_Transdecoded_Only_NoOutliers_DEGs <- CBAS_DeSeq_Transdecoded_Only_NoO
 
 CBAS_DeSeq_Transdecoded_Only_NoOutliers_overDEGs <- CBAS_DeSeq_Transdecoded_Only_NoOutliers[rownames(CBAS_DeSeq_Transdecoded_Only_NoOutliers) %in% over_deg_names, ]
 
+CBAS_DeSeq_Transdecoded_Only_NoOutliers_underDEGs <- CBAS_DeSeq_Transdecoded_Only_NoOutliers[rownames(CBAS_DeSeq_Transdecoded_Only_NoOutliers) %in% under_deg_names, ]
+
 heatmap.2(log2(counts(CBAS_DeSeq_Transdecoded_Only_NoOutliers_DEGs, normalized=T)+1), cexCol=0.75, labRow=FALSE, scale="row", trace = "none", dendrogram = "column", col= colorRampPalette(rev(brewer.pal(9, "RdBu"))))
 
 plotMA(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, alpha=0.01)
@@ -933,13 +935,6 @@ selected_under_pfam_domain_enrichment_df<-selected_under_pfam_domain_enrichment_
 kable(selected_under_pfam_domain_enrichment_df)
 ```
 
-Coexpression network
-```{r weighted_correlation_network_analysis, echo=FALSE}
-
-hclust(dist(t(counts(CBAS_DeSeq_Transdecoded_Only_NoOutliers_DEGs, normalized=T))), method="average")
-
-
-```
 
 #Discussion
 
