@@ -63,7 +63,8 @@ my $kegg;
 my $degs;
 my $verbose;
 my $debug;
-my $isoforms;   
+my $isoforms;  
+my $all;
 my $output_file = "./out.csv"; #where should I store the genomes?
 
 
@@ -94,7 +95,8 @@ the following flags may be activated and will change the behaviour of the progra
 		--bacteria_evalue = evalue of the best matching
 		--bacteria_annotation = annotation derived from the bacterial accession
 		--isoforms = deactivate merging of isoforms 
- 		--verbose
+ 		--all = print all available annotations for DEGs
+		--verbose
  		--debug
 
 A normal command line would look like:
@@ -130,7 +132,8 @@ GetOptions("metatable=s" => \$metatable,
 					 "isoforms" => \$isoforms,
 					 "verbose" => \$verbose,
 					 "debug" => \$debug,
-					 "help" => \$help
+					 "help" => \$help,
+					 "all" => \$all
 					 ) or die("Error in the command line arguments\n$help");
 
 
@@ -174,25 +177,25 @@ sub main{
   
   print $table_header_fields[0];
 
-  print "\t $table_header_fields[1]" if($length);
-  print "\t $table_header_fields[2]" if($sequence);
-  print "\t $table_header_fields[3]" if($gene_name);
-  print "\t $table_header_fields[4]" if($uniprot);
-  print "\t $table_header_fields[5]" if($uniprot_evalue);
-  print "\t $table_header_fields[6]" if($uniprot_annotation);
-  print "\t $table_header_fields[7]" if($aqu2);
-  print "\t $table_header_fields[8]" if($aqu2_evalue);
-  print "\t $table_header_fields[9]" if($aqu2_annotation);
-  print "\t $table_header_fields[10]" if($transdecoder_orf_type);
-  print "\t $table_header_fields[11]" if($transdecoder_peptide);
-  print "\t $table_header_fields[12]" if($component);
-  print "\t $table_header_fields[13]" if($function);
-  print "\t $table_header_fields[14]" if($process);
-  print "\t $table_header_fields[15]" if($pfam);
-  print "\t $table_header_fields[16]" if($kegg);
-  print "\t $table_header_fields[17]" if($bacteria);
-  print "\t $table_header_fields[18]" if($bacteria_evalue);
-  print "\t $table_header_fields[19]" if($bacteria_annotation);
+  print "\t $table_header_fields[1]" if($length || $all);
+  print "\t $table_header_fields[2]" if($sequence || $all);
+  print "\t $table_header_fields[3]" if($gene_name || $all);
+  print "\t $table_header_fields[4]" if($uniprot || $all);
+  print "\t $table_header_fields[5]" if($uniprot_evalue || $all);
+  print "\t $table_header_fields[6]" if($uniprot_annotation || $all);
+  print "\t $table_header_fields[7]" if($aqu2 || $all);
+  print "\t $table_header_fields[8]" if($aqu2_evalue || $all);
+  print "\t $table_header_fields[9]" if($aqu2_annotation || $all);
+  print "\t $table_header_fields[10]" if($transdecoder_orf_type || $all);
+  print "\t $table_header_fields[11]" if($transdecoder_peptide || $all);
+  print "\t $table_header_fields[12]" if($component || $all);
+  print "\t $table_header_fields[13]" if($function || $all);
+  print "\t $table_header_fields[14]" if($process || $all);
+  print "\t $table_header_fields[15]" if($pfam || $all);
+  print "\t $table_header_fields[16]" if($kegg || $all);
+  print "\t $table_header_fields[17]" if($bacteria || $all);
+  print "\t $table_header_fields[18]" if($bacteria_evalue || $all);
+  print "\t $table_header_fields[19]" if($bacteria_annotation || $all);
 
   print "\n"; 
 
@@ -240,43 +243,43 @@ sub main{
     
         print $table_fields[0];
       
-	print "\t $table_fields[1]" if($length);
+	print "\t $table_fields[1]" if($length || $all);
 
-	print "\t $table_fields[2]" if($sequence);
+	print "\t $table_fields[2]" if($sequence || $all);
      
-	print "\t $table_fields[3]" if($gene_name);
+	print "\t $table_fields[3]" if($gene_name || $all);
 
-        print "\t $table_fields[4]" if($uniprot); 
+        print "\t $table_fields[4]" if($uniprot || $all); 
 
-	print "\t $table_fields[5]" if($uniprot_evalue);
+	print "\t $table_fields[5]" if($uniprot_evalue || $all);
 
-        print "\t $table_fields[6]" if($uniprot_annotation);
+        print "\t $table_fields[6]" if($uniprot_annotation || $all);
 
-	print "\t $table_fields[7]" if($aqu2);
+	print "\t $table_fields[7]" if($aqu2 || $all);
 
-	print "\t $table_fields[8]" if($aqu2_evalue);
+	print "\t $table_fields[8]" if($aqu2_evalue || $all);
 
-	print "\t $table_fields[9]" if($aqu2_annotation);
+	print "\t $table_fields[9]" if($aqu2_annotation || $all);
 
-        print "\t $table_fields[10]" if($transdecoder_orf_type);
+        print "\t $table_fields[10]" if($transdecoder_orf_type || $all);
 
-        print "\t $table_fields[11]" if($transdecoder_peptide);
+        print "\t $table_fields[11]" if($transdecoder_peptide || $all);
 
-        print "\t $table_fields[12]" if($component);
+        print "\t $table_fields[12]" if($component || $all);
       
-        print "\t $table_fields[13]" if($function);
+        print "\t $table_fields[13]" if($function || $all);
       
-        print "\t $table_fields[14]" if($process);
+        print "\t $table_fields[14]" if($process || $all);
       
-        print "\t $table_fields[15]" if($pfam);
+        print "\t $table_fields[15]" if($pfam || $all);
 
-        print "\t $table_fields[16]" if($kegg);
+        print "\t $table_fields[16]" if($kegg || $all);
 
-        print "\t $table_fields[17]" if($bacteria);
+        print "\t $table_fields[17]" if($bacteria || $all);
 
-	print "\t $table_fields[18]" if($bacteria_evalue);
+	print "\t $table_fields[18]" if($bacteria_evalue || $all);
 
-        print "\t $table_fields[19]" if($bacteria_annotation);
+        print "\t $table_fields[19]" if($bacteria_annotation || $all);
       
         print "\n";
         
