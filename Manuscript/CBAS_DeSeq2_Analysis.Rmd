@@ -585,9 +585,6 @@ hist(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$pvalue, main = "", xlab="p-
 
 ***
 
-
-
-
 ```{r expression_heat_maps, echo=FALSE, fig.align='center', fig.height=15, fig.width=10}
 #par(oma=c(4,2,2,4))
 #first generate a list of genes with a high LFC between treatments
