@@ -1,0 +1,39 @@
+R version 3.2.2 (2015-08-14)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Gentoo/Linux
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8    LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C             LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats4    parallel  stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] vegan_2.4-3                permute_0.9-4              topGO_2.22.0               SparseM_1.77              
+ [5] GO.db_3.2.2                RSQLite_2.0                graph_1.48.0               genefilter_1.52.1         
+ [9] RColorBrewer_1.1-2         gplots_3.0.1               pheatmap_1.0.8             DESeq2_1.10.1             
+[13] RcppArmadillo_0.7.900.2.0  Rcpp_0.12.11               EDASeq_2.4.1               ShortRead_1.28.0          
+[17] GenomicAlignments_1.6.3    SummarizedExperiment_1.0.2 Rsamtools_1.22.0           GenomicRanges_1.22.4      
+[21] GenomeInfoDb_1.6.3         Biostrings_2.38.4          XVector_0.10.0             BiocParallel_1.4.3        
+[25] geneplotter_1.48.0         annotate_1.48.0            XML_3.98-1.9               AnnotationDbi_1.32.3      
+[29] IRanges_2.4.8              S4Vectors_0.8.11           lattice_0.20-35            Biobase_2.30.0            
+[33] BiocGenerics_0.16.1        reshape2_1.4.2             ggplot2_2.2.1              knitr_1.16                
+[37] rmarkdown_1.6             
+
+loaded via a namespace (and not attached):
+ [1] nlme_3.1-131            bitops_1.0-6            matrixStats_0.52.2      bit64_0.9-7             rprojroot_1.2          
+ [6] tools_3.2.2             backports_1.1.0         rpart_4.1-11            KernSmooth_2.23-15      mgcv_1.8-17            
+[11] Hmisc_4.0-3             DBI_0.7                 lazyeval_0.2.0          colorspace_1.3-2        nnet_7.3-12            
+[16] gridExtra_2.2.1         bit_1.1-12              htmlTable_1.9           labeling_0.3            rtracklayer_1.30.4     
+[21] caTools_1.17.1          scales_0.4.1            checkmate_1.8.2         DESeq_1.22.1            stringr_1.2.0          
+[26] digest_0.6.12           foreign_0.8-69          R.utils_2.5.0           pkgconfig_2.0.1         base64enc_0.1-3        
+[31] htmltools_0.3.6         highr_0.6               htmlwidgets_0.8         rlang_0.1.1             hwriter_1.3.2          
+[36] gtools_3.5.0            acepack_1.4.1           R.oo_1.21.0             RCurl_1.95-4.8          magrittr_1.5           
+[41] Formula_1.2-1           futile.logger_1.4.3     Matrix_1.2-10           munsell_0.4.3           R.methodsS3_1.7.1      
+[46] stringi_1.1.5           yaml_2.1.14             MASS_7.3-47             zlibbioc_1.16.0         plyr_1.8.4             
+[51] grid_3.2.2              blob_1.1.0              gdata_2.18.0            splines_3.2.2           GenomicFeatures_1.22.13
+[56] locfit_1.5-9.1          biomaRt_2.26.1          futile.options_1.0.0    evaluate_0.10.1         latticeExtra_0.6-28    
+[61] lambda.r_1.1.9          data.table_1.10.4       gtable_0.2.0            aroma.light_3.0.0       xtable_1.8-2           
+[66] survival_2.41-3         tibble_1.3.3            memoise_1.1.0           cluster_2.0.6   
