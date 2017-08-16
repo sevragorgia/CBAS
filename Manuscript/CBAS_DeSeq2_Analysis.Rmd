@@ -536,16 +536,22 @@ CBAS_DE_Genes_Over<-table(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$padj <
 CBAS_DE_Genes_Under<-table(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$padj < 0.01 & CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$log2FoldChange <= -2)
 
 #get significant genes; uncomment the write.csv method lines if you want to save a new file, otherwise leave commented to use the files in the repo.
-degs_names<-rownames(subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & abs(log2FoldChange) >= 2))
-#write.csv(degs_names, "../Results/DEGs/all_degs_p001_2LFC.csv")
+degs_table<-subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & abs(log2FoldChange) >= 2)
+degs_names<-rownames(degs_table)
+#write.csv(degs_table, "~/Repos/CBAS/Results/DEGs/all_degs_p001_2LFC_all_info.csv")
+#write.csv(degs_names, "~/Repos/CBAS/Results/DEGs/all_degs_p001_2LFC_names_only.csv")
 
 #get significantly overexpressed in treatment:
-over_deg_names<-rownames(subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & log2FoldChange >= 2))
-#write.csv(over_deg_names, "../Results/DEGs/over_degs_p001_2LFC.csv")
+over_deg_table<-subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & log2FoldChange >= 2)
+over_deg_names<-rownames(over_deg_table)
+#write.csv(over_deg_table, "~/Repos/CBAS/Results/DEGs/over_degs_p001_2LFC_all_info.csv")
+#write.csv(over_deg_names, "~/Repos/CBAS/Results/DEGs/over_degs_p001_2LFC_names_only.csv")
 
 #get significantly underexpressed in treatment:
-under_deg_names<-rownames(subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & log2FoldChange <= -2))
-#write.csv(under_deg_names, "../Results/DEGs/under_degs_p001_2LFC.csv")
+under_deg_table<-subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & log2FoldChange <= -2)
+under_deg_names<-rownames(under_deg_table)
+#write.csv(under_deg_table, "~/Repos/CBAS/Results/DEGs/under_degs_p001_2LFC_all_info.csv")
+#write.csv(under_deg_names, "~/Repos/CBAS/Results/DEGs/under_degs_p001_2LFC_names_only.csv")
 
 ```
 
