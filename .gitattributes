@@ -3,3 +3,4 @@ Annotations/AQU2/Galaxy135-CBAS_Trinity_Reference_Transcriptome_Aqu2_Annotations
 Annotations/Transdecoder/*.gzip filter=lfs diff=lfs merge=lfs -text
 Annotations/Uniprot/Galaxy136-CBAS_Trinity_Reference_Transcriptome_Uniprot_Annotations_SingleMatch.csv.gz filter=lfs diff=lfs merge=lfs -text
 Annotations/Metatable/CBAS_Annotation_Metatable_20160505.csv.gz filter=lfs diff=lfs merge=lfs -text
+*.RData filter=lfs diff=lfs merge=lfs -text
