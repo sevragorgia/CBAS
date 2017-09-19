@@ -1,0 +1,15 @@
+
+========================[ Sep 1, 2017  9:28 PM ]========================
+Version 2.2.26 [Sep-21-2011]
+Started database file "/home/sergio/Repos/CBAS/Transcripts/Galaxy85-CBAS_Trinity_Reference_Transcriptome.fasta.gz"
+WARNING: [000.000] Sequence number 1 (lcl|1_/home/sergio/Repos/CBAS/Transcri), 387 illegal characters were removed:
+47 Es, 32 Fs, 47 Is, 36 Js, 43 Ls, 38 Os, 35 Ps, 37 Qs, 33 Zs, 23 -s, 16 ?s
+
+Formatted 1 sequences in volume 0
+SUCCESS: formatted database /home/sergio/Repos/CBAS/Transcripts/Galaxy85-CBAS_Trinity_Reference_Transcriptome.fasta.gz
+
+========================[ Sep 1, 2017  9:29 PM ]========================
+Version 2.2.26 [Sep-21-2011]
+Started database file "/home/sergio/Repos/CBAS/Transcripts/Galaxy85-CBAS_Trinity_Reference_Transcriptome.fasta"
+Formatted 128686 sequences in volume 0
+SUCCESS: formatted database /home/sergio/Repos/CBAS/Transcripts/Galaxy85-CBAS_Trinity_Reference_Transcriptome.fasta
