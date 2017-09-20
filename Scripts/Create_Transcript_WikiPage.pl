@@ -119,10 +119,10 @@ sub main{
 ## Gene name: $table_fields[3]
 ## Sequence ($table_fields[1] bp):
 $table_fields[2]
-## Uniprot best match:
-$table_fields[4]	$table_fields[6]	evalue = $table_fields[5]
-## AQU2 best match:
-$table_fields[7]	$table_fields[9]		evalue = $table_fields[8]
+## Uniprot best match (evalue = $table_fields[5]):
+$table_fields[4]	$table_fields[6]
+## AQU2 best match (evalue = $table_fields[8]:
+$table_fields[7]	$table_fields[9]
 ## ORF Type = $table_fields[10]
 ## Protein sequence:
 $table_fields[11]
@@ -137,16 +137,19 @@ $table_fields[14]
 $table_fields[15]
 ## KEGG
 $table_fields[16]
-## Bacterial match:
-$table_fields[17]	$table_fields[19]	evalue = $table_fields[18]\n";
+## Bacterial match (evalue = $table_fields[18]:
+$table_fields[17]	$table_fields[19]\n";
 
     if($is_deg_table){
     
     	$print_line .= "## DeSeq2 Results:
-### Basemean = $table_fields[22]
-### Log2 Fold Change = $table_fields[23] (lfcSE = $table_fields[24])
-### Stat = $table_fields[25]
-### p-value (BJ adjusted) = $table_fields[27] (unadjusted = $table_fields[26])";
+Basemean = $table_fields[22]
+
+Log2 Fold Change = $table_fields[23] (lfcSE = $table_fields[24])
+
+Stat = $table_fields[25]
+
+p-value (BJ adjusted) = $table_fields[27] (unadjusted = $table_fields[26])\n";
     
     }
 
