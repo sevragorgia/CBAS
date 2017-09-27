@@ -669,8 +669,12 @@ multidensity( list(fore=log2(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results[und
 ```{r Over_GO_analysis, include=FALSE, results='hide'}
 #overexpressed genes only
 #function GO analysis
+#uncomment the lfc cutoff you want to analyse
 overdegs_Function_GO<-readMappings("../Results/GOs/over_degs_p001_2LFC.functions.gos")
 overback_Function_GO<-readMappings("../Results/GOs/Back_over_degs_p001_2LFC.functions.gos")
+
+#overdegs_Function_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/over_degs_p001_1LFC_names_only.functions.gos")
+#overback_Function_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_over_degs_p001_1LFC.functions.gos")
 
 over_universe_for_function_topgo<-c(overdegs_Function_GO, overback_Function_GO)
 
@@ -695,8 +699,12 @@ over_resultsFisher_functions<-runTest(over_functions_go_data, algorithm = "class
 #showSigOfNodes(over_functions_go_data, score(over_resultsFisher_functions), useInfo = "all")
 
 #process GO analysis
+#uncomment the lfc cutoff you want to analyse
 overdegs_Process_GO<-readMappings("../Results/GOs/over_degs_p001_2LFC.processes.gos")
 overback_Process_GO<-readMappings("../Results/GOs/Back_over_degs_p001_2LFC.processes.gos")
+
+#overdegs_Process_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/over_degs_p001_1LFC_names_only.processes.gos")
+#overback_Process_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_over_degs_p001_1LFC.processes.gos")
 
 over_universe_for_process_topgo<-c(overdegs_Process_GO, overback_Process_GO)
 
@@ -722,8 +730,11 @@ over_resultsFisher_process<-runTest(over_process_go_data, algorithm = "classic",
 
 
 #component GO analysis
-overdegs_Component_GO<-readMappings("../Results/GOs/over_degs_p001_2LFC.components.gos")
-overback_Component_GO<-readMappings("../Results/GOs/Back_over_degs_p001_2LFC.components.gos")
+#uncomment the lfc cutoff you want to analyse
+overdegs_Component_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/over_degs_p001_2LFC.components.gos")
+overback_Component_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_over_degs_p001_2LFC.components.gos")
+#overdegs_Component_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/over_degs_p001_1LFC_names_only.components.gos")
+#overback_Component_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_over_degs_p001_1LFC.components.gos")
 
 over_universe_for_component_topgo<-c(overdegs_Component_GO, overback_Component_GO)
 
@@ -772,8 +783,12 @@ kable(GenTable(over_component_go_data, classic=over_resultsFisher_component, top
 #underexpressed genes only
 
 #function GO analysis
+#uncomment the lfc cutoff you want to analyse
 underdegs_Function_GO<-readMappings("../Results/GOs/under_degs_p001_2LFC.functions.gos")
 underback_Function_GO<-readMappings("../Results/GOs/Back_under_degs_p001_2LFC.functions.gos")
+#underdegs_Function_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/under_degs_p001_1LFC_names_only.functions.gos")
+#underback_Function_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_under_degs_p001_1LFC.functions.gos")
+
 
 under_universe_for_function_topgo<-c(underdegs_Function_GO, underback_Function_GO)
 
@@ -799,8 +814,12 @@ under_resultsFisher_functions<-runTest(under_functions_go_data, algorithm = "cla
 
 
 #process GO analysis
+#uncomment the lfc cutoff you want to analyse
 underdegs_Process_GO<-readMappings("../Results/GOs/under_degs_p001_2LFC.processes.gos")
 underback_Process_GO<-readMappings("../Results/GOs/Back_under_degs_p001_2LFC.processes.gos")
+#underdegs_Process_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/under_degs_p001_1LFC_names_only.processes.gos")
+#underback_Process_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_under_degs_p001_1LFC.processes.gos")
+
 
 under_universe_for_process_topgo<-c(underdegs_Process_GO, underback_Process_GO)
 
@@ -826,8 +845,12 @@ under_resultsFisher_process<-runTest(under_process_go_data, algorithm = "classic
 
 
 #component GO analysis
+#uncomment the lfc cutoff you want to analyse
 underdegs_Component_GO<-readMappings("../Results/GOs/under_degs_p001_2LFC.components.gos")
 underback_Component_GO<-readMappings("../Results/GOs/Back_under_degs_p001_2LFC.components.gos")
+#underdegs_Component_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/under_degs_p001_1LFC_names_only.components.gos")
+#underback_Component_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_under_degs_p001_1LFC.components.gos")
+
 
 under_universe_for_component_topgo<-c(underdegs_Component_GO, underback_Component_GO)
 
@@ -873,9 +896,12 @@ kable(GenTable(under_component_go_data, classic=under_resultsFisher_component, t
 Over
 
 ```{r Pfam_over_enrichment_analysis, echo=FALSE}
-
+#uncomment the lfc you want to use in the following analyses
 over_degs_pfam<-read.csv("../Results/Pfam/over_degs_p001_2LFC.pfam", sep="\t", head=F)
 over_back_pfam<-read.csv("../Results/Pfam/Back_over_degs_p001_2LFC.pfam", sep = "\t", head=F)
+
+#over_degs_pfam<-read.csv("~/Repos/CBAS/CBAS_DE/Results/Pfam/over_degs_p001_1LFC.pfam", sep="\t", head=F)
+#over_back_pfam<-read.csv("~/Repos/CBAS/CBAS_DE/Results/Pfam/Back_over_degs_p001_1LFC.pfam", sep = "\t", head=F)
 
 over_domain_col<-c()
 over_domain_in_degs_col<-c()
@@ -885,7 +911,9 @@ over_domain_pval_col<-c()
 over_count_in_degs<-nrow(over_degs_pfam)
 over_count_in_back<-nrow(over_back_pfam)
 
+#uncomment the lfc you want to use in the following analyses
 over_domains<-read.csv("../Results/Pfam/over_degs_p001_2LFC.pfam.list", sep="\t", head=F)
+#over_domains<-read.csv("~/Repos/CBAS/CBAS_DE/Results/Pfam/over_degs_p001_1LFC.pfam.list", sep="\t", head=F)
 
 for(over_domain in over_domains$V2){
   over_domain_count_in_degs<-nrow(over_degs_pfam[grep(over_domain, over_degs_pfam$V2),])
@@ -916,9 +944,13 @@ Under
 
 ```{r Pfam_under_enrichment_analysis, echo=FALSE}
 #yes I know this code could be modularized better...
-
+#uncomment the lfc you want to use in the following analyses
 under_degs_pfam<-read.csv("../Results/Pfam/under_degs_p001_2LFC.pfam", sep="\t", head=F)
 under_back_pfam<-read.csv("../Results/Pfam/Back_under_degs_p001_2LFC.pfam", sep = "\t", head=F)
+
+#under_degs_pfam<-read.csv("~/Repos/CBAS/CBAS_DE/Results/Pfam/under_degs_p001_1LFC.pfam", sep="\t", head=F)
+#under_back_pfam<-read.csv("~/Repos/CBAS/CBAS_DE/Results/Pfam/Back_under_degs_p001_1LFC.pfam", sep = "\t", head=F)
+
 
 under_domain_col<-c()
 under_domain_in_degs_col<-c()
@@ -928,7 +960,9 @@ under_domain_pval_col<-c()
 under_count_in_degs<-nrow(under_degs_pfam)
 under_count_in_back<-nrow(under_back_pfam)
 
+#uncomment the lfc you want to use in the following analyses
 under_domains<-read.csv("../Results/Pfam/under_degs_p001_2LFC.pfam.list", sep="\t", head=F)
+#under_domains<-read.csv("~/Repos/CBAS/CBAS_DE/Results/Pfam/under_degs_p001_1LFC.pfam.list", sep="\t", head=F)
 
 for(under_domain in under_domains$V2){
   under_domain_count_in_degs<-nrow(under_degs_pfam[grep(under_domain, under_degs_pfam$V2),])
