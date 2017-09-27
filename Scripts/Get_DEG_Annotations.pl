@@ -109,10 +109,7 @@ This will generate three output files for the uniprot accession numbers, the tra
 
 #get options from command line
 GetOptions("metatable=s" => \$metatable,
-<<<<<<< Updated upstream
 					 "length" => \$length,
-=======
->>>>>>> Stashed changes
 					 "sequence" => \$sequence,
 					 "uniprot" => \$uniprot,
 					 "uniprot_annotation" => \$uniprot_annotation,
