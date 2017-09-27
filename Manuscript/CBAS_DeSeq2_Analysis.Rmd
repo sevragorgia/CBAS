@@ -538,20 +538,32 @@ CBAS_DE_Genes_Under<-table(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$padj 
 #get significant genes; uncomment the write.csv method lines if you want to save a new file, otherwise leave commented to use the files in the repo.
 degs_table<-subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & abs(log2FoldChange) >= 2)
 degs_names<-rownames(degs_table)
-#write.csv(degs_table, "~/Repos/CBAS/Results/DEGs/all_degs_p001_2LFC_all_info.csv")
-#write.csv(degs_names, "~/Repos/CBAS/Results/DEGs/all_degs_p001_2LFC_names_only.csv")
+#write.csv(degs_table, "~/Repos/CBAS/CBAS_DE/Results/DEGs/all_degs_p001_2LFC_all_info.csv")
+#write.csv(degs_names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/all_degs_p001_2LFC_names_only.csv")
+#change the log2FoldChange value above to 1 if the following results are to be generated
+#write.csv(degs_table, "~/Repos/CBAS/CBAS_DE/Results/DEGs/all_degs_p001_1LFC_all_info.csv")
+#write.csv(degs_names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/all_degs_p001_1LFC_names_only.csv")
+
 
 #get significantly overexpressed in treatment:
 over_deg_table<-subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & log2FoldChange >= 2)
 over_deg_names<-rownames(over_deg_table)
-#write.csv(over_deg_table, "~/Repos/CBAS/Results/DEGs/over_degs_p001_2LFC_all_info.csv")
-#write.csv(over_deg_names, "~/Repos/CBAS/Results/DEGs/over_degs_p001_2LFC_names_only.csv")
+#write.csv(over_deg_table, "~/Repos/CBAS/CBAS_DE/Results/DEGs/over_degs_p001_2LFC_all_info.csv")
+#write.csv(over_deg_names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/over_degs_p001_2LFC_names_only.csv")
+#change the log2FoldChange value above to 1 if the following results are to be generated
+#write.csv(over_deg_table, "~/Repos/CBAS/CBAS_DE/Results/DEGs/over_degs_p001_1LFC_all_info.csv")
+#write.csv(over_deg_names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/over_degs_p001_1LFC_names_only.csv")
+
 
 #get significantly underexpressed in treatment:
 under_deg_table<-subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & log2FoldChange <= -2)
 under_deg_names<-rownames(under_deg_table)
-#write.csv(under_deg_table, "~/Repos/CBAS/Results/DEGs/under_degs_p001_2LFC_all_info.csv")
-#write.csv(under_deg_names, "~/Repos/CBAS/Results/DEGs/under_degs_p001_2LFC_names_only.csv")
+#write.csv(under_deg_table, "~/Repos/CBAS/CBAS_DE/Results/DEGs/under_degs_p001_2LFC_all_info.csv")
+#write.csv(under_deg_names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/under_degs_p001_2LFC_names_only.csv")
+#change the log2FoldChange value above to 1 if the following results are to be generated
+#write.csv(under_deg_table, "~/Repos/CBAS/CBAS_DE/Results/DEGs/under_degs_p001_1LFC_all_info.csv")
+#write.csv(under_deg_names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/under_degs_p001_1LFC_names_only.csv")
+
 
 ```
 
@@ -570,8 +582,11 @@ CBAS_DeSeq_Transdecoded_Only_NoOutliers_underDEGs <- CBAS_DeSeq_Transdecoded_Onl
 
 heatmap.2(log2(counts(CBAS_DeSeq_Transdecoded_Only_NoOutliers_DEGs, normalized=T)+1), cexCol=0.75, labRow=FALSE, scale="row", trace = "none", dendrogram = "column", col= colorRampPalette(rev(brewer.pal(9, "RdBu"))))
 
-plotMA(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, alpha=0.01)
-
+plotMA(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, alpha=0.01, ylim=c(-9.5,9.5))
+abline(h=1, col="blue", lwd=2)
+abline(h=-1, col="blue", lwd=2)
+abline(h=2, col="green", lwd=2)
+abline(h=-2, col="green", lwd=2)
 
 ```
 
@@ -628,9 +643,9 @@ GO_Over_Background_Gene_Names<-setdiff(GO_Over_Background_Gene_Names, over_deg_n
 GO_Under_Background_Gene_Names<-setdiff(GO_Under_Background_Gene_Names, under_deg_names)
 
 #uncomment the following line to save the names. Leave as comments to use the files already on the repo later on.
-#write.csv(GO_Background_Gene_Names, "../Results/DEGs/Back_degs_p001_2LFC.csv")
-#write.csv(GO_Over_Background_Gene_Names, "../Results/DEGs/Back_over_degs_p001_2LFC.csv")
-#write.csv(GO_Under_Background_Gene_Names, "../Results/DEGs/Back_under_degs_p001_2LFC.csv")
+#write.csv(GO_Background_Gene_Names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/Back_degs_p001_1LFC.csv")
+#write.csv(GO_Over_Background_Gene_Names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/Back_over_degs_p001_1LFC.csv")
+#write.csv(GO_Under_Background_Gene_Names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/Back_under_degs_p001_1LFC.csv")
 ```
 
 For Gene Ontology (GO) enrichment analyses we were able to select a background set of transcripts showing similar expression patterns but no significant change between conditions for all transcripts as well as for overexpressed and underexpressed transcripts (Fig. 13). Enriched Function, Process and Compartment GO terms for over- and underexpressed genes can be found in Tables 5-10.
@@ -738,19 +753,19 @@ Table 5: GO-Term functions overrepresented in the set of overexpressed DEGs.
 
 ```{r Generate_Over_GO_Function_analysis_table, echo=FALSE}
 #generate table of results
-kable(GenTable(over_functions_go_data, classic=over_resultsFisher_functions, topNodes=15))
+kable(GenTable(over_functions_go_data, classic=over_resultsFisher_functions, topNodes=68))
 ```
 
 Table 6: GO-Term processes overrepresented in the set of overexpressed DEGs.
 ```{r Generate_Over_GO_Process_analysis_table, echo=FALSE}
 #generate table of results
-kable(GenTable(over_process_go_data, classic=over_resultsFisher_process, topNodes=15))
+kable(GenTable(over_process_go_data, classic=over_resultsFisher_process, topNodes=124))
 ```
 
 Table 7: GO-Term compartments overrepresented in the set of overexpressed DEGs.
 ```{r Generate_Over_GO_Component_analysis_table, echo=FALSE}
 #generate table of results
-kable(GenTable(over_component_go_data, classic=over_resultsFisher_component, topNodes=15))
+kable(GenTable(over_component_go_data, classic=over_resultsFisher_component, topNodes=39))
 ```
 
 ```{r Under_GO_analysis, include=FALSE, results='hide'}
@@ -840,17 +855,17 @@ under_resultsFisher_component<-runTest(under_component_go_data, algorithm = "cla
 
 Table 8: GO-Term functions overrepresented in the set of underexpressed DEGs.
 ```{r Generate_Under_GO_Function_analysis_table, echo=FALSE}
-kable(GenTable(under_functions_go_data, classic=under_resultsFisher_functions, topNodes=15))
+kable(GenTable(under_functions_go_data, classic=under_resultsFisher_functions, topNodes=124))
 ```
 
 Table 9: GO-Term processes overrepresented in the set of underexpressed DEGs.
 ```{r Generate_Under_GO_Process_analysis_table, echo=FALSE}
-kable(GenTable(under_process_go_data, classic=under_resultsFisher_process, topNodes=15))
+kable(GenTable(under_process_go_data, classic=under_resultsFisher_process, topNodes=477))
 ```
 
 Table 10: GO-Term compartments overrepresented in the set of underexpressed DEGs.
 ```{r Generate_Under_GO_Component_analysis_table, echo=FALSE}
-kable(GenTable(under_component_go_data, classic=under_resultsFisher_component, topNodes=15))
+kable(GenTable(under_component_go_data, classic=under_resultsFisher_component, topNodes=87))
 ```
 
 ##Pfam domains
