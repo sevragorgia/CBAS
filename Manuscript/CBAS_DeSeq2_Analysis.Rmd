@@ -7,7 +7,7 @@ output:
   html_document: default
   pdf_document: default
 ---
-```{r load_libraries, include=FALSE}
+```{r load_libraries_and_set_globals, include=FALSE}
 library(knitr)
 library(ggplot2)
 library(reshape2)
@@ -26,6 +26,14 @@ library("vegan")
 
 library("BiocParallel")
 register(MulticoreParam(4))
+
+#change this value to get results for transcripts above the desired_LFC_threshold
+#note that the GO-term and Pfam enrichment analyses were done only with desired_LFC_threshold=1 and desired_LFC_threshold=2
+desired_LFC_threshold<-1
+
+#should the script write the output or not?
+write_degs_output<-FALSE
+write_background_output<-FALSE
 
 ```
 
@@ -92,18 +100,18 @@ In addition to the GO-Term enrichment analysis, and due to the difficulties in a
 #here we load some necessary files to make them available.
 
 #meta-annotation table, read gziped file as if read.csv, i.e. no quotes, no comments.
-meta_annotations<-read.table("../Annotations/Metatable/20161123_CBAS_Annotation_Metatable.csv.gz", head=T, sep="\t", quote="", comment.char="")
+meta_annotations<-read.table("~/Repos/CBAS/CBAS_DE/Annotations/Metatable/20161123_CBAS_Annotation_Metatable.csv.gz", head=T, sep="\t", quote="", comment.char="")
 
 #histogram table
-transcript_lengths<-read.csv("../Results/Reference_transcriptome_length_histogram.csv", head=T, sep="\t")
+transcript_lengths<-read.csv("~/Repos/CBAS/CBAS_DE/Results/Reference_transcriptome_length_histogram.csv", head=T, sep="\t")
 
 #load tpm and fpkm matrices
-tpm_matrix<-read.csv("../Counts/CBAS_Bleaching_RSEM_Expression_TPM_Matrix.csv", sep="\t", header=TRUE)
-fpkm_matrix<-read.csv("../Counts/CBAS_Bleaching_RSEM_Expression_FPKM_Matrix.csv", sep="\t", header=TRUE)
+tpm_matrix<-read.csv("~/Repos/CBAS/CBAS_DE/Counts/CBAS_Bleaching_RSEM_Expression_TPM_Matrix.csv", sep="\t", header=TRUE)
+fpkm_matrix<-read.csv("~/Repos/CBAS/CBAS_DE/Counts/CBAS_Bleaching_RSEM_Expression_FPKM_Matrix.csv", sep="\t", header=TRUE)
 
 #load the transcript count matrix and sample information table. It is assumed that these files are store in the folder Count_Matrix in the folder used to cloned the CBAS repository. The folder structure of the repository must not be changed.
-CBAS_DE<-read.csv("../Counts/CBAS_Bleaching_RSEM_Expression_Matrix.counts", head=T, sep="\t")
-CBAS_DE_INFO<-read.csv("../Counts/CBAS_Bleaching_RSEM_Expression_Matrix.info", head=T)
+CBAS_DE<-read.csv("~/Repos/CBAS/CBAS_DE/Counts/CBAS_Bleaching_RSEM_Expression_Matrix.counts", head=T, sep="\t")
+CBAS_DE_INFO<-read.csv("~/Repos/CBAS/CBAS_DE/Counts/CBAS_Bleaching_RSEM_Expression_Matrix.info", head=T)
 
 ```
 
@@ -506,6 +514,7 @@ plotPCA(CBAS_DeSeq_Transdecoded_Only_NoOutliers_rlog, intgroup=c("condition"))
 ***
 
 ```{r differential_expression_analysis, include=FALSE, results='hide'}
+
 #here we assess for global differences in expression using the function adonis from the package vegan.
 
 light_treatments<-data.frame(Condition=c("T","T","T","T","C","C","C","C"))
@@ -529,45 +538,64 @@ CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results<-results(CBAS_DeSeq_Transdecoded
 #number of DE genes at 0.01 significance level
 CBAS_DE_Genes<-table(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$padj < 0.01)
 
-#number of overexpressed genes at 0.01 significance level and log fold change > 2
-CBAS_DE_Genes_Over<-table(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$padj < 0.01 & CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$log2FoldChange >= 2)
+#number of overexpressed genes at 0.01 significance level and log fold change >= desired_LFC_threshold; see above
+CBAS_DE_Genes_Over<-table(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$padj < 0.01 & CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$log2FoldChange >= desired_LFC_threshold)
 
-#number of underexpressed genes at 0.01 significance level and log fold change < -2
-CBAS_DE_Genes_Under<-table(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$padj < 0.01 & CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$log2FoldChange <= -2)
+#number of underexpressed genes at 0.01 significance level and log fold change =< -(desired_LFC_threshold); see above
+CBAS_DE_Genes_Under<-table(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$padj < 0.01 & CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results$log2FoldChange <= -(desired_LFC_threshold))
 
 #get significant genes; uncomment the write.csv method lines if you want to save a new file, otherwise leave commented to use the files in the repo.
-degs_table<-subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & abs(log2FoldChange) >= 2)
+degs_table<-subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & abs(log2FoldChange) >= desired_LFC_threshold)
 degs_names<-rownames(degs_table)
-#write.csv(degs_table, "~/Repos/CBAS/CBAS_DE/Results/DEGs/all_degs_p001_2LFC_all_info.csv")
-#write.csv(degs_names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/all_degs_p001_2LFC_names_only.csv")
-#change the log2FoldChange value above to 1 if the following results are to be generated
-#write.csv(degs_table, "~/Repos/CBAS/CBAS_DE/Results/DEGs/all_degs_p001_1LFC_all_info.csv")
-#write.csv(degs_names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/all_degs_p001_1LFC_names_only.csv")
-
 
 #get significantly overexpressed in treatment:
-over_deg_table<-subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & log2FoldChange >= 2)
+over_deg_table<-subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & log2FoldChange >= desired_LFC_threshold)
 over_deg_names<-rownames(over_deg_table)
-#write.csv(over_deg_table, "~/Repos/CBAS/CBAS_DE/Results/DEGs/over_degs_p001_2LFC_all_info.csv")
-#write.csv(over_deg_names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/over_degs_p001_2LFC_names_only.csv")
-#change the log2FoldChange value above to 1 if the following results are to be generated
-#write.csv(over_deg_table, "~/Repos/CBAS/CBAS_DE/Results/DEGs/over_degs_p001_1LFC_all_info.csv")
-#write.csv(over_deg_names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/over_degs_p001_1LFC_names_only.csv")
-
 
 #get significantly underexpressed in treatment:
-under_deg_table<-subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & log2FoldChange <= -2)
+under_deg_table<-subset(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results, padj<0.01 & log2FoldChange <= -(desired_LFC_threshold))
 under_deg_names<-rownames(under_deg_table)
-#write.csv(under_deg_table, "~/Repos/CBAS/CBAS_DE/Results/DEGs/under_degs_p001_2LFC_all_info.csv")
-#write.csv(under_deg_names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/under_degs_p001_2LFC_names_only.csv")
-#change the log2FoldChange value above to 1 if the following results are to be generated
-#write.csv(under_deg_table, "~/Repos/CBAS/CBAS_DE/Results/DEGs/under_degs_p001_1LFC_all_info.csv")
-#write.csv(under_deg_names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/under_degs_p001_1LFC_names_only.csv")
+
+if(write_degs_output){#yes, I know this code sucks...
+  
+  if(desired_LFC_threshold == 1){
+    #write all degs  
+    write.csv(degs_table, "~/Repos/CBAS/CBAS_DE/Results/DEGs/all_degs_p001_1LFC_all_info.csv")
+    write.csv(degs_names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/all_degs_p001_1LFC_names_only.csv")
+    
+    #write over degs
+    write.csv(over_deg_table, "~/Repos/CBAS/CBAS_DE/Results/DEGs/over_degs_p001_1LFC_all_info.csv")
+    write.csv(over_deg_names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/over_degs_p001_1LFC_names_only.csv")
+    
+    #write under degs
+    write.csv(under_deg_table, "~/Repos/CBAS/CBAS_DE/Results/DEGs/under_degs_p001_1LFC_all_info.csv")
+    write.csv(under_deg_names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/under_degs_p001_1LFC_names_only.csv")
+    
+    
+  }else if(desired_LFC_threshold == 2){
+    #write all degs  
+    write.csv(degs_table, "~/Repos/CBAS/CBAS_DE/Results/DEGs/all_degs_p001_2LFC_all_info.csv")
+    write.csv(degs_names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/all_degs_p001_2LFC_names_only.csv")
+  
+    #write over degs
+    write.csv(over_deg_table, "~/Repos/CBAS/CBAS_DE/Results/DEGs/over_degs_p001_2LFC_all_info.csv")
+    write.csv(over_deg_names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/over_degs_p001_2LFC_names_only.csv")
+
+    #write under degs
+    write.csv(under_deg_table, "~/Repos/CBAS/CBAS_DE/Results/DEGs/under_degs_p001_2LFC_all_info.csv")
+    write.csv(under_deg_names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/under_degs_p001_2LFC_names_only.csv")
+
+  }else{
+    
+    print("please define an output file... For this you need to modify the code, sorry!")
+    
+  }
+}
 
 
 ```
 
-We detected significant differences in the global expression patters bewteen treated and control sponges (Adonis PseudoF = 5.1164, df = 1, p-value = 0.039). In this reduced dataset, a total of `r as.vector(CBAS_DE_Genes)[2]` transcripts were differentially expressed between the *control* and *bleached* sponges (Fig. 11). Of these transcripts, `r as.vector(CBAS_DE_Genes_Over)[2]` were overexpressed (with a log2 fold change higher or equal to 2) in *bleached vs. control* sponges and `r as.vector(CBAS_DE_Genes_Under)[2]` were expressed at lower levels (a log2 fold change lower or equal than -2) in *bleached vs. control* specimens.
+We detected significant differences in the global expression patters bewteen treated and control sponges (Adonis PseudoF = 5.1164, df = 1, p-value = 0.039). In this reduced dataset, a total of `r as.vector(CBAS_DE_Genes)[2]` transcripts were differentially expressed between the *control* and *bleached* sponges (Fig. 11). Of these transcripts, `r as.vector(CBAS_DE_Genes_Over)[2]` were overexpressed (with a log2 fold change higher or equal to `r desired_LFC_threshold`) in *bleached vs. control* sponges and `r as.vector(CBAS_DE_Genes_Under)[2]` were expressed at lower levels (a log2 fold change lower or equal than -`r desired_LFC_threshold`) in *bleached vs. control* specimens.
 
 ```{r MA_plot, echo=FALSE, fig.align='center', fig.height=10, fig.width=10}
 par(mfrow=c(2,1), oma=c(2,2,2,2))
@@ -642,10 +670,27 @@ GO_Background_Gene_Names<-setdiff(GO_Background_Gene_Names, degs_names)
 GO_Over_Background_Gene_Names<-setdiff(GO_Over_Background_Gene_Names, over_deg_names)
 GO_Under_Background_Gene_Names<-setdiff(GO_Under_Background_Gene_Names, under_deg_names)
 
-#uncomment the following line to save the names. Leave as comments to use the files already on the repo later on.
-#write.csv(GO_Background_Gene_Names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/Back_degs_p001_1LFC.csv")
-#write.csv(GO_Over_Background_Gene_Names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/Back_over_degs_p001_1LFC.csv")
-#write.csv(GO_Under_Background_Gene_Names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/Back_under_degs_p001_1LFC.csv")
+if(write_background_output){
+
+  if(desired_LFC_threshold == 1){
+    
+    write.csv(GO_Background_Gene_Names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/Back_degs_p001_1LFC.csv")
+    write.csv(GO_Over_Background_Gene_Names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/Back_over_degs_p001_1LFC.csv")
+    write.csv(GO_Under_Background_Gene_Names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/Back_under_degs_p001_1LFC.csv")
+    
+  }else if(desired_LFC_threshold == 2){
+    
+    write.csv(GO_Background_Gene_Names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/Back_degs_p001_2LFC.csv")
+    write.csv(GO_Over_Background_Gene_Names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/Back_over_degs_p001_2LFC.csv")
+    write.csv(GO_Under_Background_Gene_Names, "~/Repos/CBAS/CBAS_DE/Results/DEGs/Back_under_degs_p001_2LFC.csv")
+    
+  }else{
+    
+    print("You need to provide an output file, for this you have to modify the code. Sorry!")
+    
+  }
+}
+
 ```
 
 For Gene Ontology (GO) enrichment analyses we were able to select a background set of transcripts showing similar expression patterns but no significant change between conditions for all transcripts as well as for overexpressed and underexpressed transcripts (Fig. 13). Enriched Function, Process and Compartment GO terms for over- and underexpressed genes can be found in Tables 5-10.
@@ -668,14 +713,38 @@ multidensity( list(fore=log2(CBAS_DeSeq_Transdecoded_Only_NoOutliers_Results[und
 
 ```{r Over_GO_analysis, include=FALSE, results='hide'}
 #overexpressed genes only
-#function GO analysis
-#uncomment the lfc cutoff you want to analyse
-overdegs_Function_GO<-readMappings("../Results/GOs/over_degs_p001_2LFC.functions.gos")
-overback_Function_GO<-readMappings("../Results/GOs/Back_over_degs_p001_2LFC.functions.gos")
 
-#overdegs_Function_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/over_degs_p001_1LFC_names_only.functions.gos")
-#overback_Function_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_over_degs_p001_1LFC.functions.gos")
+#get the Go annotations
+if(desired_LFC_threshold == 1){
+  #function GO analysis
+  overdegs_Function_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/over_degs_p001_1LFC_names_only.functions.gos")
+  overback_Function_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_over_degs_p001_1LFC.functions.gos")
+  #process GO analysis
+  overdegs_Process_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/over_degs_p001_1LFC_names_only.processes.gos")
+  overback_Process_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_over_degs_p001_1LFC.processes.gos")
+  #component GO analysis
+  overdegs_Component_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/over_degs_p001_1LFC_names_only.components.gos")
+  overback_Component_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_over_degs_p001_1LFC.components.gos")
 
+  
+}else if(desired_LFC_threshold == 2){
+  #function GO analysis
+  overdegs_Function_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/over_degs_p001_2LFC.functions.gos")
+  overback_Function_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_over_degs_p001_2LFC.functions.gos")
+  #process GO analysis
+  overdegs_Process_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/over_degs_p001_2LFC.processes.gos")
+  overback_Process_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_over_degs_p001_2LFC.processes.gos")
+  #component GO analysis
+  overdegs_Component_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/over_degs_p001_2LFC.components.gos")
+  overback_Component_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_over_degs_p001_2LFC.components.gos") 
+  
+}else {
+  
+  print("The LFC you are using was not analyzed in the original dataset. You need to generate the go term list for the set of transcripts you generated previously.")
+  
+}
+
+#function
 over_universe_for_function_topgo<-c(overdegs_Function_GO, overback_Function_GO)
 
 #get names of genes in different groups
@@ -698,14 +767,8 @@ over_resultsFisher_functions<-runTest(over_functions_go_data, algorithm = "class
 #generate graph of results
 #showSigOfNodes(over_functions_go_data, score(over_resultsFisher_functions), useInfo = "all")
 
+
 #process GO analysis
-#uncomment the lfc cutoff you want to analyse
-overdegs_Process_GO<-readMappings("../Results/GOs/over_degs_p001_2LFC.processes.gos")
-overback_Process_GO<-readMappings("../Results/GOs/Back_over_degs_p001_2LFC.processes.gos")
-
-#overdegs_Process_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/over_degs_p001_1LFC_names_only.processes.gos")
-#overback_Process_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_over_degs_p001_1LFC.processes.gos")
-
 over_universe_for_process_topgo<-c(overdegs_Process_GO, overback_Process_GO)
 
 #get names of genes in different groups
@@ -730,12 +793,6 @@ over_resultsFisher_process<-runTest(over_process_go_data, algorithm = "classic",
 
 
 #component GO analysis
-#uncomment the lfc cutoff you want to analyse
-overdegs_Component_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/over_degs_p001_2LFC.components.gos")
-overback_Component_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_over_degs_p001_2LFC.components.gos")
-#overdegs_Component_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/over_degs_p001_1LFC_names_only.components.gos")
-#overback_Component_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_over_degs_p001_1LFC.components.gos")
-
 over_universe_for_component_topgo<-c(overdegs_Component_GO, overback_Component_GO)
 
 #get names of genes in different groups
@@ -764,32 +821,62 @@ Table 5: GO-Term functions overrepresented in the set of overexpressed DEGs.
 
 ```{r Generate_Over_GO_Function_analysis_table, echo=FALSE}
 #generate table of results
-kable(GenTable(over_functions_go_data, classic=over_resultsFisher_functions, topNodes=68))
+over_functions_go_table<-GenTable(over_functions_go_data, classic=over_resultsFisher_functions, topNodes=1575)
+kable(subset(over_functions_go_table,classic < 0.05))
 ```
 
 Table 6: GO-Term processes overrepresented in the set of overexpressed DEGs.
 ```{r Generate_Over_GO_Process_analysis_table, echo=FALSE}
 #generate table of results
-kable(GenTable(over_process_go_data, classic=over_resultsFisher_process, topNodes=124))
+over_process_go_table<-GenTable(over_process_go_data, classic=over_resultsFisher_process, topNodes=7271)
+kable(subset(over_process_go_table,classic < 0.05))
 ```
 
 Table 7: GO-Term compartments overrepresented in the set of overexpressed DEGs.
 ```{r Generate_Over_GO_Component_analysis_table, echo=FALSE}
 #generate table of results
-kable(GenTable(over_component_go_data, classic=over_resultsFisher_component, topNodes=39))
+over_component_go_table<-GenTable(over_component_go_data, classic=over_resultsFisher_component, topNodes=959)
+kable(subset(over_component_go_table, classic < 0.05))
 ```
 
 ```{r Under_GO_analysis, include=FALSE, results='hide'}
 #underexpressed genes only
 
+#get the Go annotations
+if(desired_LFC_threshold == 1){
+  #function GO analysis
+  underdegs_Function_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/under_degs_p001_1LFC_names_only.functions.gos")
+  underback_Function_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_under_degs_p001_1LFC.functions.gos")
+
+  #process GO analysis
+  underdegs_Process_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/under_degs_p001_1LFC_names_only.processes.gos")
+  underback_Process_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_under_degs_p001_1LFC.processes.gos")
+  
+  #component GO analysis
+  underdegs_Component_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/under_degs_p001_1LFC_names_only.components.gos")
+  underback_Component_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_under_degs_p001_1LFC.components.gos")
+
+}else if(desired_LFC_threshold == 2){
+  
+  #function GO analysis
+  underdegs_Function_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/under_degs_p001_2LFC.functions.gos")
+  underback_Function_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_under_degs_p001_2LFC.functions.gos")
+  
+  #process GO analysis
+  underdegs_Process_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/under_degs_p001_2LFC.processes.gos")
+  underback_Process_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_under_degs_p001_2LFC.processes.gos")
+  
+  #component GO analysis
+  underdegs_Component_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/under_degs_p001_2LFC.components.gos")
+  underback_Component_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_under_degs_p001_2LFC.components.gos") 
+  
+}else {
+  
+  print("The LFC you are using was not analyzed in the original dataset. You need to generate the go term list for the set of transcripts you generated previously.")
+  
+}
+
 #function GO analysis
-#uncomment the lfc cutoff you want to analyse
-underdegs_Function_GO<-readMappings("../Results/GOs/under_degs_p001_2LFC.functions.gos")
-underback_Function_GO<-readMappings("../Results/GOs/Back_under_degs_p001_2LFC.functions.gos")
-#underdegs_Function_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/under_degs_p001_1LFC_names_only.functions.gos")
-#underback_Function_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_under_degs_p001_1LFC.functions.gos")
-
-
 under_universe_for_function_topgo<-c(underdegs_Function_GO, underback_Function_GO)
 
 #get names of genes in different groups
@@ -814,13 +901,6 @@ under_resultsFisher_functions<-runTest(under_functions_go_data, algorithm = "cla
 
 
 #process GO analysis
-#uncomment the lfc cutoff you want to analyse
-underdegs_Process_GO<-readMappings("../Results/GOs/under_degs_p001_2LFC.processes.gos")
-underback_Process_GO<-readMappings("../Results/GOs/Back_under_degs_p001_2LFC.processes.gos")
-#underdegs_Process_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/under_degs_p001_1LFC_names_only.processes.gos")
-#underback_Process_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_under_degs_p001_1LFC.processes.gos")
-
-
 under_universe_for_process_topgo<-c(underdegs_Process_GO, underback_Process_GO)
 
 #get names of genes in different groups
@@ -845,13 +925,6 @@ under_resultsFisher_process<-runTest(under_process_go_data, algorithm = "classic
 
 
 #component GO analysis
-#uncomment the lfc cutoff you want to analyse
-underdegs_Component_GO<-readMappings("../Results/GOs/under_degs_p001_2LFC.components.gos")
-underback_Component_GO<-readMappings("../Results/GOs/Back_under_degs_p001_2LFC.components.gos")
-#underdegs_Component_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/under_degs_p001_1LFC_names_only.components.gos")
-#underback_Component_GO<-readMappings("~/Repos/CBAS/CBAS_DE/Results/GOs/Back_under_degs_p001_1LFC.components.gos")
-
-
 under_universe_for_component_topgo<-c(underdegs_Component_GO, underback_Component_GO)
 
 #get names of genes in different groups
@@ -878,17 +951,20 @@ under_resultsFisher_component<-runTest(under_component_go_data, algorithm = "cla
 
 Table 8: GO-Term functions overrepresented in the set of underexpressed DEGs.
 ```{r Generate_Under_GO_Function_analysis_table, echo=FALSE}
-kable(GenTable(under_functions_go_data, classic=under_resultsFisher_functions, topNodes=124))
+under_functions_go_table<-GenTable(under_functions_go_data, classic=under_resultsFisher_functions, topNodes=1575)
+kable(subset(under_functions_go_table, classic < 0.05))
 ```
 
 Table 9: GO-Term processes overrepresented in the set of underexpressed DEGs.
 ```{r Generate_Under_GO_Process_analysis_table, echo=FALSE}
-kable(GenTable(under_process_go_data, classic=under_resultsFisher_process, topNodes=477))
+under_process_go_table<-GenTable(under_process_go_data, classic=under_resultsFisher_process, topNodes=7271)
+kable(subset(under_process_go_table, classic < 0.05))
 ```
 
 Table 10: GO-Term compartments overrepresented in the set of underexpressed DEGs.
 ```{r Generate_Under_GO_Component_analysis_table, echo=FALSE}
-kable(GenTable(under_component_go_data, classic=under_resultsFisher_component, topNodes=87))
+under_component_go_table<-GenTable(under_component_go_data, classic=under_resultsFisher_component, topNodes=959)
+kable(subset(under_component_go_table, classic < 0.05))
 ```
 
 ##Pfam domains
@@ -896,12 +972,23 @@ kable(GenTable(under_component_go_data, classic=under_resultsFisher_component, t
 Over
 
 ```{r Pfam_over_enrichment_analysis, echo=FALSE}
-#uncomment the lfc you want to use in the following analyses
-over_degs_pfam<-read.csv("../Results/Pfam/over_degs_p001_2LFC.pfam", sep="\t", head=F)
-over_back_pfam<-read.csv("../Results/Pfam/Back_over_degs_p001_2LFC.pfam", sep = "\t", head=F)
 
-#over_degs_pfam<-read.csv("~/Repos/CBAS/CBAS_DE/Results/Pfam/over_degs_p001_1LFC.pfam", sep="\t", head=F)
-#over_back_pfam<-read.csv("~/Repos/CBAS/CBAS_DE/Results/Pfam/Back_over_degs_p001_1LFC.pfam", sep = "\t", head=F)
+if(desired_LFC_threshold == 1){
+  
+  over_degs_pfam<-read.csv("~/Repos/CBAS/CBAS_DE/Results/Pfam/over_degs_p001_1LFC.pfam", sep="\t", head=F)
+  over_back_pfam<-read.csv("~/Repos/CBAS/CBAS_DE/Results/Pfam/Back_over_degs_p001_1LFC.pfam", sep = "\t", head=F)
+  over_domains<-read.csv("~/Repos/CBAS/CBAS_DE/Results/Pfam/over_degs_p001_1LFC.pfam.list", sep="\t", head=F)
+
+}else if(desired_LFC_threshold == 2){
+  over_degs_pfam<-read.csv("~/Repos/CBAS/CBAS_DE/Results/Pfam/over_degs_p001_2LFC.pfam", sep="\t", head=F)
+  over_back_pfam<-read.csv("~/Repos/CBAS/CBAS_DE/Results/Pfam/Back_over_degs_p001_2LFC.pfam", sep = "\t", head=F) 
+  over_domains<-read.csv("~/Repos/CBAS/CBAS_DE/Results/Pfam/over_degs_p001_2LFC.pfam.list", sep="\t", head=F)
+  
+}else{
+  
+  print("The LFC you are using was not analyzed in the original dataset. You need to generate the pfam list for the set of transcripts you generated previously.")
+  
+}
 
 over_domain_col<-c()
 over_domain_in_degs_col<-c()
@@ -911,9 +998,6 @@ over_domain_pval_col<-c()
 over_count_in_degs<-nrow(over_degs_pfam)
 over_count_in_back<-nrow(over_back_pfam)
 
-#uncomment the lfc you want to use in the following analyses
-over_domains<-read.csv("../Results/Pfam/over_degs_p001_2LFC.pfam.list", sep="\t", head=F)
-#over_domains<-read.csv("~/Repos/CBAS/CBAS_DE/Results/Pfam/over_degs_p001_1LFC.pfam.list", sep="\t", head=F)
 
 for(over_domain in over_domains$V2){
   over_domain_count_in_degs<-nrow(over_degs_pfam[grep(over_domain, over_degs_pfam$V2),])
@@ -944,13 +1028,22 @@ Under
 
 ```{r Pfam_under_enrichment_analysis, echo=FALSE}
 #yes I know this code could be modularized better...
-#uncomment the lfc you want to use in the following analyses
-under_degs_pfam<-read.csv("../Results/Pfam/under_degs_p001_2LFC.pfam", sep="\t", head=F)
-under_back_pfam<-read.csv("../Results/Pfam/Back_under_degs_p001_2LFC.pfam", sep = "\t", head=F)
 
-#under_degs_pfam<-read.csv("~/Repos/CBAS/CBAS_DE/Results/Pfam/under_degs_p001_1LFC.pfam", sep="\t", head=F)
-#under_back_pfam<-read.csv("~/Repos/CBAS/CBAS_DE/Results/Pfam/Back_under_degs_p001_1LFC.pfam", sep = "\t", head=F)
-
+if(desired_LFC_threshold == 1){
+  
+  under_degs_pfam<-read.csv("~/Repos/CBAS/CBAS_DE/Results/Pfam/under_degs_p001_1LFC.pfam", sep="\t", head=F)
+  under_back_pfam<-read.csv("~/Repos/CBAS/CBAS_DE/Results/Pfam/Back_under_degs_p001_1LFC.pfam", sep = "\t", head=F)  
+  under_domains<-read.csv("~/Repos/CBAS/CBAS_DE/Results/Pfam/under_degs_p001_1LFC.pfam.list", sep="\t", head=F)
+}else if(desired_LFC_threshold == 2){
+  
+  under_degs_pfam<-read.csv("~/Repos/CBAS/CBAS_DE/Results/Pfam/under_degs_p001_2LFC.pfam", sep="\t", head=F)
+  under_back_pfam<-read.csv("~/Repos/CBAS/CBAS_DE/Results/Pfam/Back_under_degs_p001_2LFC.pfam", sep = "\t", head=F)
+  under_domains<-read.csv("~/Repos/CBAS/CBAS_DE/Results/Pfam/under_degs_p001_2LFC.pfam.list", sep="\t", head=F)
+}else{
+  
+  print("The LFC you are using was not analyzed in the original dataset. You need to generate the pfam list for the set of transcripts you generated previously.")
+  
+}
 
 under_domain_col<-c()
 under_domain_in_degs_col<-c()
@@ -959,10 +1052,6 @@ under_domain_pval_col<-c()
 
 under_count_in_degs<-nrow(under_degs_pfam)
 under_count_in_back<-nrow(under_back_pfam)
-
-#uncomment the lfc you want to use in the following analyses
-under_domains<-read.csv("../Results/Pfam/under_degs_p001_2LFC.pfam.list", sep="\t", head=F)
-#under_domains<-read.csv("~/Repos/CBAS/CBAS_DE/Results/Pfam/under_degs_p001_1LFC.pfam.list", sep="\t", head=F)
 
 for(under_domain in under_domains$V2){
   under_domain_count_in_degs<-nrow(under_degs_pfam[grep(under_domain, under_degs_pfam$V2),])
