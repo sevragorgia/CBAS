@@ -757,7 +757,9 @@ over_genes_of_interest_list_for_function<-factor(as.integer(over_genes_in_univer
 names(over_genes_of_interest_list_for_function)<-over_genes_in_universe_for_function
 
 #create a topGO object for Molecular Function
-over_functions_go_data<-new("topGOdata", ontology="MF", allGenes=over_genes_of_interest_list_for_function, annot=annFUN.gene2GO, gene2GO=over_universe_for_function_topgo)
+#over_functions_go_data<-new("topGOdata", ontology="MF", allGenes=over_genes_of_interest_list_for_function, annot=annFUN.gene2GO, gene2GO=over_universe_for_function_topgo)
+
+over_functions_go_data<-new("topGOdata", ontology="MF", allGenes=over_genes_of_interest_list_for_function, annot=annFUN.gene2GO, gene2GO=over_universe_for_function_topgo, nodeSize=10)
 
 #create a test object
 over_resultsFisher_functions<-runTest(over_functions_go_data, algorithm = "classic", statistic="fisher")
@@ -781,7 +783,9 @@ over_genes_of_interest_list_for_process<-factor(as.integer(over_genes_in_univers
 names(over_genes_of_interest_list_for_process)<-over_genes_in_universe_for_process
 
 #create a topGO object for Molecular Function
-over_process_go_data<-new("topGOdata", ontology="BP", allGenes=over_genes_of_interest_list_for_process, annot=annFUN.gene2GO, gene2GO=over_universe_for_process_topgo)
+#over_process_go_data<-new("topGOdata", ontology="BP", allGenes=over_genes_of_interest_list_for_process, annot=annFUN.gene2GO, gene2GO=over_universe_for_process_topgo)
+
+over_process_go_data<-new("topGOdata", ontology="BP", allGenes=over_genes_of_interest_list_for_process, annot=annFUN.gene2GO, gene2GO=over_universe_for_process_topgo, nodeSize=10)
 
 #create a test object
 over_resultsFisher_process<-runTest(over_process_go_data, algorithm = "classic", statistic="fisher")
@@ -805,7 +809,9 @@ over_genes_of_interest_list_for_component<-factor(as.integer(over_genes_in_unive
 names(over_genes_of_interest_list_for_component)<-over_genes_in_universe_for_component
 
 #create a topGO object for Molecular Function
-over_component_go_data<-new("topGOdata", ontology="CC", allGenes=over_genes_of_interest_list_for_component, annot=annFUN.gene2GO, gene2GO=over_universe_for_component_topgo)
+#over_component_go_data<-new("topGOdata", ontology="CC", allGenes=over_genes_of_interest_list_for_component, annot=annFUN.gene2GO, gene2GO=over_universe_for_component_topgo)
+
+over_component_go_data<-new("topGOdata", ontology="CC", allGenes=over_genes_of_interest_list_for_component, annot=annFUN.gene2GO, gene2GO=over_universe_for_component_topgo, nodeSize=10)
 
 #create a test object
 over_resultsFisher_component<-runTest(over_component_go_data, algorithm = "classic", statistic="fisher")
@@ -821,21 +827,24 @@ Table 5: GO-Term functions overrepresented in the set of overexpressed DEGs.
 
 ```{r Generate_Over_GO_Function_analysis_table, echo=FALSE}
 #generate table of results
-over_functions_go_table<-GenTable(over_functions_go_data, classic=over_resultsFisher_functions, topNodes=1575)
+#over_functions_go_table<-GenTable(over_functions_go_data, classic=over_resultsFisher_functions, topNodes=1575)
+over_functions_go_table<-GenTable(over_functions_go_data, classic=over_resultsFisher_functions, topNodes=50)
 kable(subset(over_functions_go_table,classic < 0.05))
 ```
 
 Table 6: GO-Term processes overrepresented in the set of overexpressed DEGs.
 ```{r Generate_Over_GO_Process_analysis_table, echo=FALSE}
 #generate table of results
-over_process_go_table<-GenTable(over_process_go_data, classic=over_resultsFisher_process, topNodes=7271)
+#over_process_go_table<-GenTable(over_process_go_data, classic=over_resultsFisher_process, topNodes=7271)
+over_process_go_table<-GenTable(over_process_go_data, classic=over_resultsFisher_process, topNodes=50)
 kable(subset(over_process_go_table,classic < 0.05))
 ```
 
 Table 7: GO-Term compartments overrepresented in the set of overexpressed DEGs.
 ```{r Generate_Over_GO_Component_analysis_table, echo=FALSE}
 #generate table of results
-over_component_go_table<-GenTable(over_component_go_data, classic=over_resultsFisher_component, topNodes=959)
+#over_component_go_table<-GenTable(over_component_go_data, classic=over_resultsFisher_component, topNodes=959)
+over_component_go_table<-GenTable(over_component_go_data, classic=over_resultsFisher_component, topNodes=50)
 kable(subset(over_component_go_table, classic < 0.05))
 ```
 
@@ -889,7 +898,9 @@ under_genes_of_interest_list_for_function<-factor(as.integer(under_genes_in_univ
 names(under_genes_of_interest_list_for_function)<-under_genes_in_universe_for_function
 
 #create a topGO object for Molecular Function
-under_functions_go_data<-new("topGOdata", ontology="MF", allGenes=under_genes_of_interest_list_for_function, annot=annFUN.gene2GO, gene2GO=under_universe_for_function_topgo)
+#under_functions_go_data<-new("topGOdata", ontology="MF", allGenes=under_genes_of_interest_list_for_function, annot=annFUN.gene2GO, gene2GO=under_universe_for_function_topgo)
+
+under_functions_go_data<-new("topGOdata", ontology="MF", allGenes=under_genes_of_interest_list_for_function, annot=annFUN.gene2GO, gene2GO=under_universe_for_function_topgo, nodeSize=10)
 
 #create a test object
 under_resultsFisher_functions<-runTest(under_functions_go_data, algorithm = "classic", statistic="fisher")
@@ -913,7 +924,8 @@ under_genes_of_interest_list_for_process<-factor(as.integer(under_genes_in_unive
 names(under_genes_of_interest_list_for_process)<-under_genes_in_universe_for_process
 
 #create a topGO object for Molecular Function
-under_process_go_data<-new("topGOdata", ontology="BP", allGenes=under_genes_of_interest_list_for_process, annot=annFUN.gene2GO, gene2GO=under_universe_for_process_topgo)
+#under_process_go_data<-new("topGOdata", ontology="BP", allGenes=under_genes_of_interest_list_for_process, annot=annFUN.gene2GO, gene2GO=under_universe_for_process_topgo)
+under_process_go_data<-new("topGOdata", ontology="BP", allGenes=under_genes_of_interest_list_for_process, annot=annFUN.gene2GO, gene2GO=under_universe_for_process_topgo, nodeSize=10)
 
 #create a test object
 under_resultsFisher_process<-runTest(under_process_go_data, algorithm = "classic", statistic="fisher")
@@ -937,7 +949,9 @@ under_genes_of_interest_list_for_component<-factor(as.integer(under_genes_in_uni
 names(under_genes_of_interest_list_for_component)<-under_genes_in_universe_for_component
 
 #create a topGO object for Molecular Function
-under_component_go_data<-new("topGOdata", ontology="CC", allGenes=under_genes_of_interest_list_for_component, annot=annFUN.gene2GO, gene2GO=under_universe_for_component_topgo)
+#under_component_go_data<-new("topGOdata", ontology="CC", allGenes=under_genes_of_interest_list_for_component, annot=annFUN.gene2GO, gene2GO=under_universe_for_component_topgo)
+
+under_component_go_data<-new("topGOdata", ontology="CC", allGenes=under_genes_of_interest_list_for_component, annot=annFUN.gene2GO, gene2GO=under_universe_for_component_topgo, nodeSize=10)
 
 #create a test object
 under_resultsFisher_component<-runTest(under_component_go_data, algorithm = "classic", statistic="fisher")
@@ -951,19 +965,22 @@ under_resultsFisher_component<-runTest(under_component_go_data, algorithm = "cla
 
 Table 8: GO-Term functions overrepresented in the set of underexpressed DEGs.
 ```{r Generate_Under_GO_Function_analysis_table, echo=FALSE}
-under_functions_go_table<-GenTable(under_functions_go_data, classic=under_resultsFisher_functions, topNodes=1575)
+#under_functions_go_table<-GenTable(under_functions_go_data, classic=under_resultsFisher_functions, topNodes=1575)
+under_functions_go_table<-GenTable(under_functions_go_data, classic=under_resultsFisher_functions, topNodes=50)
 kable(subset(under_functions_go_table, classic < 0.05))
 ```
 
 Table 9: GO-Term processes overrepresented in the set of underexpressed DEGs.
 ```{r Generate_Under_GO_Process_analysis_table, echo=FALSE}
-under_process_go_table<-GenTable(under_process_go_data, classic=under_resultsFisher_process, topNodes=7271)
+#under_process_go_table<-GenTable(under_process_go_data, classic=under_resultsFisher_process, topNodes=7271)
+under_process_go_table<-GenTable(under_process_go_data, classic=under_resultsFisher_process, topNodes=50)
 kable(subset(under_process_go_table, classic < 0.05))
 ```
 
 Table 10: GO-Term compartments overrepresented in the set of underexpressed DEGs.
 ```{r Generate_Under_GO_Component_analysis_table, echo=FALSE}
-under_component_go_table<-GenTable(under_component_go_data, classic=under_resultsFisher_component, topNodes=959)
+#under_component_go_table<-GenTable(under_component_go_data, classic=under_resultsFisher_component, topNodes=959)
+under_component_go_table<-GenTable(under_component_go_data, classic=under_resultsFisher_component, topNodes=50)
 kable(subset(under_component_go_table, classic < 0.05))
 ```
 
