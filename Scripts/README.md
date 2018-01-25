@@ -30,7 +30,7 @@ Perl script to produce a TPM/FPKM matrix from RSEM output files.
 
 ### Create_Transcript_WikiPage.pl
 
-Perl script to generate github wikipages for a set of transcripts based on the annotations provided as a metatable. The metatable can contain DeSeq2 results appended after the last metatable columns. The pages produced can be pushed to the github wiki and will be functional.
+Perl script to generate github wikipages for a set of transcripts based on the annotations provided as a metatable. The metatable can contain DeSeq2 results appended after the last metatable columns. The pages produced can be pushed to the github wiki and will be functional (e.g. see this repo's wiki).
 
 
 ## Support:
