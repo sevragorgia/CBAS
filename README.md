@@ -46,35 +46,9 @@ I will try to provide instructions to clone the repo and fetch the large files i
     
     * Pfam: here the pfam annotations for the DEGs and their respective background sets are provided. The filenames should be self explanatory. These files were used for the Pfam enrichment analysis.
   
-  - **R_Scripts**: 
+  - **R_Scripts**: this folder groups a number of R scripts used to conduct some descriptive analyses on the transcriptome, the DEG analysis and the GO/Pfam enrichment analyses. Originally the scripts were independent from each other. Now they are provided as an **Rmarkdown** file that integrates them with a kind of manuscript on the quality of reference transcriptome and the results of the DEG analysis. **Note** that some of the scripts currently provided here will be removed once I am 100% that all the code necessary for all the analyses have been ported to the rmd script. This step only requires a final check, so hopefully these unnecessary, deprecated scripts will be removed soon. Two other files are provided, one is an RData session snapshot and the other includes details of the R environment used, including the versions of the packages loaded. **Note** that different versions of different packages may change the results! Regarding the RData session provided, for this, I ran the rmarkdown file and saved all resulting objects as the RData file provided. It is likely that this RData file will change to a new/final version once all analyses are considered done/closed.
   
   - **Scripts**: here a number of perl scripts (and some old R scripts that will be deleted from this folder) are provided. These were written to do different things. Each script should provided a (moderately) well written help/usage. If any issues/problems are found trying to execute these scripts please use this repository **Issues** tab to ask for feedback/help. I will try to provide a fix or help.
   
   - **Transcripts**: CBAS' reference transcriptome as fasta. A blast database based on this assembly is provided as well.
 
-
-### Provided Scripts
-
-**CBAS_DeSeq2_Analysis.R**
-
-R script providing the steps followed to derived a list of Differentially Expressed Genes (DEGs) from a matrix of counts.
-
-Using this scripts a background set of transcript (necessary for GO term enrichment analysis) can be derived.
-
-**CBAS_TopGO_Enrichment_Analysis.R**
-
-R script used for the GO term enrichment analysis.
-
-**Get_DEG_GO_Annotations.pl**
-
-Perl script with which the GO term annotations for the DEGs and the transcripts in the background set can be extracted from a set GO annotation files (provided in Annotations/GOs)
-
-**Get_GO_Annotaitons.pl**
-
-Perl script to scan swissprot and retrieve the GO annotations associated with a UNIPROT accession. Using this script one can use the results of a blast annotation table against UNIPROT to get the GO terms associated with the UNIPROT match of a transcript and annotate the transcript this way. NOTE: you are annotating against annotations! So, be careful interpreting the results.
-
-***Deriving lists of GO terms for DEGs and their background distributions***
-
-Once lists of DEGs and background transcripts are available the perl scritp *Get_DEG_GO_Annotations.pl* can be used to get the GO annotations.
-
-This is work in progress!
