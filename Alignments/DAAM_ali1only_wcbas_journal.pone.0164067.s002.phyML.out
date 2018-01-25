@@ -1,0 +1,256 @@
+Statistics:
+
+
+ oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+                                  ---  PhyML 3.2.20170215  ---                                             
+                            http://www.atgc-montpellier.fr/phyml                                          
+                         Copyright CNRS - Universite Montpellier II                                 
+ oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+
+. Sequence filename: 			PHYML
+. Data set: 				#1
+. Tree topology search : 		NNIs
+. Initial tree: 			BioNJ
+. Model of amino acids substitution: 	LG
+. Number of taxa: 			101
+. Log-likelihood: 			-72496.04292
+. Unconstrained likelihood: 		-4095.70067
+. Parsimony: 				16927
+. Tree size: 				91.92648
+. Discrete gamma model: 		Yes
+  - Number of classes: 			4
+  - Gamma shape parameter: 		1.781
+  - Relative rate in class 1: 		0.26559 [freq=0.250000] 		
+  - Relative rate in class 2: 		0.62944 [freq=0.250000] 		
+  - Relative rate in class 3: 		1.06338 [freq=0.250000] 		
+  - Relative rate in class 4: 		2.04159 [freq=0.250000] 		
+
+. Run ID:				none
+. Random seed:				1510664350
+. Subtree patterns aliasing:		no
+. Version:				3.2.20170215
+. Time used:				0h7m56s (476 seconds)
+
+ oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+ Suggested citations:
+ S. Guindon, JF. Dufayard, V. Lefort, M. Anisimova, W. Hordijk, O. Gascuel
+ "New algorithms and methods to estimate maximum-likelihood phylogenies: assessing the performance of PhyML 3.0."
+ Systematic Biology. 2010. 59(3):307-321.
+
+ S. Guindon & O. Gascuel
+ "A simple, fast, and accurate algorithm to estimate large phylogenies by maximum likelihood"
+ Systematic Biology. 2003. 52(5):696-704.
+ oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+
+
+Bootstrap stats:
+
+. Sequence file : [PHYML]
+
+. Model of amino acids substitution : LG
+
+. Initial tree : [BioNJ]
+
+
+. Data	Nb of 	Likelihood	Discrete   	Number of 	Gamma shape	Proportion of	Nucleotides frequencies               	
+  set	taxa	loglk     	gamma model	categories	parameter  	invariant    	f(A)      f(C)      f(G)      f(T)    	
+
+  #1	101   	-72900.91940	Yes        	4        	2.174    	0.000    	
+
+  #2	101   	-72333.66684	Yes        	4        	1.265    	0.000    	
+
+  #3	101   	-75668.39723	Yes        	4        	1.867    	0.000    	
+
+  #4	101   	-70383.16533	Yes        	4        	1.538    	0.000    	
+
+  #5	101   	-71847.80602	Yes        	4        	1.816    	0.000    	
+
+  #6	101   	-69092.61482	Yes        	4        	1.514    	0.000    	
+
+  #7	101   	-69543.56109	Yes        	4        	1.600    	0.000    	
+
+  #8	101   	-70736.22956	Yes        	4        	1.772    	0.000    	
+
+  #9	101   	-73251.85736	Yes        	4        	1.575    	0.000    	
+
+  #10	101   	-71906.11544	Yes        	4        	2.085    	0.000    	
+
+  #11	101   	-73333.76804	Yes        	4        	1.989    	0.000    	
+
+  #12	101   	-76414.12107	Yes        	4        	2.071    	0.000    	
+
+  #13	101   	-71888.23567	Yes        	4        	1.594    	0.000    	
+
+  #14	101   	-69743.39172	Yes        	4        	1.587    	0.000    	
+
+  #15	101   	-70167.44038	Yes        	4        	1.796    	0.000    	
+
+  #16	101   	-72936.76470	Yes        	4        	1.774    	0.000    	
+
+  #17	101   	-76051.59213	Yes        	4        	1.831    	0.000    	
+
+  #18	101   	-70422.70121	Yes        	4        	2.261    	0.000    	
+
+  #19	101   	-65400.50318	Yes        	4        	1.473    	0.000    	
+
+  #20	101   	-66387.50973	Yes        	4        	1.179    	0.000    	
+
+  #21	101   	-73590.87845	Yes        	4        	2.022    	0.000    	
+
+  #22	101   	-73369.60634	Yes        	4        	1.772    	0.000    	
+
+  #23	101   	-74985.45545	Yes        	4        	1.552    	0.000    	
+
+  #24	101   	-74945.99568	Yes        	4        	1.704    	0.000    	
+
+  #25	101   	-76192.84393	Yes        	4        	2.086    	0.000    	
+
+  #26	101   	-72164.31871	Yes        	4        	2.124    	0.000    	
+
+  #27	101   	-72607.43549	Yes        	4        	1.838    	0.000    	
+
+  #28	101   	-73611.96606	Yes        	4        	1.466    	0.000    	
+
+  #29	101   	-71905.27923	Yes        	4        	1.421    	0.000    	
+
+  #30	101   	-70507.04654	Yes        	4        	2.133    	0.000    	
+
+  #31	101   	-71962.08823	Yes        	4        	1.915    	0.000    	
+
+  #32	101   	-70924.33785	Yes        	4        	1.543    	0.000    	
+
+  #33	101   	-72181.56300	Yes        	4        	1.902    	0.000    	
+
+  #34	101   	-70587.71275	Yes        	4        	1.558    	0.000    	
+
+  #35	101   	-65596.35639	Yes        	4        	1.507    	0.000    	
+
+  #36	101   	-71394.82649	Yes        	4        	1.292    	0.000    	
+
+  #37	101   	-71347.25102	Yes        	4        	1.627    	0.000    	
+
+  #38	101   	-72879.54801	Yes        	4        	1.477    	0.000    	
+
+  #39	101   	-72599.37975	Yes        	4        	2.174    	0.000    	
+
+  #40	101   	-73466.99699	Yes        	4        	1.877    	0.000    	
+
+  #41	101   	-72444.21975	Yes        	4        	1.877    	0.000    	
+
+  #42	101   	-72875.54127	Yes        	4        	1.919    	0.000    	
+
+  #43	101   	-71945.80034	Yes        	4        	1.662    	0.000    	
+
+  #44	101   	-76851.42199	Yes        	4        	2.015    	0.000    	
+
+  #45	101   	-73358.05732	Yes        	4        	2.102    	0.000    	
+
+  #46	101   	-67636.87560	Yes        	4        	2.008    	0.000    	
+
+  #47	101   	-71266.89046	Yes        	4        	2.010    	0.000    	
+
+  #48	101   	-76181.91273	Yes        	4        	1.905    	0.000    	
+
+  #49	101   	-70376.13766	Yes        	4        	1.563    	0.000    	
+
+  #50	101   	-72190.88207	Yes        	4        	1.940    	0.000    	
+
+  #51	101   	-74782.23256	Yes        	4        	1.828    	0.000    	
+
+  #52	101   	-70834.01513	Yes        	4        	1.298    	0.000    	
+
+  #53	101   	-73193.24949	Yes        	4        	1.777    	0.000    	
+
+  #54	101   	-72399.49376	Yes        	4        	2.048    	0.000    	
+
+  #55	101   	-68864.14197	Yes        	4        	2.375    	0.000    	
+
+  #56	101   	-73450.79055	Yes        	4        	1.857    	0.000    	
+
+  #57	101   	-69117.17392	Yes        	4        	1.831    	0.000    	
+
+  #58	101   	-73764.74152	Yes        	4        	1.864    	0.000    	
+
+  #59	101   	-73063.84640	Yes        	4        	1.690    	0.000    	
+
+  #60	101   	-75078.96011	Yes        	4        	1.651    	0.000    	
+
+  #61	101   	-77307.39236	Yes        	4        	2.048    	0.000    	
+
+  #62	101   	-70671.69677	Yes        	4        	1.571    	0.000    	
+
+  #63	101   	-75853.54043	Yes        	4        	1.850    	0.000    	
+
+  #64	101   	-73218.97893	Yes        	4        	1.999    	0.000    	
+
+  #65	101   	-74493.32331	Yes        	4        	1.748    	0.000    	
+
+  #66	101   	-71586.58587	Yes        	4        	1.622    	0.000    	
+
+  #67	101   	-72411.97695	Yes        	4        	1.676    	0.000    	
+
+  #68	101   	-72064.72728	Yes        	4        	1.443    	0.000    	
+
+  #69	101   	-71582.21445	Yes        	4        	2.043    	0.000    	
+
+  #70	101   	-72087.10214	Yes        	4        	1.996    	0.000    	
+
+  #71	101   	-72585.98801	Yes        	4        	1.779    	0.000    	
+
+  #72	101   	-68012.02753	Yes        	4        	2.167    	0.000    	
+
+  #73	101   	-72586.61381	Yes        	4        	1.851    	0.000    	
+
+  #74	101   	-72907.88731	Yes        	4        	1.967    	0.000    	
+
+  #75	101   	-76245.83328	Yes        	4        	1.790    	0.000    	
+
+  #76	101   	-73727.51291	Yes        	4        	1.562    	0.000    	
+
+  #77	101   	-76334.26560	Yes        	4        	1.596    	0.000    	
+
+  #78	101   	-67594.76628	Yes        	4        	1.751    	0.000    	
+
+  #79	101   	-71495.51907	Yes        	4        	1.938    	0.000    	
+
+  #80	101   	-74668.94029	Yes        	4        	1.570    	0.000    	
+
+  #81	101   	-76886.03968	Yes        	4        	1.662    	0.000    	
+
+  #82	101   	-69446.90869	Yes        	4        	1.706    	0.000    	
+
+  #83	101   	-74848.58776	Yes        	4        	2.215    	0.000    	
+
+  #84	101   	-76416.52642	Yes        	4        	1.748    	0.000    	
+
+  #85	101   	-72935.58297	Yes        	4        	2.347    	0.000    	
+
+  #86	101   	-68306.53787	Yes        	4        	2.103    	0.000    	
+
+  #87	101   	-74249.46863	Yes        	4        	2.139    	0.000    	
+
+  #88	101   	-75551.36400	Yes        	4        	1.223    	0.000    	
+
+  #89	101   	-72792.29994	Yes        	4        	1.679    	0.000    	
+
+  #90	101   	-71422.89478	Yes        	4        	1.438    	0.000    	
+
+  #91	101   	-75587.13511	Yes        	4        	1.521    	0.000    	
+
+  #92	101   	-72365.34890	Yes        	4        	1.838    	0.000    	
+
+  #93	101   	-72886.43513	Yes        	4        	1.793    	0.000    	
+
+  #94	101   	-73473.17311	Yes        	4        	1.667    	0.000    	
+
+  #95	101   	-72986.95896	Yes        	4        	1.494    	0.000    	
+
+  #96	101   	-71683.61624	Yes        	4        	1.621    	0.000    	
+
+  #97	101   	-73572.38594	Yes        	4        	1.706    	0.000    	
+
+  #98	101   	-73417.58780	Yes        	4        	1.719    	0.000    	
+
+  #99	101   	-71523.05319	Yes        	4        	1.730    	0.000    	
+
+  #100	101   	-71915.34612	Yes        	4        	1.687    	0.000    	
