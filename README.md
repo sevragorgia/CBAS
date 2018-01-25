@@ -32,19 +32,25 @@ I will try to provide instructions to clone the repo and fetch the large files i
     
     * Pfam: results of pfam_scan.pl
     
-    T Transdecoder: transdecoder predicted mRNAs, peptides, CDSs and transdecoder provided track files (not used but provided). The mRNA, peptides and CDSs files are fasta files.
+    * Transdecoder: transdecoder predicted mRNAs, peptides, CDSs and transdecoder provided track files (not used but provided). The mRNA, peptides and CDSs files are fasta files.
     
     * Uniprot: blast results of CBAS' reference transcriptome against the SWISS-Prot database. These blast results provide the basis for the GO term annotation.
     
-  - Counts: count matrix used for the DESeq2 analysis. In this folder the RSEM results can be found as well. **Note** that a .metadata text file is provided specifying the details of all the RNA-Seq libraries used. In this file, the *Original_Sample_Name* column specifies the name of the sample as it was used during collection and parts of the lab. work. These names appear in some files and these files **won't** be modified. The reason behind this decision is to keep the data in the repo consistent as far as possible with the Galaxy history associated with the experiments. **Yet, the names given in the counts matrix were changed to make them more readable and easy to handle.** In this matrix, the names used are especified in the column *Name_Used_in_Analysis* in the metadata file. So, you can track everything, I hope. To repeat the DESeq2 analyses the only files needed are: CBAS_Bleaching_RSEM_Expression_Matrix.counts, CBAS_Bleaching_RSEM_Expression_Matrix.info. In this folder you can also find FPKM and TPM matrices.
+  - **Counts**: count matrix used for the DESeq2 analysis. In this folder the RSEM results can be found as well. **Note** that a .metadata text file is provided specifying the details of all the RNA-Seq libraries used. In this file, the *Original_Sample_Name* column specifies the name of the sample as it was used during collection and parts of the lab. work. These names appear in some files and these files **won't** be modified. The reason behind this decision is to keep the data in the repo consistent as far as possible with the Galaxy history associated with the experiments. **Yet, the names given in the counts matrix were changed to make them more readable and easy to handle.** In this matrix, the names used are especified in the column *Name_Used_in_Analysis* in the metadata file. So, you can track everything, I hope. To repeat the DESeq2 analyses the only files needed are: CBAS_Bleaching_RSEM_Expression_Matrix.counts, CBAS_Bleaching_RSEM_Expression_Matrix.info. In this folder you can also find FPKM and TPM matrices.
   
-  - Results: 
+  - **Results**: in this folder a number of results files can be found. In the folder the files *CEGMA_Results*, *Sequencing_QC_Results* and *Trinity_Results.txt* provide an overview of: 1. the completeness of the reference transcriptome as judge by blasting againts the CEGMA gene (**Note** that the results reported in the paper refer to the results of the BUSCO pipeline), 2. the results of the quality control done before assembly and 3. the results provided by trinity (e.g. transcriptome stats). In addition the following subfolders can be found:
   
-  - R_Scripts:
+    * DEGs: provide a number of files containing the list of **D**ifferentially **E**xpressed **G**ene**s** with varied levels of detail. Two different **L**og **F**old **C**hange threshold are provided: |LFC| = 1 and |LFC| = 2. The files starting with OVER_ and UNDER_ provide a copy of the annotations of the best uniprot match for up/down regulated transcripts. I keep this here just to preserve the state of the information I accessed while trying to make sense out of all these data.
+    
+    * GOs: in this folder, the GO annotation for the DEGs is provided. The background set of transcripts used for the TopGO analysis is also provided here (files starting with Back_). The filenames should be self explanatory. Annotations at two different LFC cutoffs (1 and 2) are provided.
+    
+    * Pfam: here the pfam annotations for the DEGs and their respective background sets are provided. The filenames should be self explanatory. These files were used for the Pfam enrichment analysis.
   
-  - Scripts:
+  - **R_Scripts**: 
   
-  - Transcripts:
+  - **Scripts**: here a number of perl scripts (and some old R scripts that will be deleted from this folder) are provided. These were written to do different things. Each script should provided a (moderately) well written help/usage. If any issues/problems are found trying to execute these scripts please use this repository **Issues** tab to ask for feedback/help. I will try to provide a fix or help.
+  
+  - **Transcripts**: CBAS' reference transcriptome as fasta. A blast database based on this assembly is provided as well.
 
 
 ### Provided Scripts
