@@ -4,8 +4,9 @@ title: Changes in gene expression in a common aquarium sponge under different sy
 author: "Sergio Vargas R."
 date: '2016-07-26'
 output:
-  html_document: default
+  pdf_document: default
   md_document: default
+  html_document: default
 ---
 ```{r load_libraries_and_set_globals, include=FALSE}
 library(knitr)
