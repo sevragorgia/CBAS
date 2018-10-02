@@ -151,11 +151,19 @@ sub Get_List_of_Queries{#expects a file and a ref to an array
 #		push(@target_transcripts, $transcript);
 
 		print $_, "\n" if($debug);
+
+		#get rid of isoforms
+		s/_i\d+//g if($fuse_isoforms);
+
 		push(@{$ref_array}, $_);
 
 		$targets++;
 		}
 
+	#if fuse_isoform, the array needs to be cleaned.
+	if($fuse_isoforms){
+		@{$ref_array} = Unique($ref_array);
+	}
 	print "$targets in list file\n" if($verbose);
 
   close $list_file_filehandle;
@@ -175,7 +183,7 @@ sub Extract_GOs_for_list{#receives a list of genes of interest, and three hash r
 
   foreach my $item (@{$list_ref}){
 
-    $item =~ s/_i\d+//g if($fuse_isoforms);
+#    $item =~ s/_i\d+//g if($fuse_isoforms);
     
     if(exists ${$functions_ref}{$item}){
       if (@{${$functions_ref}{$item}}){
