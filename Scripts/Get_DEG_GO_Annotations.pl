@@ -174,6 +174,9 @@ sub Extract_GOs_for_list{#receives a list of genes of interest, and three hash r
   open my $processes_outfile, '>' , ($outname . ".processes.gos") or die "Cannot open processes outfile: ", $!;
 
   foreach my $item (@{$list_ref}){
+
+    $item =~ s/_i\d+//g if($fuse_isoforms);
+    
     if(exists ${$functions_ref}{$item}){
       if (@{${$functions_ref}{$item}}){
         
